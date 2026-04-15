@@ -275,7 +275,7 @@ function renderSemesterCourses(year, semester) {
       </div>
       <h3 class="course-title-large">${course.title_ar}</h3>
       <p class="course-title-en-large">${course.title_en}</p>
-      <div class="course-status-badge-large">${getStatusLabel(course.status)}</div>
+      <div class="course-status-badge-large" data-status="${course.status}">${getStatusLabel(course.status)}</div>
     </article>
   `).join('');
 }
