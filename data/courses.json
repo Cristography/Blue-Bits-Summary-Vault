@@ -22,7 +22,7 @@
 
   {"id": "numerical-analysis-2", "year": 2, "semester": 2, "title_ar": "التحليل العددي 2", "title_en": "Numerical Analysis 2", "status": "none", "summary_md": "courses/numerical-analysis-2.md"},
   {"id": "communication-skills", "year": 2, "semester": 2, "title_ar": "مهارات التواصل", "title_en": "Communication Skills", "status": "none", "summary_md": "courses/communication-skills.md"},
-  {"id": "algorithms-1", "year": 2, "semester": 2, "title_ar": "خوارزميات 1", "title_en": "Algorithms 1", "status": "reviewed", "summary_md": "courses/خوارزميات-1.md"},
+  {"id": "algorithms-1", "year": 2, "semester": 2, "title_ar": "خوارزميات 1", "title_en": "Algorithms 1", "status": "reviewed", "summary_md": "courses/algorithms-1.md"},
   {"id": "statistics", "year": 2, "semester": 2, "title_ar": "إحصاء", "title_en": "Statistics", "status": "none", "summary_md": "courses/statistics.md"},
   {"id": "logic-circuits", "year": 2, "semester": 2, "title_ar": "دارات منطقية", "title_en": "Logic Circuits", "status": "none", "summary_md": "courses/logic-circuits.md"},
 
