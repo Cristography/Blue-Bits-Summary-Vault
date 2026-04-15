@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blue Bits Summary Vault</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- KaTeX (LaTeX) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-content">
+      <div class="logo">
+        <span class="logo-icon">💠</span>
+        <h1>Blue Bits Summary Vault</h1>
+      </div>
+      <div class="header-controls">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="بحث... Search">
+        </div>
+        <button id="themeToggle" class="icon-btn" title="Toggle Dark Mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" id="breadcrumb">
+      <span class="breadcrumb-item active">الرئيسية</span>
+    </nav>
+
+    <!-- Years Grid View -->
+    <section class="years-view" id="yearsView">
+      <section class="years-grid" id="yearsGrid"></section>
+    </section>
+
+    <!-- Semester Courses View -->
+    <section class="semester-view" id="semesterView" style="display: none;">
+      <div class="section-header">
+        <button class="back-btn" id="backBtn">
+          <i class="fas fa-arrow-right"></i>
+          رجوع
+        </button>
+        <h2 id="semesterTitle"></h2>
+      </div>
+      <div class="courses-grid" id="coursesGrid"></div>
+    </section>
+
+    <!-- Course Content Page -->
+    <section class="course-page" id="coursePage" style="display: none;">
+      <div class="page-header">
+        <button class="back-btn" id="backToSemester">
+          <i class="fas fa-arrow-right"></i>
+          رجوع
+        </button>
+        <div class="course-header-info">
+          <h1 id="courseTitle"></h1>
+          <p id="courseTitleEn"></p>
+        </div>
+        <div class="course-actions">
+          <select id="statusSelect" class="status-select">
+            <option value="none">قيد الانتظار</option>
+            <option value="planned">مخطط</option>
+            <option value="reviewed">مراجع</option>
+            <option value="flagged">مُعلم</option>
+          </select>
+        </div>
+      </div>
+      <article class="course-content" id="courseContent">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          جاري التحميل...
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>Blue Bits Summary Vault &copy; 2026</p>
+  </footer>
+
+  <!-- CDN Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"></script>
+  
+  <!-- App -->
+  <script src="app.js"></script>
+</body>
+</html>
