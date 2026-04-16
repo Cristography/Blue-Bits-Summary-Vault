@@ -1,594 +1,397 @@
-PRD
-===
-
-1. Document Control
-
--------------------
-
-* **Project Name:** Blue Bits Summary Vault
-
-* **Version:** 1.0
-
-* **Owner:** Crist Yaghjian
-
-* **Stakeholders:** Blue Bits, all univeristy classmates.
-
-* **Last Updated:** 14 -4 -2026
-
-* **Status:** Draft
-2. Product Overview
-
--------------------
-
-* **Problem Statement:** we have a lot of exams, before each exam we see a lot of handwritten low quality hard to read cheatsheets and summeries for the exam.
-
-* **Product Summary:** this is a scable lightweigh simple website that collects all the summeries in a very user friendly way, and even a unified way to add new notes and summeries generated and processed with ai, the over all philosophy of the website to be each information as a card.
-
-* **Target Users:** all university students that are preparing for exams
-
-* **Primary Use Case:** to learn, revise, the core eqauations and notes of the lectures in a very clean and very easy way.
-
-* **Why Now:** we are in the begining of the new semester so we need to build the website 
-
-* **Expected Outcome:** a clean website with highly orginzed sections 5 years, each 2 semester , and each semester approx 7 courses, each course has topics and crads in them
-3. Goals
-
---------
-
-* **Business Goals:** volumteering project with no buiness project
-
-* **User Goals:** to make learning and reivsing as easy as possible for student
-
-* **Technical Goals:** adding new content, wrttien by ai or manully as easy as possible
-
-* **Success Metrics:** to make the flow as easy as possible and very userful for students
-4. Non-Goals  to have a backend and complex system but rather super practical flow
-
-------------
-
-5. Scope
-
---------
-
-In Scope: the system from prompt to generation to publishing
---------
-
-Out of Scope full comlex platform
-------------
-
-6. Users and Personas
-
----------------------
-
-Persona 1
----------
-
-* **Name:** the nerd
-
-* **Role:** to add summeries as admins
-
-* **Needs:** to generate or write the summeries in the required format and publish
-
-* **Pain Points:** using git and sometimes manual editing to polish the output and make sure of the info
-
-* **Frequency of Use:** before any exam, before a week at least, or when edit
-
-Persona 2
----------
-
-* **Name:** the sutdent
-
-* **Role:** view
-
-* **Needs:** to just learn and revise
-
-* **Pain Points:** no pain points
-
-* **Frequency of Use:** before the exam a day or and the begining of studing
-7. User Stories
-
----------------
-
-* As a **nerd**, I want **to publish my summeries**, so that **so others can access it easly**.
-
-* As a **student**, I want **access the info**, so that **i can learn and revise**.
-8. Product Requirements
-
------------------------
-
-Core Features
--------------
-
-Functional Requirements the nerd can add summeries wrtten by hand or generated and pushed to github via commit so the webste can turn that format into clean looking output
------------------------
-
-Edge Cases some mathematical symbols and eng arabic bilnual lines and some complex diagrams and figures
-----------
-
-Acceptance Criteria if it is bug free output and high quality content and easy to publish and view
--------------------
-
-10. UX Notes
-
-------------
-
-* **Key Screens:** main page with 5 years and 2 semesters for each one, each semester has 7 courses and then course by course
-
-* **Navigation Structure:** home/yearXSemesterY/coursenameZ
-
-* **Content Guidelines:** to be strict format that the webiste can fetch and traslate to output that can cover graphs, text , equations, ....
-13. Non-Functional Requirements
-
--------------------------------
-
-* **Performance:** very lighwiegth
-
-* **Scalability:** add new content as easy as possible and 
-
-* **Maintainability:** add new component that can be fetched
-
-* **Browser/Device Support:** brower for laptop (horizontal), mobile phones (vertical)
-
-AI Purpose
-----------
-
-* **What the AI should do:**
-
-* there is no direct inegeration between platform and ai but the system to shoudl include very deteailed prompts to extract the summery in the format that can be converted 
-
-Inputs
-------
-
-Outputs
--------
-
-Behavior Rules
---------------
-
-Guardrails
-----------
-
-* **Must not hallucinate:** Yes
-
-* **Must ask clarifying questions when:** something not clear in the lectures
-
-Evaluation must be written
-----------
-
-* **Quality checks:**
-
-* **Test prompts:**
-
-* **Failure cases:**
-23. Rollout Plan
-
-----------------
-
-* **Beta users**
-
-* **Feature flags**
-
-* **Rollback plan**
-
-* **Monitoring**
-24. Post-Launch
-
----------------
-
-* **Feedback loop:** via perosnal asking
-  
-  
-  
-  
-
-### all course names for the entire university
-
-
-
-### السنة الأولى:
-
-الفصل الأول:
-
-* مبادئ عمل الحاسوب
-* تحليل 1
-* فيزياء 1
-* رياضيات متقطعة
-* لغة 1
-* برمجة 1
-
-الفصل الثاني:
-
-* الجبر الخطي
-* التحليل 2
-* الدارات الكهربائية
-* فيزياء 2
-* لغة 2
-* اللغة العربية
-* برمجة 2
+# PRD - Blue Bits Summary Vault
+
+## 1. Document Control
+
+| Property | Value |
+|----------|-------|
+| **Project Name** | Blue Bits Summary Vault |
+| **Version** | 1.0 |
+| **Owner** | Crist Yaghjian |
+| **Stakeholders** | Blue Bits, University Classmates |
+| **Last Updated** | 2026-04-17 |
+| **Status** | Draft |
 
 ---
 
-### السنة الثانية:
+## 2. Product Overview
 
-الفصل الأول:
+### Problem Statement
 
-* التحليل 3
-* التحليل العددي 1
-* لغة 3
-* برمجة 3
-* الكترونيات
-* احتمالات
-* برمجة رياضية
+University students face significant challenges when preparing for exams:
+- Handwritten summaries are often low quality and difficult to read
+- Content is scattered across various sources
+- No standardized format for organizing study materials
+- Difficulty finding and accessing relevant notes quickly
 
-الفصل الثاني:
+### Product Summary
 
-* تحليل عددي 2
-* مهارات التواصل
-* خوارزميات 1
-* تحليل 4
-* إحصاء
-* دارات منطقية
-* لغة 4
+A **scalable, lightweight, user-friendly** static website that aggregates university course summaries in a unified, structured format. The core philosophy centers on presenting each topic as a **card-based** component for optimal readability and navigation.
 
----
+### Target Users
 
-### السنة الثالثة:
+- University students preparing for exams
+- Self-learners seeking structured course materials
+- Study groups collaborating on course content
 
-الفصل الأول:
+### Primary Use Case
 
-* رسوميات حاسوبية
-* خوارزميات 2
-* نظرية المخططات
-* معالج مصغر
-* معالجة الإشارة
-* نظرية المعلومات
-* قواعد المعطيات 1
+Students can quickly learn, revise, and review core concepts, equations, and notes in a clean, organized, and easily accessible format — both on desktop and mobile devices.
 
-الفصل الثاني:
+### Why Now
 
-* مبادئ الذكاء الاصطناعي
-* خوارزميات 3
-* اتصالات تشابهية ورقمية
-* بنية وتنظيم الحاسب 1
-* شبكات حاسوبية
-* لغات صورية
-* هندسة البرمجيات 1
+- Beginning of a new semester — ideal time to establish the platform
+- Growing need for digital, accessible study materials
+- Opportunity to build a foundation for the entire academic journey
+
+### Expected Outcome
+
+A clean, organized website featuring:
+- 5 years of study, each with 2 semesters
+- ~7 courses per semester
+- Each course containing topics and summary cards
 
 ---
 
-### السنة الرابعة:
+## 3. Goals
 
-الفصل الأول:
+| Goal Type | Description |
+|-----------|-------------|
+| **Business** | Volunteering project — no commercial objectives |
+| **User** | Make learning and revision as easy as possible for students |
+| **Technical** | Enable adding new content (AI-generated or manual) with minimal friction |
 
-* نظرية الأرتال
-* نظم تشغيل 1
-* تصميم المترجمات
-* قواعد المعطيات 2
-* بنية وتنظيم الحواسيب 2
-* شبكات متقدمة
-* نظم وسائط متعددة
-* برمجة منطقية
-* بحوث عمليات
+### Success Metrics
 
-الفصل الثاني:
-
-* تسويق وإدارة مشاريع
-* شبكات عصبونية ومنطق الترجيح
-* نظم تشغيل 2
-* روبوتية
-* أمن المعلومات
-* هندسة البرمجيات 2
-* نظم رقمية مبرمجة
-* برمجة تفرعية
-* تطبيقات الانترنت
+- Seamless content creation workflow
+- High user satisfaction for study/revision tasks
+- Fast, responsive interface on all devices
 
 ---
 
-### السنة الخامسة:
+## 4. Non-Goals
 
-الفصل الأول:
+- **NOT** building a complex backend system
+- **NOT** implementing user authentication/authorization
+- **NOT** creating a full LMS (Learning Management System)
 
-* أمن الشبكات
-* هندسة البرمجيات 3
-* تحكم منطقي مبرمج plc
-* نظم خبيرة
-* رؤية حاسوبية
-* نمذجة ومحاكاة
-* جودة ووثوقية
-* نظم موزعة
-
-الفصل الثاني:
-
-* معالجة لغات طبيعية
-* تنقيب المعطيات
-* إدارة نظم إنتاجية
-* نظم الزمن الحقيقي
-* الشبكات اللاسلكية
-* إدارة الشبكات
-* قواعد معطيات موزعة
-  
-  
-
-### Zero-Build, GitHub Pages Friendly)
-
-| Layer             | Tool/Approach                                      | Why                                                                             |
-| ----------------- | -------------------------------------------------- | ------------------------------------------------------------------------------- |
-| **Data**          | `courses.json` + per-course `.md` files            | Separates metadata from content. Easy to edit, AI-friendly, version-controlled. |
-| **Renderer**      | Vanilla JS + `marked.js` (or `remark`)             | No build step. Fetches JSON → renders cards → parses MD → injects into DOM.     |
-| **Hosting**       | GitHub Pages (`gh-pages` branch or `/docs`)        | Free, supports static JSON/MD/HTML/JS natively.                                 |
-| **Search/Filter** | `fuse.js` (lightweight fuzzy search) or vanilla JS | Runs client-side. No backend needed.                                            |
-| **Styling**       | CSS Grid/Flex + CSS Variables + RTL support        | Responsive, themeable, Arabic-friendly.                                         |
-
-
-
-
-
-Both **LaTeX** and **Mermaid** work perfectly in a static GitHub Pages site using client-side rendering. You can keep your JSON minimal, and let the Markdown file handle all content, equations, and diagrams.
-
-Here’s the exact setup:
+The focus is on a **practical, static, zero-build** solution that emphasizes content accessibility over platform complexity.
 
 ---
 
-### 📦 1. Simplified `courses.json`
+## 5. Scope
 
-```json
-[
-  {
-    "id": "graph-theory",
-    "year": 3,
-    "semester": 1,
-    "title_ar": "نظرية المخططات",
-    "title_en": "Graph Theory",
-    "status": "reviewed",
-    "summary_md": "courses/graph-theory.md"
-  }
-]
-```
+### In Scope
 
-✅ Clean, flat, and easy for AI/humans to maintain.
+- End-to-end system: Prompt → Generation → Publishing
+- Static site rendering with Markdown, LaTeX, and Mermaid support
+- Card-based UI with responsive layout
+- Dark/Light mode toggle
+- Global search functionality
+- Progress tracking (localStorage)
+
+### Out of Scope
+
+- Full-featured content management system
+- User accounts and authentication
+- Real-time collaboration
+- Complex backend infrastructure
+
+---
+
+## 6. Users and Personas
+
+### Persona 1: The Nerd (Content Creator)
+
+| Attribute | Description |
+|-----------|-------------|
+| **Name** | The Nerd |
+| **Role** | Add summaries (Admin/Content Creator) |
+| **Needs** | Generate or write summaries in the required format and publish to the website |
+| **Pain Points** | Using Git and manual editing to polish output and verify information accuracy |
+| **Frequency** | Before each exam (at least 1 week before), or when editing existing content |
+
+### Persona 2: The Student (Content Consumer)
+
+| Attribute | Description |
+|-----------|-------------|
+| **Name** | The Student |
+| **Role** | View and consume content |
+| **Needs** | Quick access to course materials for learning and revision |
+| **Pain Points** | None — the system is designed for ease of use |
+| **Frequency** | Before exams (1-2 days), beginning of study sessions |
 
 ---
 
-### 📝 2. Markdown File Format (LaTeX + Mermaid Ready)
+## 7. User Stories
 
-Your `.md` files can mix text, tables, LaTeX, and Mermaid natively:
-
-```markdown
-# نظرية المخططات · Graph Theory
-
-## 📐 التعاريف الأساسية
-- المخطط `G(V,E)` حيث `V` رؤوس و `E` حواف
-- درجة الرأس: `$\deg(v) = |E(v)|$`
-- مصافحة الأيدي: `$\sum_{v \in V} \deg(v) = 2|E|$`
-
-## 🌲 خوارزمية بريم (MST)
-$$
-\text{Pick } e \in \delta(T) \text{ s.t. } w(e) = \min_{f \in \delta(T)} w(f)
-$$
-
-## 🗺 مخطط العجلة `Wₙ`
-```mermaid
-graph TD
-  H[Hub] --> A[Rim 1]
-  H --> B[Rim 2]
-  H --> C[Rim 3]
-  A --> B --> C --> A
-```
-
-## 📊 جدول مرجعي
-
-| المخطط | `n` | `m` | مستوي؟            |
-| ------ | --- | --- | ----------------- |
-| `K₅`   | 5   | 10  | ❌ `$10 > 3(5)-6$` |
-| `K₃,₃` | 6   | 9   | ❌ `$9 > 2(6)-4$`  |
-
-```
+| ID | As a... | I want to... | So that... |
+|----|---------|--------------|------------|
+| US-01 | **Nerd** | Publish my summaries | Others can access them easily |
+| US-02 | **Student** | Access course information | I can learn and revise effectively |
+| US-03 | **Nerd** | Generate summaries using AI | I can quickly create content in the correct format |
+| US-04 | **Student** | Toggle between light and dark mode | I can read comfortably in any lighting condition |
+| US-05 | **Student** | Search across all courses | I can find specific topics quickly |
+| US-06 | **Student** | Track my progress | I know which courses I've reviewed |
 
 ---
-### 🛠️ 3. Complete Rendering Pipeline (Zero Build)
-Add these to your `<head>`:
+
+## 8. Product Requirements
+
+### Functional Requirements
+
+| ID | Requirement | Priority |
+|----|-------------|----------|
+| FR-01 | Display 5 years, each with 2 semesters, ~7 courses per semester | Must |
+| FR-02 | Card-based UI where each `##` heading becomes a summary card | Must |
+| FR-03 | Render Markdown content with proper formatting | Must |
+| FR-04 | Render LaTeX math equations (KaTeX) | Must |
+| FR-05 | Render Mermaid diagrams | Must |
+| FR-06 | Global search across all courses (Arabic & English) | Should |
+| FR-07 | Dark/Light theme toggle with persistence | Should |
+| FR-08 | Progress/status tracking per course | Could |
+| FR-09 | Responsive design (mobile + desktop) | Must |
+
+### Non-Functional Requirements
+
+| Category | Requirement |
+|----------|-------------|
+| **Performance** | Lightweight — fast load times, minimal dependencies |
+| **Scalability** | Easy to add new courses and content |
+| **Maintainability** | Component-based architecture, easy to extend |
+| **Browser Support** | Chrome, Firefox, Safari, Edge (latest versions) |
+| **Device Support** | Desktop (landscape) + Mobile (portrait) |
+| **Accessibility** | Proper contrast ratios, keyboard navigation |
+
+### Edge Cases
+
+- Mathematical symbols and equations (LaTeX)
+- Mixed Arabic/English bilingual content
+- Complex diagrams and figures (Mermaid)
+- RTL text direction for Arabic content
+- Empty course content placeholder
+
+### Acceptance Criteria
+
+1. **Bug-free output**: No rendering errors in Markdown, LaTeX, or Mermaid
+2. **High quality content**: Structured, accurate summaries
+3. **Easy to publish**: AI prompts generate ready-to-use Markdown
+4. **Easy to view**: Responsive, fast, intuitive interface
+5. **Theme toggle works**: Dark/Light mode persists and applies correctly
+
+---
+
+## 9. Technical Architecture
+
+### Zero-Build, GitHub Pages Friendly Stack
+
+| Layer | Tool/Approach | Why |
+|-------|---------------|-----|
+| **Data** | `courses.json` + per-course `.md` files | Separates metadata from content. Easy to edit, AI-friendly, version-controlled |
+| **Renderer** | Vanilla JS + `marked.js` | No build step. Fetches JSON → renders cards → parses MD → injects into DOM |
+| **Hosting** | GitHub Pages (`/docs` or `gh-pages` branch) | Free, supports static JSON/MD/HTML/JS natively |
+| **Search/Filter** | Vanilla JS (client-side) | Runs client-side, no backend needed |
+| **Styling** | CSS Grid/Flex + CSS Variables + RTL support | Responsive, themeable, Arabic-friendly |
+
+### Supported Content Types
+
+| Type | Syntax | Notes |
+|------|--------|-------|
+| **Inline Math** | `$formula$` | KaTeX renders automatically |
+| **Display Math** | `$$formula$$` | Centered, larger format |
+| **Mermaid Diagrams** | ````mermaid` blocks | Flowcharts, graphs, sequences |
+| **Tables** | Standard Markdown tables | Aligned for RTL |
+| **Code Blocks** | ````cpp`, ````python`, etc. | Syntax highlighted |
+| **Cards** | Each `## Heading` becomes a card | Auto-wrapped by JS |
+
+### CDN Dependencies
+
 ```html
 <!-- Markdown Parser -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <!-- LaTeX (KaTeX) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
 <!-- Mermaid Diagrams -->
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+<!-- DOM Sanitizer -->
+<script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 ```
 
-Then in your `app.js`:
+### Rendering Pipeline (Execution Order)
 
-```js
-// Initialize Mermaid once
-mermaid.initialize({ startOnLoad: false, theme: 'default' });
+1. **Fetch JSON** → Build course grid
+2. **Open Course** → Fetch `.md` file
+3. **Parse Markdown** → `marked.parse()` → sanitize with `DOMPurify`
+4. **Transform to Cards** → Each `##` heading wraps into a `.content-card` div
+5. **Render LaTeX** → `renderMathInElement()` (KaTeX)
+6. **Render Diagrams** → Async `mermaid.render()` + safe injection
+7. **Attach Events** → Status buttons, modal close, theme toggle
 
-async function renderCourse(mdPath, containerId) {
-  const res = await fetch(mdPath);
-  const md = await res.text();
-
-  // 1️⃣ Parse Markdown → HTML
-  const html = marked.parse(md);
-  const container = document.getElementById(containerId);
-  container.innerHTML = html;
-
-  // 2️⃣ Render LaTeX (KaTeX auto-render)
-  renderMathInElement(container, {
-    delimiters: [
-      {left: '$$', right: '$$', display: true},
-      {left: '$', right: '$', display: false}
-    ],
-    throwOnError: false
-  });
-
-  // 3️⃣ Render Mermaid diagrams
-  await mermaid.run({ nodes: container.querySelectorAll('.language-mermaid') });
-}
-
-// Usage example:
-// renderCourse('courses/graph-theory.md', 'summary-content');
-```
-
-✅ **Order matters**: Markdown → KaTeX → Mermaid. This prevents parser conflicts.
+> **Why this order?** Mermaid and KaTeX fail if run on raw text or before DOM nodes exist. The pipeline guarantees clean, isolated rendering.
 
 ---
 
-### 🤖 4. AI Prompt for Auto-Generating `.md` Files
+## 10. UI/UX Design
+
+### Key Screens
+
+| Screen | Description |
+|--------|-------------|
+| **Home (Years Grid)** | 5 year cards, each showing semester counts and progress |
+| **Semester View** | Course cards for selected year/semester |
+| **Course Page** | Card-based content with math and diagrams |
+| **Search Results** | Global search across all courses |
+
+### Navigation Structure
 
 ```
-أنت خبير في تلخيص المواد الجامعية. أنشئ ملف Markdown للمقرر التالي وفق الهيكل التالي:
-- استخدم `$...$` للمعادلات المضمنة، و`$$...$$` للمعادلات المنفصلة
-- استخدم ```mermaid ... ``` للرسوم البيانية (flowchart, graph, sequenceDiagram)
-- استخدم جداول Markdown للجداول المرجعية
-- لغة: عربية أكاديمية واضحة مع مصطلحات إنجليزية بين قوسين عند اللزوم
-- لا تكتب مقدمة أو خاتمة، فقط المحتوى التقني المنظم بعناوين فرعية
-المقرر: [اسم المقرر]
-المنهج: [نقاط أو ملاحظات]
+Home → Year X → Semester Y → Course Z
+              ↘ Search Results → Course Z
 ```
+
+### Layout Specifications
+
+- **Header**: Logo, global search input, theme toggle
+- **Breadcrumb**: Navigation trail with clickable links
+- **Content Area**: Responsive grid (3 columns desktop, 2 tablet, 1 mobile)
+- **Cards**: Each `##` heading becomes a card with icon, title, and body
+
+### Typography
+
+- **Primary Font**: `IBM Plex Sans Arabic` (with fallback)
+- **Monospace**: `JetBrains Mono` for code/math
+- **Base Size**: 16px
+- **Line Height**: 1.6
+
+### Color Palette (Light Mode)
+
+| Variable | Hex | Usage |
+|----------|-----|-------|
+| `--bg` | `#f2ede8` | Page background |
+| `--surf` | `#faf7f4` | Card/header background |
+| `--card` | `#ffffff` | Elevated surfaces |
+| `--border` | `#ddd5c8` | Borders |
+| `--txt` | `#1e1a17` | Primary text |
+| `--muted` | `#6a5a4e` | Secondary text |
+| `--p5` | `#90b8d8` | Primary accent (blue) |
+
+### Color Palette (Dark Mode)
+
+| Variable | Hex | Usage |
+|----------|-----|-------|
+| `--bg` | `#1a1816` | Page background |
+| `--surf` | `#252220` | Card/header background |
+| `--card` | `#2d2927` | Elevated surfaces |
+| `--border` | `#3d3734` | Borders |
+| `--txt` | `#e8e4e0` | Primary text |
+| `--muted` | `#a0948c` | Secondary text |
+| `--p5` | `#7aa8d4` | Primary accent (lighter blue) |
+
+### Interactive Behaviors
+
+- **Hover**: Cards lift with shadow (`transform: translateY(-3px)`)
+- **Transitions**: 200ms ease for all interactive elements
+- **Focus**: Visible focus rings for accessibility
 
 ---
 
-### ⚠️ Important Notes & Best Practices
+## 11. AI Integration
 
-| Issue                    | Solution                                                                                              |
-| ------------------------ | ----------------------------------------------------------------------------------------------------- |
-| **Mermaid slow on load** | Use `mermaid.run({ nodes: [...] })` instead of `startOnLoad: true`. It only renders visible diagrams. |
-| **KaTeX vs MathJax**     | KaTeX is faster & lighter. Perfect for cheat-sheets. MathJax is heavier but supports more edge cases. |
-| **Arabic RTL + Mermaid** | Mermaid SVGs are LTR by default. Wrap them: `.mermaid { direction: ltr; }` if needed.                 |
-| **Security**             | For production, add `DOMPurify` before `innerHTML`: `container.innerHTML = DOMPurify.sanitize(html);` |
-| **Caching**              | Append `?v=1.2` to `summary_md` paths when updating so browsers fetch fresh MD.                       |
+### Purpose
 
----
+The platform does **not** have direct AI integration. Instead, the system includes **detailed prompts** that users can use with any LLM (ChatGPT, Claude, Gemini, etc.) to generate summaries in the correct format.
 
-### 🚀 Next Steps
+### Prompt Requirements
 
-1. Create `data/courses.json` with the simplified structure.
-2. Drop the CDN links in `index.html`.
-3. Paste the `renderCourse()` function into `app.js`.
-4. Add one `.md` file with LaTeX + Mermaid to test.
-5. Push to GitHub → Pages auto-deploys.
-   
-   
+- Output MUST be raw Markdown (no code fences, no explanations)
+- Structure: Each `##` heading becomes a card
+- Bilingual: Arabic primary with English in parentheses
+- Math: LaTeX `$inline$` and `$$display$$`
+- Diagrams: Mermaid syntax in fenced blocks
 
-## Prompt version 1.0
+### AI Output Validation
 
-```text
-You are an expert academic summarizer and curriculum designer. Extract, organize, and format ALL key information from the provided course material into a precise, bilingual (Arabic/English), Markdown-based cheat sheet optimized for static web rendering. Follow these rules STRICTLY:
-
-OUTPUT FORMAT:
-- Use ONLY Markdown. No introductory text, no explanations, no conversational filler.
-- Bilingual pattern: Primary Arabic with English terms in parentheses or after a slash. Headers: `# العنوان العربي · English Title`
-- Math: Inline `$...$`, Display `$$...$$`. Never use `\[ \]` or `\( \)`.
-- Diagrams: Use ````mermaid` blocks for flowcharts, graphs, or sequences. Keep them minimal and functional.
-- Tables: Standard Markdown. Align text right for Arabic. Include all relevant parameters.
-- Structure must follow this EXACT template:
-
-# [العربي] · [English]
-
-## 📐 التعاريف الأساسية · Core Definitions
-- [المفهوم بالعربي] ([English]): [التعريف/الصيغة/الشرط]
-- ...
-
-## 🧮 النظريات والصيغ · Theorems & Formulas
-- [اسم النظرية عربي/إنجليزي]: 
-  $$[الصيغة أو التعبير الرياضي]$$
-  [شرح موجز للشرط أو النتيجة أو البرهان]
-- ...
-
-## 🔁 الخوارزميات والعمليات · Algorithms & Processes
-1. [الخطوة 1 عربي] ([English])
-2. [الخطوة 2] ...
-```mermaid
-[مخطط انسيابي أو بياني يوضح التسلسل]
-```
-
-- التعقيد/الشروط: [Complexity/Constraints]
-
-## 🌲 الخصائص والثوابت · Properties & Invariants
-
-- [الخاصية 1]: [الشرح + الصيغة إن وجدت]
-- [الخاصية 2]: ...
-- المتراجحات الأساسية: `$[formula]$`
-
-## 📝 أمثلة محلولة · Worked Examples
-
-- [المثال 1]: [المعطيات → الحل → النتيجة]
-- [المثال 2]: ...
-  
-```mermaid
-[رسم توضيحي للمثال إن ينطبق]
-```
-
-## 📊 جدول مرجعي شامل · Master Reference Table
-
-| المخطط/الحالة | |V| | |E| | الدرجة | χ | مستوي؟ | ثنائي القسم؟ | مطابقة تامة؟ | τ(G) |
-|---|---|---|---|---|---|---|---|---|
-| [عنصر 1] | ... | ... | ... | ... | ... | ... | ... | ... |
-| ... | ... | ... | ... | ... | ... | ... | ... | ... |
-
-## ⚠️ أخطاء شائعة وملاحظات · Common Pitfalls & Notes
-
-- [ملاحظة 1]: [التوضيح]
-- [ملاحظة 2]: ...
-- 💡 شرط لازم vs شرط لازم وكافٍ: [توضيح دقيق]
-
-SYNTAX & RENDERING RULES:
-
-- ALWAYS use `$...$` for inline math and `$$...$$` for block math.
-- Mermaid blocks MUST start with ````mermaid` and end with ```` on new lines.
-- Tables MUST have a header row, separator row, and consistent columns.
-- Use concise academic Arabic. Keep English terms in parentheses for quick reference.
-- Do NOT include markdown code fences around the entire output. Output raw Markdown only.
-- Verify all formulas, indices, and mathematical notations against standard conventions.
-- If any section lacks data from the source, omit it. Do NOT hallucinate.
-
-PROCESS:
-
-1. Scan input for definitions, formulas, theorems, algorithms, examples, tables, and edge cases.
-2. Map each to the template above.
-3. Apply bilingual formatting and math/diagram syntax.
-4. Output ONLY the final Markdown.
-
-Begin generation now.
-
-```
-
-
-
-## possible doc for the project
-
-## 🎯 Overview
-
-A **zero-build, static, bilingual (AR/EN)** cheat-sheet website for university courses, hosted on GitHub Pages. Content is dynamically fetched from a lightweight JSON index and per-course Markdown files. Supports LaTeX, Mermaid diagrams, responsive card layouts, search/filter, progress tracking, and dark mode.
+| Check | Description |
+|-------|-------------|
+| Quality | Content accuracy, completeness |
+| Format | Correct Markdown, LaTeX, Mermaid syntax |
+| Structure | Each `##` is a distinct card |
+| Language | Arabic academic with English terms |
 
 ---
 
-## 📁 Repository Structure
+## 12. Course Catalog
 
-```
+### Year 1
 
-your-repo/
-├── index.html          # Main entry point
-├── style.css           # RTL-optimized responsive styles
-├── app.js              # Core rendering, filtering, modal, localStorage
-├── data/
-│   └── courses.json    # Flat index of all courses
-├── courses/
-│   ├── graph-theory.md
-│   ├── programming-1.md
-│   └── ...             # Per-course Markdown files
-└── test.html           # Standalone local tester (dev only)
+| Semester 1 | Semester 2 |
+|-----------|------------|
+| مبادئ عمل الحاسوب | الجبر الخطي |
+| تحليل 1 | التحليل 2 |
+| فيزياء 1 | الدارات الكهربائية |
+| رياضيات متقطعة | فيزياء 2 |
+| لغة 1 | اللغة العربية |
+| برمجة 1 | برمجة 2 |
 
-```
+### Year 2
+
+| Semester 1 | Semester 2 |
+|-----------|------------|
+| التحليل 3 | التحليل العددي 2 |
+| التحليل العددي 1 | مهارات التواصل |
+| برمجة 3 | خوارزميات 1 |
+| إلكترونيات | إحصاء |
+| احتمالات | دارات منطقية |
+| برمجة رياضية | — |
+
+### Year 3
+
+| Semester 1 | Semester 2 |
+|-----------|------------|
+| رسوميات حاسوبية | مبادئ الذكاء الاصطناعي |
+| خوارزميات 2 | خوارزميات 3 |
+| نظرية المخططات | اتصالات تشابهية ورقمية |
+| معالج مصغر | بنية وتنظيم الحاسب 1 |
+| معالجة الإشارة | شبكات حاسوبية |
+| نظرية المعلومات | لغات صورية |
+| قواعد المعطيات 1 | هندسة البرمجيات 1 |
+
+### Year 4
+
+| Semester 1 | Semester 2 |
+|-----------|------------|
+| نظرية الأرتال | تسويق وإدارة مشاريع |
+| نظم تشغيل 1 | شبكات عصبونية ومنطق الترجيح |
+| تصميم المترجمات | نظم تشغيل 2 |
+| قواعد المعطيات 2 | روبوتيا |
+| بنية وتنظيم الحواسيب 2 | أمن المعلومات |
+| شبكات متقدمة | هندسة البرمجيات 2 |
+| نظم وسائط متعددة | نظم رقمية مبرمجة |
+| برمجة منطقية | برمجة تفرعية |
+| بحوث عمليات | تطبيقات الإنترنت |
+
+### Year 5
+
+| Semester 1 | Semester 2 |
+|-----------|------------|
+| أمن الشبكات | معالجة لغات طبيعية |
+| هندسة البرمجيات 3 | تنقيب المعطيات |
+| تحكم منطقي مبرمج PLC | إدارة نظم إنتاجية |
+| نظم خبيرة | نظم الزمن الحقيقي |
+| رؤية حاسوبية | الشبكات اللاسلكية |
+| نمذجة ومحاكاة | إدارة الشبكات |
+| جودة ووثوقية | — |
+| نظم موزعة | — |
 
 ---
 
-## 📦 Data Format
+## 13. Data Format
 
-### `data/courses.json`
-
-Flat, human/AI-friendly structure. No nested arrays.
+### courses.json Structure
 
 ```json
 [
@@ -604,145 +407,56 @@ Flat, human/AI-friendly structure. No nested arrays.
 ]
 ```
 
-- `id`: URL-safe slug, used for `localStorage` tracking & modal routing
-- `status`: `"none" | "planned" | "reviewed" | "flagged"` (overriden by `localStorage`)
-- `summary_md`: Relative path to the Markdown file
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | String | URL-safe slug, used for localStorage tracking |
+| `year` | Number | University year (1-5) |
+| `semester` | Number | Semester (1 or 2) |
+| `title_ar` | String | Arabic course name |
+| `title_en` | String | English course name |
+| `status` | String | `"none"`, `"planned"`, `"reviewed"`, or `"flagged"` |
+| `summary_md` | String | Relative path to Markdown file |
 
 ---
 
-## 📝 Markdown & Custom Syntax
+## 14. Deployment
 
-### Core Syntax Rules
+### GitHub Pages Setup
 
-| Feature      | Syntax                                               |
-| ------------ | ---------------------------------------------------- |
-| Inline Math  | `$\sum x = y$`                                       |
-| Display Math | `$$\int f(x)dx$$`                                    |
-| Diagrams     | ````mermaid \n graph TD \n A --> B \n ````           |
-| Tables       | Standard Markdown                                    |
-| Cards        | `[card icon="📐" title="عنوان"]...content...[/card]` |
+1. Create a GitHub repository
+2. Enable **Settings → Pages → Deploy from main branch → `/`**
+3. Commit all files:
+   ```
+   index.html
+   style.css
+   app.js
+   data/courses.json
+   courses/*.md
+   ```
+4. Wait ~60 seconds for deployment
+5. Visit `https://<username>.github.io/<repo>/`
 
-### Card Example
+### Cache Handling
 
-```markdown
-[card icon="🌲" title="خوارزميات MST"]
-1. رتب الحواف تصاعدياً
-2. اختر الحافة الأصغر وزناً
-3. أضف إذا لم تُشكّل حلقة
-$$\text{Complexity: } O(E \log E)$$
-[/card]
+When updating content, append a version query to force refresh:
+```javascript
+summary_md: "courses/graph-theory.md?v=1.2"
 ```
 
-✅ Cards automatically become responsive grid items. Inner content supports full Markdown, LaTeX, and Mermaid.
+---
+
+## 15. Future Enhancements
+
+| Priority | Feature | Notes |
+|----------|---------|-------|
+| 🟢 High | GitHub Actions CI | Validate JSON, lint MD, auto-deploy |
+| 🟢 High | PDF/Print Stylesheet | `@media print` for clean printing |
+| 🟡 Medium | Cross-Linking | Auto-suggest related courses |
+| 🟡 Medium | PWA/Offline | Service worker + manifest for mobile |
+| 🟠 Low | Tag System | Filter by `#algorithms`, `#math`, etc. |
+| 🟠 Low | Multi-Lang Toggle | Switch AR/EN primary dynamically |
+| 🔵 Future | Progressive Loading | Lazy-render cards on scroll |
 
 ---
 
-## ⚙️ Rendering Pipeline (Execution Order)
-
-Strict order prevents parser conflicts and DOM race conditions:
-
-1. **Fetch JSON** → build course grid
-2. **Open Course** → fetch `.md`
-3. **Preprocess Cards** → replace `[card...]` with `%%CARD_ID%%`
-4. **Parse Markdown** → `marked.parse()` → sanitize with `DOMPurify`
-5. **Inject Cards** → replace `%%CARD_ID%%` with `.summary-card` divs + re-parse inner Markdown
-6. **Render LaTeX** → `renderMathInElement()` (KaTeX)
-7. **Render Diagrams** → async `mermaid.render()` + safe `replaceChild()` injection
-8. **Attach Events** → status buttons, modal close, theme toggle
-
-> 🔑 *Why this order?* Mermaid/KaTeX fail if run on raw text or before DOM nodes exist. The pipeline guarantees clean, isolated rendering.
-
----
-
-## 🎨 UI/UX Features
-
-| Feature              | Implementation                                                |
-| -------------------- | ------------------------------------------------------------- |
-| Responsive Grid      | `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))` |
-| Modal Preview        | Scrollable overlay, dynamic title & content                   |
-| Progress Tracking    | `localStorage` maps `courseId → status`                       |
-| Search/Filter        | Real-time by title (AR/EN), year, status                      |
-| Dark/Light Mode      | CSS variables + `localStorage` theme flag                     |
-| RTL Support          | `dir="rtl"`, Arabic font stack, table/text alignment          |
-| Hover Effects        | Lift + shadow transition on cards                             |
-| Loading/Empty States | Skeleton text, fallback messages                              |
-
----
-
-## 🤖 AI Generation Workflow
-
-### Prompt Template (Strict Output)
-
-```
-أنت خبير في تلخيص المواد الجامعية. أنشئ ملف Markdown للمقرر التالي وفق الهيكل التالي:
-- استخدم الصيغة: [card icon="📐" title="عنوان"]...محتوى...[/card]
-- المعادلات: $...$ للمضمنة، $$...$$ للمنفصلة
-- الرسوم: ```mermaid ... ```
-- لغة: عربية أكاديمية مع مصطلحات إنجليزية بين قوسين
-- لا تكتب مقدمة/خاتمة، فقط المحتوى التقني المنظم
-المقرر: [اسم]
-المنهج/النقاط: [نص أو ملفات مرفقة]
-```
-
-✅ Output is ready to paste directly into `courses/*.md` or the `test.html` editor.
-
----
-
-## 🧪 Local Testing
-
-- Open `test.html` in any browser (no server needed)
-- Left panel: paste Markdown
-- Right panel: live preview with cards, LaTeX, Mermaid
-- Auto-renders on input (debounced 600ms)
-- Includes sample Graph Theory content
-- Mermaid null-error fixed via async `replaceChild()`
-
----
-
-## 🚀 Deployment Steps
-
-1. Create GitHub repo → enable **Pages → Deploy from `main`/`master` → `/`**
-2. Commit `index.html`, `style.css`, `app.js`, `data/courses.json`, `courses/*.md`
-3. Wait ~60s → visit `https://<username>.github.io/<repo>/`
-4. Update content → push → auto-deploys (static files)
-5. Optional: append `?v=1.2` to JSON paths if cache persists
-
----
-
-## 🔮 Planned Enhancements  ** low importance for no **
-
-| Priority  | Feature              | Notes                                                    |
-| --------- | -------------------- | -------------------------------------------------------- |
-| 🟢 High   | GitHub Actions CI    | Validate `courses.json`, lint MD, auto-deploy            |
-| 🟢 High   | PDF/Print Stylesheet | `@media print` hides nav, formats tables, removes modals |
-| 🟡 Medium | Cross-Linking        | Auto-suggest related courses via shared tags/topics      |
-| 🟡 Medium | PWA/Offline          | Service worker + `manifest.json` for mobile caching      |
-| 🟠 Low    | Tag System           | Filter by `#algorithms`, `#linear-algebra`, etc.         |
-| 🟠 Low    | Multi-Lang Toggle    | Switch AR/EN primary language dynamically                |
-| 🔵 Future | Progressive Loading  | Lazy-render cards/MD on scroll for 100+ courses          |
-
----
-
-## 📜 Quick Reference Cheatsheet
-
-```bash
-# Folder structure
-mkdir -p data courses
-
-# Add new course
-echo '{
-  "id": "new-course",
-  "year": 4,
-  "semester": 1,
-  "title_ar": "اسم المقرر",
-  "title_en": "Course Name",
-  "status": "none",
-  "summary_md": "courses/new-course.md"
-}' >> data/courses.json
-
-# Test locally
-open test.html
-
-# Deploy
-git add . && git commit -m "add new-course" && git push
-```
+*Document Version: 1.0 | Last Updated: 2026-04-17*

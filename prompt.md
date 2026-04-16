@@ -1,201 +1,144 @@
-# AI Prompt for Lecture Summary Generation
-## Blue Bits Summary Vault Format
-
-Use this prompt with your AI (ChatGPT, Claude, Gemini, etc.) to convert lecture notes/videos into properly formatted course summaries.
+# AI Prompt for Blue Bits Summary Vault
+## Universal Prompt - Works with ALL LLMs
 
 ---
 
-## 📋 Prompt Template
+## 🎯 Universal Prompt
+
+Use this **exact prompt** with any LLM (ChatGPT, Claude, Gemini, Grok, DeepSeek, etc.):
 
 ```
-# Create a course summary for [COURSE NAME] following the Blue Bits format
+أنت خبير أكاديمي في تلخيص المواد الجامعية. أنشئ ملخصاً كاملاً للمقرر التالي وفق المعايير التالية:
 
-## Course Info:
-- **Course Name:** [Arabic Name] · [English Name]
-- **University Year:** [Year]
-- **Semester:** [1 or 2]
-- **Language:** Bilingual Arabic/English
+## المتطلبات الإلزامية:
 
-## Format Requirements:
+1. **الناتج**: Markdown خام فقط (بدون fences، بدون نص إضافي، بدون مقدمة أو خاتمة)
+2. **البنية**: كل ## = بطاقة منفصلة في الموقع
+3. **العناوين**: عربي مع الإنجليزية بين أقواس: ## 📐 العنوان · English
+4. **الرياضيات**: مضمنة $...$ + منفصلة $$...$$ (لا تستخدم \[ \] أو \( \))
+5. **الرسوم**: ```mermaid للأنظمة والخرائط الانسيابية
+6. **الجداول**: جداول Markdown قياسية
+7. **الكود**: ```cpp أو ```python مع شرح
+8. **اللغة**: عربية أكاديمية، الإنجليزية بين (أقواس)
 
-### 1. Structure
-Use these Arabic headings with English in parentheses:
-- `## 📐 التعاريف الأساسية · Core Definitions` - For key concepts
-- `## 🧮 [Topic Name]` - For main topics
-- `## 🔁 [Topic Name]` - For processes/flows
-- `## 📊 [Topic Name]` - For tables/data
-- `## ⚠️ الأخطاء الشائعة · Common Pitfalls` - For mistakes to avoid
-- `## 📝 ملخص · Summary` - For final summary
+## الأقسام المطلوبة:
+- ## 📐 التعاريف الأساسية · Core Definitions
+- ## 🧮 النظريات والصيغ · Theorems & Formulas
+- ## 🔁 الخوارزميات والعمليات · Algorithms & Processes
+- ## 📊 الجداول المرجعية · Reference Tables
+- ## ⚠️ الأخطاء الشائعة · Common Pitfalls
+- ## 📝 ملخص · Summary
 
-### 2. Content Cards (Each h2 section = one card)
-- Group content under each ## heading into a card
-- Use bullet points for definitions
-- Keep content concise but comprehensive
-
-### 3. LaTeX Math Formulas
-- Inline: `$formula$` 
-- Display: `$$formula$$`
-- Examples:
-  - Variables: `$x$, $y$, $n$, $i$`
-  - Fractions: `$\frac{a}{b}$`
-  - Exponents: `$x^2$, $e^x$`
-  - Roots: `$\sqrt{x}$, $\sqrt[3]{x}$`
-  - Greek: `$\alpha$, $\beta$, $\gamma$, $\theta$, $\pi$`
-  - Summation: `$\sum_{i=1}^{n}$`
-  - Integral: `$\int_{a}^{b} f(x) dx$`
-  - Matrix: `$A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$`
-
-### 4. Mermaid Diagrams
-Include one diagram per major topic using:
-```mermaid
-graph TD
-    A[Start] --> B[Step 1]
-    B --> C{Decision}
-    C -->|Yes| D[Result 1]
-    C -->|No| E[Result 2]
-```
-
-Diagram types:
-- Flowcharts: `graph TD` or `graph LR`
-- Sequence: `sequenceDiagram`
-- State: `stateDiagram-v2`
-
-### 5. Tables
-Use markdown tables for:
-- Comparisons
-- Classifications
-- Formula summaries
-
-Example:
-| Concept | Description | Formula |
-|---------|-------------|---------|
-| X | Y | Z |
-
-### 6. Code Blocks
-For any code:
-```cpp
-// or python, java, etc.
-code here
-```
-
-### 7. Important Guidelines:
-- Always use Arabic headings first, English in parentheses
-- Keep English terms in parentheses after Arabic
-- Use emojis as section icons
-- Include 3-5 common mistakes in "الأخطاء الشائعة" section
-- Each section should be substantial but not overwhelming
-- Add "المراجع" (References) at the end with source info
-
-## Output Format:
-Generate the complete markdown file ready to use on the website.
+## المقرر: [اسم المقرر]
+## المنهج: [المواضيع أو ملاحظات المحاضرات]
 ```
 
 ---
 
-## 📝 Example Output (for reference):
+## 📋 How to Use
 
+1. **Copy** the universal prompt above
+2. **Replace** `[اسم المقرر]` with the course name
+3. **Replace** `[المواضيع أو ملاحظات المحاضرات]` with the topics
+4. **Paste** into any LLM
+5. **Copy** the raw Markdown output
+6. **Save** as `courses/[course-id].md`
+
+---
+
+## ✅ Quality Checklist
+
+Before using the output, verify:
+
+- [ ] عناوين عربية مع إنجليزية بين أقواس
+- [ ] كل ## = بطاقة منفصلة
+- [ ] معادلات LaTeX بـ $inline$ و $$display$$
+- [ ] مخطط Mermaid واحد على الأقل (إن أمكن)
+- [ ] جداول للجداول المرجعية
+- [ ] قسم الأخطاء الشائعة
+- [ ] ملخص في النهاية
+- [ ] بدون مقدمة أو خاتمة
+- [ ] Markdown خام بدون code fences
+
+---
+
+## 📝 Example
+
+**Input to LLM:**
+```
+المقرر: نظرية المخططات
+المنهج: أنواع المخططات، درجات الرؤوس، المصاصة، المستوية، خوارزميات MST (بريم، كروسكال)
+```
+
+**Expected Output:**
 ```markdown
-# برمجة 1 · Programming 1
+# نظرية المخططات · Graph Theory
 
 ## 📐 التعاريف الأساسية · Core Definitions
+- المخطط (Graph) `G(V,E)` حيث `V` مجموعة الرؤوس و`E` مجموعة الحواف
+- درجة الرأس (Degree): `$\deg(v) = |E(v)|$`
 
-- **المتغير (Variable)**: موقع في الذاكرة يخزن قيمة
-- **نوع البيانات (Data Type)**: تصنيف القيم المخزنة
-- **بنية التحكم (Control Flow)**: ترتيب تنفيذ التعليمات
+## 🧮 النظريات الأساسية · Basic Theorems
+- نظرية مصافقة الأيدي:
+  $$\sum_{v \in V} \deg(v) = 2|E|$$
 
-## 🧮 الأنواع والبيانات · Data Types
-
-### الأنواع الأساسية · Primitive Types
-
-| النوع | الحجم | النطاق |
-|---|---|---|
-| `int` | 4 bytes | $-2^{31}$ إلى $2^{31}-1$ |
-| `float` | 4 bytes | $\pm3.4 \times 10^{\pm38}$ |
-
-$$type\_name variable\_name = value;$$
-
-## 🔁 التحكم في التدفق · Control Flow
-
+## 🔁 خوارزمية بريم · Prim's Algorithm
 ```mermaid
 graph TD
-    A[Start] --> B{Condition}
-    B -->|True| C[Execute]
-    B -->|False| D[Else]
+    A[ابدأ من رأس] --> B[اختر الحافة الأصغر]
+    B --> C{هل الحافة تربط بشجرة؟}
+    C -->|No| D[أضف للحل]
+    C -->|Yes| E[تجاهل]
 ```
+- التعقيد: $O(E \log V)$
+
+## 📊 جدول المخططات · Graphs Table
+| النوع | |V| | |E| | مستوي؟ |
+|-------|---|---|---|---|---|
+| `K₅` | 5 | 10 | لا |
 
 ## ⚠️ الأخطاء الشائعة · Common Pitfalls
-
-1. نسيان فاصلة منقوطة في نهاية التعليمة
-2. الخلط بين `=` و `==` في المقارنة
-3. عدم تعريف المتغير قبل استخدامه
+- الخلط بين درجة الرأس ومجموع الدرجات
 
 ## 📝 ملخص · Summary
-
-- المتغيرات هي أساس البرمجة
-- أنواع البيانات تحدد القيم المقبولة
-- هياكل التحكم تحدد مسار التنفيذ
-
----
-
-**المراجع**: محاضرات المادة، جامعة Aleppo
+- مصافقة الأيدي قاعدة أساسية
+- خوارزميات MST: بريم، كروسكال
 ```
 
 ---
 
-## 🎯 Quick Copy-Paste Prompts
+## 💡 Tips for Better Results
 
-### For Computer Science Courses:
-```
-Create a detailed course summary for [COURSE NAME] in Arabic/English bilingual format. 
-Include: definitions, formulas (use LaTeX $...$), tables, one Mermaid diagram, 
-and common mistakes section. 
-Structure: Each ## heading = one card in the final output.
-```
+1. **Be specific**: Include topics, not just course name
+2. **Request math**: Add "استخدم LaTeX للصيغ الرياضية"
+3. **Request diagrams**: أضف "أضف مخططات Mermaid"
+4. **For code courses**: "أضف كود مع شرح"
+5. **For math courses**: "أضف أمثلة محلولة"
 
-### For Math/Physics Courses:
+---
+
+## 🔧 Course-Specific Variations
+
+### for Math (Calculus, Linear Algebra)
 ```
-Create a comprehensive summary with:
-- All formulas in LaTeX ($inline$ and $$display$$)
-- Step-by-step derivations
-- Key theorems and proofs
-- Example problems
-- Common mistakes students make
+أضف: جدول الصيغ الأساسية + أمثلة محلولة خطوة بخطوة
 ```
 
-### For Engineering Courses:
+### for Programming (Algorithms, Data Structures)
 ```
-Generate lecture notes summary with:
-- Technical terminology (Arabic/English)
-- Circuit diagrams or flowcharts as Mermaid
-- Formula tables
-- Practical applications
-- Error prevention tips
+أضف: كود ++C أو Python + تعقيد خوارزميات O(n)
+```
+
+### for Engineering (Circuits, Signals)
+```
+أضف: معادلات الدارات + قوانين أساسية + تطبيقات
+```
+
+### for Theory (Automata, Graph Theory)
+```
+أضف: نظريات + براهين + تصنيفات
 ```
 
 ---
 
-## ✅ Checklist for AI Output:
-
-- [ ] Arabic headings with English in parentheses
-- [ ] Each major topic under ## is a separate card
-- [ ] LaTeX formulas for all math ($...$ or $$...$$)
-- [ ] At least one Mermaid diagram
-- [ ] Tables for comparisons/classifications
-- [ ] Code blocks for any programming
-- [ ] Common mistakes section
-- [ ] Summary at the end
-- [ ] References/sources
-
----
-
-## 💡 Tips for Best Results:
-
-1. **Provide context**: Tell AI the course name, year, semester
-2. **Specify format**: Remind about Arabic/English headings
-3. **Request LaTeX**: Explicitly ask for math formulas
-4. **Ask for diagrams**: Request Mermaid for flows
-5. **Include examples**: Give the example above as reference
-
----
-
-*Generated for Blue Bits Summary Vault - University Course Summaries*
+*Universal Prompt v2.0 - Works with All LLMs*

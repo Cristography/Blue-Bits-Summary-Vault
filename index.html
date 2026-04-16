@@ -24,7 +24,6 @@
   <header class="site-header">
     <div class="header-content">
       <div class="logo">
-        <span class="logo-icon">💠</span>
         <h1>Blue Bits Summary Vault</h1>
       </div>
       <div class="header-controls">
@@ -32,7 +31,7 @@
           <i class="fas fa-search"></i>
           <input type="text" id="searchInput" placeholder="بحث... Search">
         </div>
-        <button id="themeToggle" class="icon-btn" title="Toggle Dark Mode">
+        <button type="button" id="themeToggle" class="icon-btn" title="Toggle Dark Mode">
           <i class="fas fa-moon"></i>
         </button>
       </div>
@@ -46,6 +45,18 @@
       <span class="breadcrumb-item active">الرئيسية</span>
     </nav>
 
+    <!-- Search Results View -->
+    <section class="search-view" id="searchView" style="display: none;">
+      <div class="section-header">
+        <button type="button" class="back-btn" id="clearSearchBtn">
+          <i class="fas fa-arrow-right"></i>
+          إلغاء البحث
+        </button>
+        <h2 id="searchResultsTitle"></h2>
+      </div>
+      <div class="search-results-grid" id="searchResultsGrid"></div>
+    </section>
+
     <!-- Years Grid View -->
     <section class="years-view" id="yearsView">
       <section class="years-grid" id="yearsGrid"></section>
@@ -54,7 +65,7 @@
     <!-- Semester Courses View -->
     <section class="semester-view" id="semesterView" style="display: none;">
       <div class="section-header">
-        <button class="back-btn" id="backBtn">
+        <button type="button" class="back-btn" id="backBtn">
           <i class="fas fa-arrow-right"></i>
           رجوع
         </button>
@@ -66,7 +77,7 @@
     <!-- Course Content Page -->
     <section class="course-page" id="coursePage" style="display: none;">
       <div class="page-header">
-        <button class="back-btn" id="backToSemester">
+        <button type="button" class="back-btn" id="backToSemester">
           <i class="fas fa-arrow-right"></i>
           رجوع
         </button>

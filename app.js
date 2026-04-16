@@ -127,12 +127,21 @@ function initMermaid() {
   if (typeof mermaid !== 'undefined') {
     mermaid.initialize({
       startOnLoad: false,
-      theme: 'default',
-      securityLevel: 'strict',
+      theme: state.theme === 'dark' ? 'dark' : 'default',
+      securityLevel: 'loose',
       flowchart: {
         useMaxWidth: true,
         htmlLabels: true,
         curve: 'basis'
+      },
+      gantt: {
+        useMaxWidth: true
+      },
+      sequence: {
+        useMaxWidth: true
+      },
+      classDiagram: {
+        useMaxWidth: true
       }
     });
   }
@@ -143,7 +152,7 @@ function initMermaid() {
 // ========================================
 
 function showView(viewName) {
-  const views = ['yearsView', 'semesterView', 'coursePage'];
+  const views = ['yearsView', 'semesterView', 'coursePage', 'searchView'];
   views.forEach(v => {
     const el = document.getElementById(v);
     if (el) {
@@ -288,6 +297,82 @@ function getStatusLabel(status) {
     'flagged': 'مُعلم'
   };
   return labels[status] || 'قيد الانتظار';
+}
+
+// ========================================.
+// Global Search - Search across ALL years and courses
+// ========================================
+
+function performGlobalSearch(query) {
+  if (!query || query.length < 2) {
+    // If search is cleared, go back to home
+    goHome();
+    return;
+  }
+
+  const lowerQuery = query.toLowerCase();
+  
+  // Search across ALL courses (all years)
+  const matchingCourses = state.courses.filter(c => 
+    c.title_ar.toLowerCase().includes(lowerQuery) || 
+    c.title_en.toLowerCase().includes(lowerQuery) ||
+    c.id.toLowerCase().includes(lowerQuery)
+  );
+
+  // Show search results view
+  showSearchResults(query, matchingCourses);
+}
+
+function showSearchResults(query, courses) {
+  showView('searchView');
+  state.currentYear = null;
+  state.currentSemester = null;
+  state.currentCourse = null;
+
+  const title = document.getElementById('searchResultsTitle');
+  const grid = document.getElementById('searchResultsGrid');
+
+  if (title) {
+    title.textContent = `نتائج البحث عن "${query}" - ${courses.length} نتيجة`;
+  }
+
+  if (!grid) return;
+
+  if (courses.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-search"></i>
+        <p>لا توجد نتائج مطابقة للبحث</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Render matching courses (reuse same card style)
+  grid.innerHTML = courses.map(course => `
+    <article class="course-card-large" data-course-id="${course.id}" data-year="${course.year}" data-semester="${course.semester}">
+      <div class="card-status-indicator" data-status="${course.status}"></div>
+      <div class="card-icon-wrapper">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <h3 class="course-title-large">${course.title_ar}</h3>
+      <p class="course-title-en-large">${course.title_en}</p>
+      <p class="course-year-semester">السنة ${course.year} - الفصل ${course.semester === 1 ? 'الأول' : 'الثاني'}</p>
+      <div class="course-status-badge-large" data-status="${course.status}">${getStatusLabel(course.status)}</div>
+    </article>
+  `).join('');
+
+  // Update breadcrumb
+  updateBreadcrumb(`نتائج البحث`);
+}
+
+function clearSearch() {
+  state.searchQuery = '';
+  
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) searchInput.value = '';
+  
+  goHome();
 }
 
 // ========================================
@@ -477,22 +562,56 @@ function renderMath(container) {
 async function renderMermaidDiagrams(container) {
   if (typeof mermaid === 'undefined') return;
   
-  const mermaidBlocks = container.querySelectorAll('.language-mermaid, pre code.language-mermaid');
+  // Find all pre elements that might contain mermaid diagrams
+  const mermaidBlocks = [];
+  const allPres = container.querySelectorAll('pre');
+  
+  for (const pre of allPres) {
+    const code = pre.querySelector('code');
+    const codeClass = code?.className || '';
+    const preText = pre.textContent.trim();
+    
+    // Check if this is a mermaid block
+    const isMermaid = codeClass.includes('mermaid') || 
+        preText.startsWith('graph') || 
+        preText.startsWith('flowchart') ||
+        preText.startsWith('pie') ||
+        preText.startsWith('sequenceDiagram') ||
+        preText.startsWith('classDiagram') ||
+        preText.startsWith('stateDiagram');
+    
+    if (isMermaid) {
+      mermaidBlocks.push(pre);
+    }
+  }
   
   for (const block of mermaidBlocks) {
     try {
-      const graphDefinition = block.textContent || block.innerText;
+      const graphDefinition = (block.textContent || block.innerText || '').trim();
+      if (!graphDefinition) continue;
+      
+      // Create unique ID for each diagram
       const id = `mermaid-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       
+      // Use mermaid 10.x API - render returns { svg } promise
       const { svg } = await mermaid.render(id, graphDefinition);
       
       const wrapper = document.createElement('div');
       wrapper.className = 'mermaid';
       wrapper.innerHTML = svg;
       
+      // Ensure proper styling
+      wrapper.style.direction = 'ltr';
+      wrapper.style.textAlign = 'left';
+      
       block.replaceWith(wrapper);
     } catch (error) {
       console.error('Mermaid render error:', error);
+      // Replace with error message
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-state';
+      errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i><p>خطأ في رسم المخطط البياني</p><p class="hint">${error.message}</p>`;
+      block.replaceWith(errorDiv);
     }
   }
 }
@@ -505,16 +624,16 @@ function setupEventListeners() {
   // Theme toggle
   document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
   
-  // Search
+  // Search - Now searches across ALL years and courses globally
   const searchInput = document.getElementById('searchInput');
   searchInput?.addEventListener('input', debounce((e) => {
     state.searchQuery = e.target.value;
-    if (state.currentYear && state.currentSemester) {
-      renderSemesterCourses(state.currentYear, state.currentSemester);
-    } else {
-      renderYears();
-    }
+    // Always perform global search across all courses
+    performGlobalSearch(state.searchQuery);
   }, CONFIG.debounceDelay));
+  
+  // Clear search button
+  document.getElementById('clearSearchBtn')?.addEventListener('click', clearSearch);
   
   // Year card click → go to semester
   document.getElementById('yearsGrid')?.addEventListener('click', (e) => {
@@ -542,11 +661,25 @@ function setupEventListeners() {
     }
   });
   
-  // Course card click → go to course page
+  // Course card click → go to course page (semester view)
   document.getElementById('coursesGrid')?.addEventListener('click', (e) => {
     const courseCard = e.target.closest('.course-card-large');
     if (courseCard) {
       const courseId = courseCard.dataset.courseId;
+      openCourse(courseId);
+    }
+  });
+  
+  // Search results card click → go directly to course page
+  document.getElementById('searchResultsGrid')?.addEventListener('click', (e) => {
+    const courseCard = e.target.closest('.course-card-large');
+    if (courseCard) {
+      const courseId = courseCard.dataset.courseId;
+      // Store the year/semester before navigating
+      const year = parseInt(courseCard.dataset.year);
+      const semester = parseInt(courseCard.dataset.semester);
+      state.currentYear = year;
+      state.currentSemester = semester;
       openCourse(courseId);
     }
   });
@@ -568,14 +701,23 @@ function setupEventListeners() {
 
 function goBack() {
   if (state.currentCourse) {
-    // Go from course page to semester
+    // Go from course page to semester or search results
     state.currentCourse = null;
     if (state.currentYear && state.currentSemester) {
       showView('semesterView');
       updateBreadcrumb(`الفصل ${state.currentSemester === 1 ? 'الأول' : 'الثاني'}`, state.currentYear, state.currentSemester);
+    } else if (state.searchQuery) {
+      // Go back to search results if there was a search query
+      performGlobalSearch(state.searchQuery);
     } else {
       renderYears();
     }
+  } else if (state.searchQuery) {
+    // Go from search results to years
+    state.searchQuery = '';
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = '';
+    renderYears();
   } else if (state.currentYear) {
     // Go from semester to years
     state.currentYear = null;

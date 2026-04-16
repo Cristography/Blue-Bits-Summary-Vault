@@ -75,7 +75,258 @@
   --transition-normal: 200ms ease;
 }
 
-/* Reset */
+/* ========================================
+   Dark Mode Theme
+   ======================================== */
+
+[data-theme="dark"] {
+  /* Core Colors */
+  --bg:       #1a1816;
+  --surf:     #252220;
+  --card:     #2d2927;
+  --border:   #3d3734;
+  --border2:  #4d4540;
+  --txt:      #e8e4e0;
+  --muted:    #a0948c;
+  --dim:      #706860;
+
+  /* Accent Palette - Adjusted for dark */
+  --p1: #d49080;
+  --p2: #8ab59a;
+  --p3: #9589b8;
+  --p4: #e0b860;
+  --p5: #7aa8d4;
+  --p6: #b88098;
+  --p7: #80b0a4;
+
+  /* Node/Edge Colors - Inverted */
+  --node-fill: #252220;
+  --node-stroke: #d0c8c0;
+  --edge-col: #a0948c;
+  --edge-hi: #e07060;
+  --edge-hi2: #60a080;
+
+  /* Status Colors - Lighter for dark mode */
+  --status-none: #706860;
+  --status-planned: #d4a854;
+  --status-reviewed: #7aa882;
+  --status-flagged: #d06050;
+
+  /* Shadows - Softer for dark */
+  --sh: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --sh2: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark mode specific overrides */
+[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--txt);
+}
+
+[data-theme="dark"] .site-header {
+  background: var(--surf);
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .logo h1 {
+  color: var(--txt);
+}
+
+[data-theme="dark"] .search-box input {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--txt);
+}
+
+[data-theme="dark"] .search-box input::placeholder {
+  color: var(--dim);
+}
+
+[data-theme="dark"] .icon-btn {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+[data-theme="dark"] .icon-btn:hover {
+  background: var(--p5);
+  color: white;
+  border-color: var(--p5);
+}
+
+[data-theme="dark"] .year-card,
+[data-theme="dark"] .course-card-large {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .year-card:hover,
+[data-theme="dark"] .course-card-large:hover {
+  border-color: var(--p5);
+}
+
+[data-theme="dark"] .year-number {
+  color: var(--p5);
+}
+
+[data-theme="dark"] .year-badge {
+  background: var(--surf);
+  border-color: var(--border);
+  color: var(--dim);
+}
+
+[data-theme="dark"] .semester-badge {
+  background: var(--surf);
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+[data-theme="dark"] .year-card:hover .semester-badge {
+  background: var(--p5);
+  color: white;
+  border-color: var(--p5);
+}
+
+[data-theme="dark"] .back-btn {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--txt);
+}
+
+[data-theme="dark"] .back-btn:hover {
+  background: var(--p5);
+  color: white;
+  border-color: var(--p5);
+}
+
+[data-theme="dark"] .card-icon-wrapper {
+  background: var(--p5);
+}
+
+[data-theme="dark"] .card-icon-wrapper i {
+  color: white;
+}
+
+[data-theme="dark"] .course-title-large {
+  color: var(--txt);
+}
+
+[data-theme="dark"] .course-title-en-large {
+  color: var(--muted);
+}
+
+[data-theme="dark"] .course-year-semester {
+  color: var(--dim);
+}
+
+[data-theme="dark"] .page-header {
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .course-header-info h1 {
+  color: var(--txt);
+}
+
+[data-theme="dark"] .course-header-info p {
+  color: var(--muted);
+}
+
+[data-theme="dark"] .status-select {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--txt);
+}
+
+[data-theme="dark"] .content-card {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .card-header {
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .card-title {
+  color: var(--p5);
+}
+
+[data-theme="dark"] .card-body h3 {
+  color: var(--txt);
+}
+
+[data-theme="dark"] .card-body th {
+  background: var(--surf);
+}
+
+[data-theme="dark"] .card-body th,
+[data-theme="dark"] .card-body td {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .card-body code {
+  background: var(--surf);
+}
+
+[data-theme="dark"] .card-body pre {
+  background: var(--surf);
+}
+
+[data-theme="dark"] .breadcrumb {
+  color: var(--dim);
+}
+
+[data-theme="dark"] .breadcrumb-separator {
+  color: var(--dim);
+}
+
+[data-theme="dark"] .breadcrumb-item {
+  color: var(--muted);
+}
+
+[data-theme="dark"] .breadcrumb-item.active {
+  background: var(--p5);
+  color: white;
+}
+
+[data-theme="dark"] .section-header h2 {
+  color: var(--txt);
+}
+
+[data-theme="dark"] .loading i {
+  color: var(--p5);
+}
+
+[data-theme="dark"] .loading p,
+[data-theme="dark"] .empty-state p,
+[data-theme="dark"] .error-state p {
+  color: var(--muted);
+}
+
+[data-theme="dark"] .empty-state .hint,
+[data-theme="dark"] .error-state .hint {
+  color: var(--dim);
+}
+
+[data-theme="dark"] .site-footer {
+  background: var(--surf);
+  border-top-color: var(--border);
+  color: var(--dim);
+}
+
+/* Dark mode focus states */
+[data-theme="dark"] .search-box input:focus {
+  border-color: var(--p5);
+  box-shadow: 0 0 0 3px rgba(122, 168, 212, 0.2);
+}
+
+[data-theme="dark"] .status-select:focus {
+  outline: none;
+  border-color: var(--p5);
+}
+
+/* ========================================
+   Reset
+   ======================================== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -306,6 +557,20 @@ body {
 .semesters-row {
   display: flex;
   gap: var(--space-sm);
+}
+
+/* Search Results */
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  width: 100%;
+}
+
+.course-year-semester {
+  font-size: 0.8rem;
+  color: var(--dim);
+  margin-bottom: var(--space-sm);
 }
 
 .semester-badge {
@@ -656,6 +921,9 @@ body {
   background: var(--surf);
   padding: 2px 5px;
   border-radius: 3px;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: embed;
 }
 
 .card-body pre {
@@ -663,6 +931,64 @@ body {
   padding: var(--space-md);
   border-radius: var(--r);
   overflow-x: auto;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: embed;
+}
+
+/* Force LTR for code blocks containing English text */
+.card-body pre code,
+.card-body code {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: bidi-override !important;
+}
+
+/* Mermaid diagrams - ensure LTR text rendering */
+.mermaid {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Dark mode Mermaid adjustments */
+[data-theme="dark"] .mermaid {
+  filter: brightness(0.9) saturate(0.9);
+}
+
+/* KaTeX math - force LTR for English math symbols */
+.katex {
+  direction: ltr;
+  text-align: left !important;
+  unicode-bidi: bidi-override;
+}
+
+/* KaTeX display math */
+.katex-display {
+  direction: ltr;
+  text-align: left !important;
+  margin: 1em 0;
+}
+
+.katex-display > .katex {
+  direction: ltr;
+  text-align: left !important;
+}
+
+/* Inline math */
+.katex-inline {
+  direction: ltr !important;
+  unicode-bidi: bidi-override;
+}
+
+/* Dark mode KaTeX adjustments */
+[data-theme="dark"] .katex {
+  color: var(--txt);
+}
+
+[data-theme="dark"] .katex-display {
+  background: var(--surf);
+  padding: var(--space-md);
+  border-radius: var(--r);
 }
 
 .card-body h3 {
@@ -735,6 +1061,10 @@ body {
   text-align: center;
   color: var(--dim);
   font-size: 0.8rem;
+}
+
+.site-footer p {
+  margin: 0;
 }
 
 /* ========================================
