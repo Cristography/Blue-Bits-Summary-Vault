@@ -163,7 +163,7 @@ $$a_n \text{ تصاعدية إذا } a_{n+1} \geq a_n$$
 
 $$a_n \text{ هابطة إذا } a_{n+1} \leq a_n$$
 
-### اختبار·阿دم · Cauchy Criterion
+### اختبار كوشي · Cauchy Criterion
 
 المتتالية متقاربة إذا وفقط إذا:
 $$\forall \epsilon > 0, \exists N: |a_n - a_m| < \epsilon \quad \forall n,m > N$$

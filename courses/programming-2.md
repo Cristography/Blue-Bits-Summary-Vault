@@ -182,7 +182,7 @@ for (int i = 0; i < 5; i++) {
 
 ```cpp
 int* ptr = NULL;    // مؤشر آمن
-void* vptr;         // مؤشر عام (任意)
+void* vptr;         // مؤشر عام (أي)
 ```
 
 ### 5. مؤشرات لدوال · Function Pointers
@@ -360,7 +360,7 @@ void loadGrades(string filename, int grades[], int& n) {
 ## ⚠️ أخطاء شائعة وملاحظات · Common Pitfalls & Notes
 
 - **نسيان `=` فيconstructor**: استخدام `name = n` بدلاً من `name(n)` في initializer list
-- **忘记 `virtual`**: الدوال المخصصة تحتاج `virtual` للـ polymorphism
+- **نسيان `virtual`**: الدوال المخصصة تحتاج `virtual` للـ polymorphism
 - **مؤشر NULL**: تحقق دائماً من المؤشر قبل الاستخدام
 - **تسريبات الذاكرة**: استخدام `delete` عند استخدام `new`
 - **نسيان `.h` Includes**: إضافة `#include <fstream>` للملفات
@@ -383,6 +383,6 @@ shapes[1] = new Rectangle();
 shapes[i]->draw();  // يستدعي الدالة الصحيحة
 ```
 
-💡 **تلميح 3**: للـ file handling، استخدم دائماً `close()` أو `ifstream`会自动 إغلاق
+💡 **تلميح 3**: للـ file handling، استخدم دائماً `close()` أو `ifstream` سيتم إغلاقه تلقائياً
 
 (End of file - total 270 lines)

@@ -138,7 +138,7 @@ graph TD
     H -->|نعم| I[نهاية]
 ```
 
-### طريقة稳定性 · Stability (A-Stability)
+### طريقة稳定性 · ????????? (A-?????????)
 
 - **A-stable**: لا ينمو الخطأ لأي قيمة من $h$ عند حل $y' = \lambda y$
 - Euler: غير مستقر
@@ -408,7 +408,7 @@ $$P(x) = 1 + x^2$$
 ### حل ODEs
 - **Euler unstable**: for stiff equations, use implicit methods
 - **Step size**: too large → divergence; too small → slow + accumulation errors
-- **RK4 recommended**: good balance of accuracy and stability
+- **RK4 recommended**: good balance of accuracy and ?????????
 - **Stiff equations**: use implicit methods (BDF, implicit Runge-Kutta)
 - **Adaptive step size**: important for efficiency
 
@@ -428,7 +428,7 @@ $$P(x) = 1 + x^2$$
 - **Conditioning**: ill-conditioned matrices need special care
 - **Catastrophic cancellation**: avoid subtracting similar numbers
 
-💡 **تلميح**: always check stability and convergence
+💡 **تلميح**: always check ????????? and convergence
 - Use multiple methods to compare results
 - Plot solutions to verify behavior
 
@@ -475,7 +475,7 @@ $$P(x) = 1 + x^2$$
 - استخدام طرق Euler و Runge-Kutta
 - حل أنظمة خطية بـ Power/QR methods
 - fitting البيانات بـ regression
-- فهم stability و convergence
+- فهم ????????? و convergence
 
 ---
 

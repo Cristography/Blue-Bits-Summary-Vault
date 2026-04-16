@@ -30,7 +30,7 @@
 | **الحاضر المستمر (Present Continuous)** | is/am/are + V-ing | يحدث الآن | "I am reading now." |
 | **الماضي المستمر (Past Continuous)** | was/were + V-ing | كان يحدث في الماضي | "We were studying at 5 PM." |
 
-###构词法 · Word Formation
+### علم تكوين الكلمات · Word Formation
 
 ```mermaid
 graph TD
