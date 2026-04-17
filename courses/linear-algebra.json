@@ -1,56 +1,26 @@
 {
-  "course": {
-    "id": "linear-algebra",
-    "title_ar": "الجبر الخطي",
-    "title_en": "Linear Algebra"
-  },
+  "course": { "id": "linear-algebra", "title_ar": "الجبر الخطي", "title_en": "Linear Algebra" },
   "components": [
-    {
-      "type": "card",
-      "title": "📐 المفاهيم",
-      "icon": "📐",
-      "children": [
-        { "type": "definition", "term": "المصفوفة", "term_en": "Matrix", "description": "جدول أرقام في صفوف وأعمدة", "formula": "A(m,n)" },
-        { "type": "definition", "term": "المتجه", "term_en": "Vector", "description": "مصفوفة أحادية العمود" },
-        { "type": "definition", "term": "Rank", "term_en": "Rank", "description": "عدد الأسطر المستقلة" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "🧮 العمليات",
-      "icon": "🧮",
-      "children": [
-        { "type": "definition", "term": "الجمع", "description": "جمع العناصر المناظرة", "formula": "A+B = C" },
-        { "type": "definition", "term": "الضرب", "description": "صف في عمود", "formula": "A*B = C" },
-        { "type": "equation", "formula": "A(m,n) + B(m,n) = C(m,n)", "display": true, "label": "جمع المصفوفات" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "📊 المحددات",
-      "icon": "📊",
-      "children": [
-        { "type": "equation", "formula": "det = ad - bc", "display": true, "label": "محدد 2x2" },
-        { "type": "list", "items": [{ "text": "|A^T| = |A|" }, { "text": "|AB| = |A| x |B|" }, { "text": "|A^-1| = 1/|A|" }] }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "🔁 كرامر",
-      "icon": "🔁",
-      "children": [
-        { "type": "theorem", "name": "كرامر", "statement": "x_i = |A_i| / |A|", "formula": "x_i = Delta_i / Delta" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "⚠️ أخطاء",
-      "icon": "⚠️",
-      "children": [
-        { "type": "warning", "variant": "warning", "title": "الأبعاد", "text": "يجب توافق n=m للضرب" },
-        { "type": "warning", "variant": "warning", "title": "المفرد", "text": "لا معكوس إذا |A|=0" },
-        { "type": "warning", "variant": "tip", "title": "تلميح", "text": "|AB| = |A| x |B|" }
-      ]
-    }
+    { "type": "card", "title": "المفاهيم", "icon": "M", "children": [
+      { "type": "definition", "term": "المصفوفة", "description": "جدول أرقام", "formula": "A(m,n)" },
+      { "type": "definition", "term": "المتجه", "description": "عمود واحد" },
+      { "type": "definition", "term": "الـ Rank", "description": "الأسطر المستقلة" }
+    ]},
+    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
+      { "type": "equation", "formula": "A + B = C", "display": true, "label": "الجمع" },
+      { "type": "equation", "formula": "AB = C", "display": true, "label": "الضرب" },
+      { "type": "equation", "formula": "det = ad - bc", "display": true, "label": "محدد 2x2" },
+      { "type": "equation", "formula": "det(A^T) = det(A)", "display": true, "label": "الخاصة" }
+    ]},
+    { "type": "card", "title": "الجدول", "icon": "T", "children": [
+      { "type": "table", "headers": ["العملية", "الصيغة"], "rows": [["المtranspose", "|A^T| = |A|"], ["الضرب", "|AB| = |A||B|"], ["المعكوس", "|A^-1| = 1/|A|"]], "caption": "العمليات" }
+    ]},
+    { "type": "card", "title": "الأنظمة", "icon": "S", "children": [
+      { "type": "theorem", "name": "كرامر", "statement": "x_i = |A_i| / |A|", "formula": "x_i = Delta_i / Delta" }
+    ]},
+    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
+      { "type": "warning", "variant": "warning", "title": "الأبعاد", "text": "يجب توافق n,m" },
+      { "type": "warning", "variant": "tip", "title": "تلميح", "text": "|AB| = |A| x |B|" }
+    ]}
   ]
 }

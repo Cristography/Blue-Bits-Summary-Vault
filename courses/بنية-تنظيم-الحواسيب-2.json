@@ -3,26 +3,27 @@
   "components": [
     { "type": "card", "title": "المعالجة", "icon": "P", "children": [
       { "type": "definition", "term": "Pipelining", "description": "مراحل متداخلة" },
-      { "type": "definition", "term": "Hazard", "description": "توقف خط الإنتاج" },
-      { "type": "definition", "term": "Superscalar", "description": "وحدات متعددة" }
+      { "type": "definition", "term": "Superscalar", "description": "وحدات متعددة" },
+      { "type": "definition", "term": "Hazard", "description": "توقف خط الإنتاج" }
     ]},
-    { "type": "card", "title": "أنواع Hazards", "icon": "H", "children": [
-      { "type": "definition", "term": "Structural", "description": "تعارض في الموارد" },
-      { "type": "definition", "term": "Data", "description": "إعتماد في البيانات" },
-      { "type": "definition", "term": "Control", "description": "فرع غير محدد" }
+    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
+      { "type": "equation", "formula": "CPI = CPU Cycles / Instructions", "display": true, "label": "CPI" },
+      { "type": "equation", "formula": "Speedup = 1 / (1 - P + P/N)", "display": true, "label": "Amdahl" },
+      { "type": "equation", "formula": "CPU Time = IC x CPI x Clock", "display": true, "label": "الوقت" }
+    ]},
+    { "type": "card", "title": "الـ Hazards", "icon": "H", "children": [
+      { "type": "table", "headers": ["النوع", "الوصف"], "rows": [["Structural", "تعارض موارد"], ["Data", "اعتماد بيانات"], ["Control", "فرع غير محدد"]], "caption": "الأنواع" }
     ]},
     { "type": "card", "title": "الذاكرة", "icon": "M", "children": [
-      { "type": "definition", "term": "Cache", "description": "ذاكرة سريعة" },
-      { "type": "definition", "term": "Mapping", "description": "Direct, Fully, Set" },
-      { "type": "definition", "term": "Replacement", "description": "LRU, FIFO, Random" }
+      { "type": "table", "headers": ["المستوى", "الحجم", "الوقت"], "rows": [["Registers", "32 bytes", "1 ns"], ["L1 Cache", "32 KB", "4 ns"], ["L2 Cache", "256 KB", "10 ns"], ["Main Memory", "8 GB", "100 ns"]], "caption": "الهرمية" }
     ]},
-    { "type": "card", "title": "الأداء", "icon": "P", "children": [
-      { "type": "theorem", "name": "CPI", "statement": "Clock cycles Per Instruction", "formula": "CPI = CPU / (IC * Rate)" },
-      { "type": "theorem", "name": "Amdahl", "statement": "القاعدة الذهبية", "formula": "Speedup = 1/(1-P + P/N)" }
+    { "type": "card", "title": "الحساب", "icon": "C", "children": [
+      { "type": "definition", "term": "Miss Rate", "description": "نسبة الفشل", "formula": "misses / accesses" },
+      { "type": "definition", "term": "AMAT", "description": "متوسط وقت الوصول", "formula": "Hit Time + Miss Rate x Miss Penalty" }
     ]},
     { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "Hazards", "text": "Three types: Structural, Data, Control" },
-      { "type": "warning", "variant": "tip", "title": "Amdahl", "text": "1/(نسبة التسلسل + 1/نسبة التوازي)" }
+      { "type": "warning", "variant": "warning", "title": "Hazards", "text": "Three types" },
+      { "type": "warning", "variant": "tip", "title": "Amdahl", "text": "1/(Ps + 1/Pc)" }
     ]}
   ]
 }

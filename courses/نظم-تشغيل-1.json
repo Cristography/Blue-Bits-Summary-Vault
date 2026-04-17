@@ -2,25 +2,29 @@
   "course": { "id": "operating-systems-1", "title_ar": "نظم تشغيل 1", "title_en": "Operating Systems 1" },
   "components": [
     { "type": "card", "title": "التعاريف", "icon": "O", "children": [
-      { "type": "definition", "term": "نظام التشغيل", "description": "يدير موارد الحاسوب" },
+      { "type": "definition", "term": "نظام التشغيل", "description": "يدير الموارد" },
       { "type": "definition", "term": "العملية", "description": "برنامج قيد التنفيذ" },
-      { "type": "definition", "term": "الخيط", "description": "وحدة تشغيل خفيفة" }
+      { "type": "definition", "term": "الخيط", "description": "Thread" },
+      { "type": "definition", "term": "الـ Kernel", "description": "قلب النظام" }
     ]},
     { "type": "card", "title": "الجدولة", "icon": "S", "children": [
-      { "type": "table", "headers": ["الخوارزمية", "الافضل", "الاسوأ"], "rows": [["FCFS", "O(n)", "O(n)"], ["SJF", "O(n)", "O(n^2)"], ["Round Robin", "Fair", "Fair"]], "caption": "الخوارزميات" }
+      { "type": "table", "headers": ["الخوارزمية", "أفضل", "الاسوأ"], "rows": [["FCFS", "O(n)", "O(n)"], ["SJF", "O(n)", "O(n^2)"], ["Round Robin", "Fair", "Fair"], ["Priority", "Variable", "Starvation"]], "caption": "الخوارزميات" }
+    ]},
+    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
+      { "type": "equation", "formula": "Turnaround = Completion - Arrival", "display": true, "label": "معدل الدوران" },
+      { "type": "equation", "formula": "Waiting = Turnaround - Burst", "display": true, "label": "وقت الانتظار" },
+      { "type": "equation", "formula": "Throughput = Completed / Time", "display": true, "label": "الإنتاجية" }
     ]},
     { "type": "card", "title": "الذاكرة", "icon": "M", "children": [
-      { "type": "definition", "term": "Paging", "description": "صفحات بحجم ثابت" },
-      { "type": "definition", "term": "Segmentation", "description": "قطع متغيرة الحجم" },
-      { "type": "definition", "term": "Virtual", "description": "ذاكرة على القرص" }
+      { "type": "definition", "term": "Paging", "description": "صفحات ثابتة" },
+      { "type": "definition", "term": "Segmentation", "description": "قطع متغيرة" },
+      { "type": "definition", "term": "Virtual Memory", "description": "ذاكرة على القرص" }
     ]},
-    { "type": "card", "title": "التعطل", "icon": "D", "children": [
-      { "type": "definition", "term": "Deadlock", "description": "انتظار دائري" },
-      { "type": "list", "items": [{ "text": "الاستبعاد المتبادل" }, { "text": "الامساك والانتظار" }, { "text": "لا سلب" }, { "text": "الانتظار الدائري" }] }
+    { "type": "card", "title": "الـ Deadlock", "icon": "D", "children": [
+      { "type": "table", "headers": ["الشرط", "الوصف"], "rows": [["Mutual Exclusion", "استخدام حصري"], ["Hold and Wait", "امساك وانتظار"], ["No Preemption", "لا سلب"], ["Circular Wait", "انتظار دائري"]], "caption": "الشروط الأربعة" }
     ]},
     { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "التعطل", "text": "4 شروط يجب تحققها" },
-      { "type": "warning", "variant": "tip", "title": "الحل", "text": "ترتيب موحد للموارد" }
+      { "type": "warning", "variant": "warning", "title": "Deadlock", "text": "4 شروط يجب تحققها" }
     ]}
   ]
 }

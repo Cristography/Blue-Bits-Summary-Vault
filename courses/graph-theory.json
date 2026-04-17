@@ -10,18 +10,20 @@
       "title": "التعاريف",
       "icon": "G",
       "children": [
-        { "type": "definition", "term": "المخطط", "description": "رؤوس وحواف", "formula": "G(V,E)" },
-        { "type": "definition", "term": "الدرجة", "description": "عدد الحواف بالرأس", "formula": "deg(v)" },
-        { "type": "definition", "term": "المسار", "description": "تتابع رؤوس متجاورة" }
+        { "type": "definition", "term": "المخطط", "description": "رؤوس V وحواف E", "formula": "G(V,E)" },
+        { "type": "definition", "term": "درجة الرأس", "description": "عدد الحواف بالرأس", "formula": "deg(v)" },
+        { "type": "definition", "term": "المسار", "description": "رؤوس متجاورة" },
+        { "type": "definition", "term": "الدورة", "description": "مسار يبدأوينتهي من نفس الرأس" }
       ]
     },
     {
       "type": "card",
-      "title": "النظريات",
-      "icon": "T",
+      "title": "المعادلات",
+      "icon": "E",
       "children": [
-        { "type": "theorem", "name": "مصابقة الأيدي", "statement": "مجموع الدرجات = 2|E|", "formula": "sum deg(v) = 2|E|" },
-        { "type": "theorem", "name": "أويلر", "statement": "دورة اويلراذا الدرجات زوجية", "formula": "deg(v) even" }
+        { "type": "equation", "formula": "sum_{v in V} deg(v) = 2|E|", "display": true, "label": "Handshaking Lemma" },
+        { "type": "equation", "formula": "n - m + r = c + 1", "display": true, "label": "Euler Formula" },
+        { "type": "equation", "formula": "m <= 3n - 6", "display": true, "label": "Planarity" }
       ]
     },
     {
@@ -29,18 +31,26 @@
       "title": "الخوارزميات",
       "icon": "A",
       "children": [
-        { "type": "definition", "term": "بريم", "formula": "O(E log V)" },
-        { "type": "definition", "term": "ديكسترا", "formula": "O((V+E) log V)" },
-        { "type": "definition", "term": "DFS", "formula": "O(V+E)" },
-        { "type": "definition", "term": "BFS", "formula": "O(V+E)" }
+        { "type": "definition", "term": "Prim", "description": "شجرة تغطية صغرى", "formula": "O(E log V)" },
+        { "type": "definition", "term": "Dijkstra", "description": "أقصر مسار", "formula": "O((V+E) log V)" },
+        { "type": "definition", "term": "DFS", "description": "البحث بالعمق", "formula": "O(V+E)" },
+        { "type": "definition", "term": "BFS", "description": "البحث بالعرض", "formula": "O(V+E)" }
       ]
     },
     {
       "type": "card",
       "title": "الجداول",
-      "icon": "S",
+      "icon": "T",
       "children": [
-        { "type": "table", "headers": ["المخطط", "|V|", "|E|"], "rows": [["K3", "3", "3"], ["K4", "4", "6"], ["K5", "5", "10"], ["K3,3", "6", "9"]], "caption": "المخططات" }
+        { "type": "table", "headers": ["المخطط", "|V|", "|E|", "مستوي?"], "rows": [["K3", "3", "3", "نعم"], ["K4", "4", "6", "نعم"], ["K5", "5", "10", "لا"], ["K3,3", "6", "9", "لا"], ["Cn", "n", "n", "نعم"]], "caption": "المخططات الشائعة" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "المخططات",
+      "icon": "D",
+      "children": [
+        { "type": "diagram", "chart": "flowchart", "code": "graph TD A-->B B-->C C-->D", "caption": "أساسي" }
       ]
     },
     {
@@ -48,8 +58,8 @@
       "title": "الأخطاء",
       "icon": "!",
       "children": [
-        { "type": "warning", "variant": "warning", "title": "شرط لازم", "text": "ليس كافيا" },
-        { "type": "warning", "variant": "tip", "title": "DFS vs BFS", "text": "مكدس مقابل طابور" }
+        { "type": "warning", "variant": "warning", "title": "شرط لازم", "text": "ليس كافيا لوحده" },
+        { "type": "warning", "variant": "tip", "title": "DFS vs BFS", "text": "مكدس وطابور" }
       ]
     }
   ]

@@ -1,52 +1,29 @@
 {
-  "course": { "id": "databases-1", "title_ar": "قواعد المعطيات 1", "title_en": "Databases 1" },
+  "course": { "id": "databases-1", "title_ar": "قواعد المعطيات 1", "title_en": " Databases 1" },
   "components": [
-    {
-      "type": "card",
-      "title": "التعاريف",
-      "icon": "D",
-      "children": [
-        { "type": "definition", "term": "قاعدة البيانات", "description": "مجموعة بيانات منظمة" },
-        { "type": "definition", "term": "المفتاح الأساسي", "description": "عمود يحدد كل صف" },
-        { "type": "definition", "term": "المفتاح الخارجي", "description": "عمود يشير لجدول آخر" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "نموذج ER",
-      "icon": "E",
-      "children": [
-        { "type": "definition", "term": "الكيان", "description": "كائن له وجود" },
-        { "type": "definition", "term": "العلاقة", "description": "ارتباط بين كيانين" },
-        { "type": "list", "items": [{ "text": "1:1 واحد لواحد" }, { "text": "1:N واحد لمتعدد" }, { "text": "N:M متعدد لمتعدد" }] }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "التسوية",
-      "icon": "N",
-      "children": [
-        { "type": "table", "headers": ["المستوى", "الشرط"], "rows": [["1NF", "قيم ذرية"], ["2NF", "اعتماد على المفتاح"], ["3NF", "لا اعتماديات متعدية"], ["BCNF", "مفتاح مرشح"]], "caption": "أشكال التسوية" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "SQL",
-      "icon": "S",
-      "children": [
-        { "type": "code", "language": "sql", "code": "CREATE TABLE t (id INT PRIMARY KEY, name VARCHAR(50));", "caption": "CREATE" },
-        { "type": "code", "language": "sql", "code": "SELECT * FROM t WHERE id = 1;", "caption": "SELECT" },
-        { "type": "code", "language": "sql", "code": "INSERT INTO t VALUES (1, 'name');", "caption": "INSERT" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "الأخطاء",
-      "icon": "!",
-      "children": [
-        { "type": "warning", "variant": "warning", "title": "المفتاح", "text": "لايجب أن يكون NULL" },
-        { "type": "warning", "variant": "tip", "title": "تلميح", "text": "1ذري، 2كلي، 3متعدٍ" }
-      ]
-    }
+    { "type": "card", "title": "التعاريف", "icon": "D", "children": [
+      { "type": "definition", "term": "قاعدة البيانات", "description": "بيانات منظمة" },
+      { "type": "definition", "term": "المفتاح الأساسي", "description": "يحدد كل صف" },
+      { "type": "definition", "term": "المفتاح الخارجي", "description": "يشير لجدول آخر" },
+      { "type": "definition", "term": "DBMS", "description": "نظام إدارة" }
+    ]},
+    { "type": "card", "title": "الجداول", "icon": "T", "children": [
+      { "type": "table", "headers": ["المفهوم", "الوصف"], "rows": [["DBMS", "نظام الإدارة"], ["Schema", "البنية"], ["Instance", "البيانات"], ["SQL", "لغة الاستعلام"]], "caption": "المفاهيم" }
+    ]},
+    { "type": "card", "title": "التسوية", "icon": "N", "children": [
+      { "type": "table", "headers": ["المستوى", "الشرط"], "rows": [["1NF", "قيم ذرية"], ["2NF", "اعتماد على المفتاح"], ["3NF", "لا اعتماديات متعدية"], ["BCNF", "مفتاح مرشح"]], "caption": "أشكال التسوية" }
+    ]},
+    { "type": "card", "title": "الـ SQL", "icon": "S", "children": [
+      { "type": "equation", "formula": "CREATE TABLE t()", "display": true, "label": "إنشاء" },
+      { "type": "equation", "formula": "SELECT * FROM t WHERE", "display": true, "label": "استعلام" },
+      { "type": "equation", "formula": "INSERT INTO t VALUES()", "display": true, "label": "إدراج" }
+    ]},
+    { "type": "card", "title": "الـ ER", "icon": "E", "children": [
+      { "type": "table", "headers": ["النوع", "الترجمة"], "rows": [["1:1", " واحد لواحد"], ["1:N", " واحد لمتعدد"], ["N:M", " متعدد لمتعدد"]], "caption": "العلاقات" }
+    ]},
+    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
+      { "type": "warning", "variant": "warning", "title": "المفتاح", "text": "لا NULL" },
+      { "type": "warning", "variant": "tip", "title": "تلميح", "text": "1ذري 2كلي 3متعدٍ" }
+    ]}
   ]
 }

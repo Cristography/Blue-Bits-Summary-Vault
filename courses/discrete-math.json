@@ -1,48 +1,28 @@
 {
-  "course": {
-    "id": "discrete-math",
-    "title_ar": "رياضيات متقطعة",
-    "title_en": "Discrete Mathematics"
-  },
+  "course": { "id": "discrete-math", "title_ar": "رياضيات متقطعة", "title_en": "Discrete Mathematics" },
   "components": [
-    {
-      "type": "card",
-      "title": "المفاهيم",
-      "icon": "M",
-      "children": [
-        { "type": "definition", "term": "المجموعات", "description": "مجموعة من العناصر" },
-        { "type": "definition", "term": "العلاقات", "description": "رابط بين عنصرين" },
-        { "type": "definition", "term": "الدوال", "description": "تخطيط من مجموعة لمجموعة" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "نظرية المجموعات",
-      "icon": "T",
-      "children": [
-        { "type": "equation", "formula": "A U B", "display": true, "label": "Union" },
-        { "type": "equation", "formula": "A n B", "display": true, "label": "Intersection" },
-        { "type": "theorem", "name": "دي مورجان", "statement": " complements", "formula": "not(A n B) = not A U not B" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "العلاقات",
-      "icon": "R",
-      "children": [
-        { "type": "definition", "term": "الانعكاسية", "description": "لكل x,xRx" },
-        { "type": "definition", "term": "التناظر", "description": "اذا xRy فان yRx" },
-        { "type": "definition", "term": "الالتزام", "description": "اذا xRy و yRz فان xRz" }
-      ]
-    },
-    {
-      "type": "card",
-      "title": "التوافقيات",
-      "icon": "C",
-      "children": [
-        { "type": "definition", "term": "مبدأ الضرب", "formula": "|A x B| = |A| * |B|" },
-        { "type": "definition", "term": "مبدأ الجمع", "formula": "|A U B| = |A| + |B| - |A n B|" }
-      ]
-    }
+    { "type": "card", "title": "المفاهيم", "icon": "M", "children": [
+      { "type": "definition", "term": "المجموعات", "description": "عناصر متميزة" },
+      { "type": "definition", "term": "العلاقات", "description": "رابط بين عنصرين" },
+      { "type": "definition", "term": "الدوال", "description": "تخطيط لمجموعة" }
+    ]},
+    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
+      { "type": "equation", "formula": "A U B", "display": true, "label": "Union" },
+      { "type": "equation", "formula": "A n B", "display": true, "label": "Intersection" },
+      { "type": "equation", "formula": "A - B", "display": true, "label": "Difference" },
+      { "type": "equation", "formula": "Ac", "display": true, "label": "Complement" }
+    ]},
+    { "type": "card", "title": "النظريات", "icon": "T", "children": [
+      { "type": "theorem", "name": "دي مورجان 1", "statement": " complements", "formula": "overline(AnB) = overlineA U overlineB" },
+      { "type": "theorem", "name": "دي مورجان 2", "statement": " complements", "formula": "overline(AUB) = overlineA n overlineB" }
+    ]},
+    { "type": "card", "title": "التوافقيات", "icon": "C", "children": [
+      { "type": "equation", "formula": "P(n,r) = n!/(n-r)!", "display": true, "label": "التباديل" },
+      { "type": "equation", "formula": "C(n,r) = n!/(r!(n-r)!)", "display": true, "label": "التوافقيات" },
+      { "type": "table", "headers": ["النوع", "الصيغة"], "rows": [["مبدأ الضرب", "|AxB| = |A|x|B|"], ["مبدأ الجمع", "|AUB| = |A|+|B|-|AnB|"]], "caption": "المبادئ" }
+    ]},
+    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
+      { "type": "warning", "variant": "tip", "title": "ملاحظة", "text": "U = Union, n = Intersection" }
+    ]}
   ]
 }
