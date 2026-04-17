@@ -1,0 +1,56 @@
+{
+  "course": {
+    "id": "graph-theory",
+    "title_ar": "نظرية المخططات",
+    "title_en": "Graph Theory"
+  },
+  "components": [
+    {
+      "type": "card",
+      "title": "التعاريف",
+      "icon": "G",
+      "children": [
+        { "type": "definition", "term": "المخطط", "description": "رؤوس وحواف", "formula": "G(V,E)" },
+        { "type": "definition", "term": "الدرجة", "description": "عدد الحواف بالرأس", "formula": "deg(v)" },
+        { "type": "definition", "term": "المسار", "description": "تتابع رؤوس متجاورة" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "النظريات",
+      "icon": "T",
+      "children": [
+        { "type": "theorem", "name": "مصابقة الأيدي", "statement": "مجموع الدرجات = 2|E|", "formula": "sum deg(v) = 2|E|" },
+        { "type": "theorem", "name": "أويلر", "statement": "دورة اويلراذا الدرجات زوجية", "formula": "deg(v) even" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "الخوارزميات",
+      "icon": "A",
+      "children": [
+        { "type": "definition", "term": "بريم", "formula": "O(E log V)" },
+        { "type": "definition", "term": "ديكسترا", "formula": "O((V+E) log V)" },
+        { "type": "definition", "term": "DFS", "formula": "O(V+E)" },
+        { "type": "definition", "term": "BFS", "formula": "O(V+E)" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "الجداول",
+      "icon": "S",
+      "children": [
+        { "type": "table", "headers": ["المخطط", "|V|", "|E|"], "rows": [["K3", "3", "3"], ["K4", "4", "6"], ["K5", "5", "10"], ["K3,3", "6", "9"]], "caption": "المخططات" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "الأخطاء",
+      "icon": "!",
+      "children": [
+        { "type": "warning", "variant": "warning", "title": "شرط لازم", "text": "ليس كافيا" },
+        { "type": "warning", "variant": "tip", "title": "DFS vs BFS", "text": "مكدس مقابل طابور" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "course": { "id": "algorithms-1", "title_ar": "خوارزميات 1", "title_en": "Algorithms I" },
+  "components": [
+    {
+      "type": "card",
+      "title": "التعاريف",
+      "icon": "D",
+      "children": [
+        { "type": "definition", "term": "الخوارزمية", "description": "خطوات لحل مشكلة" },
+        { "type": "definition", "term": "التعقيد", "description": "الزمن بدلالة n" },
+        { "type": "definition", "term": "O", "description": "أقصى حد" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "الترتيب",
+      "icon": "S",
+      "children": [
+        { "type": "definition", "term": "Bubble Sort", "formula": "O(n^2)" },
+        { "type": "definition", "term": "Insertion Sort", "formula": "O(n^2)" },
+        { "type": "definition", "term": "Merge Sort", "formula": "O(n log n)" },
+        { "type": "definition", "term": "Quick Sort", "formula": "O(n log n)" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "البحث",
+      "icon": "F",
+      "children": [
+        { "type": "definition", "term": "Linear", "formula": "O(n)" },
+        { "type": "definition", "term": "Binary", "formula": "O(log n)" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "الجدول",
+      "icon": "T",
+      "children": [
+        { "type": "table", "headers": ["الخوارزمية", "الافضل", "الاسوأ"], "rows": [["Bubble", "O(n)", "O(n^2)"], ["Insertion", "O(n)", "O(n^2)"], ["Merge", "O(n log n)", "O(n log n)"], ["Quick", "O(n log n)", "O(n^2)"]], "caption": "التعقيد" },
+        { "type": "equation", "formula": "O(1) < O(log n) < O(n) < O(n log n) < O(n^2)", "display": true }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "الأخطاء",
+      "icon": "!",
+      "children": [
+        { "type": "warning", "variant": "warning", "title": "O و Omega", "text": "O=أقصى حد، Omega=حد أدنى" },
+        { "type": "warning", "variant": "tip", "title": "تلميح", "text": "Binary تتطلب مصفوفة مرتبة" }
+      ]
+    }
+  ]
+}

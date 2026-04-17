@@ -182,33 +182,59 @@ The focus is on a **practical, static, zero-build** solution that emphasizes con
 
 ## 9. Technical Architecture
 
-### Zero-Build, GitHub Pages Friendly Stack
+### Zero-Build, GitHub Pages Friendly Stack (v2.0 - Component-Based)
 
 | Layer | Tool/Approach | Why |
 |-------|---------------|-----|
-| **Data** | `courses.json` + per-course `.md` files | Separates metadata from content. Easy to edit, AI-friendly, version-controlled |
-| **Renderer** | Vanilla JS + `marked.js` | No build step. Fetches JSON → renders cards → parses MD → injects into DOM |
-| **Hosting** | GitHub Pages (`/docs` or `gh-pages` branch) | Free, supports static JSON/MD/HTML/JS natively |
+| **Data** | `courses.json` + per-course `.json` files | Structured JSON components, type-safe, extensible |
+| **Renderer** | Vanilla JS + Component System | No build step. Fetches JSON → renders components → builds DOM |
+| **Hosting** | GitHub Pages (`/docs` or `gh-pages` branch) | Free, supports static JSON/HTML/JS natively |
 | **Search/Filter** | Vanilla JS (client-side) | Runs client-side, no backend needed |
 | **Styling** | CSS Grid/Flex + CSS Variables + RTL support | Responsive, themeable, Arabic-friendly |
 
-### Supported Content Types
+### Component System (v2.0)
 
-| Type | Syntax | Notes |
-|------|--------|-------|
-| **Inline Math** | `$formula$` | KaTeX renders automatically |
-| **Display Math** | `$$formula$$` | Centered, larger format |
-| **Mermaid Diagrams** | ````mermaid` blocks | Flowcharts, graphs, sequences |
-| **Tables** | Standard Markdown tables | Aligned for RTL |
-| **Code Blocks** | ````cpp`, ````python`, etc. | Syntax highlighted |
-| **Cards** | Each `## Heading` becomes a card | Auto-wrapped by JS |
+Instead of parsing Markdown at runtime, content is stored as structured JSON components. This provides:
+- Type-safe component definitions
+- Easier AI generation (structured output vs markdown)
+- Better scalability for complex content
+- Component composition (nested cards, sections)
+
+#### Supported Component Types
+
+| Type | Description | Properties |
+|------|-------------|-------------|
+| **card** | Main container for related content | title, icon, children[] |
+| **heading** | Section heading | level(1-3), text, style |
+| **paragraph** | Rich text with inline LaTeX | text, align |
+| **equation** | LaTeX formula | formula, display(boolean), label |
+| **definition** | Term + description | term, term_en, description, formula |
+| **list** | Bullet/numbered list | ordered, items[] |
+| **table** | Tabular data | headers[], rows[][], caption |
+| **diagram** | Mermaid diagram | chart(type), code, caption |
+| **code** | Code block | language, code, caption |
+| **warning** | Note/warning/tip | variant, title, text |
+| **theorem** | Theorem with optional proof | name, name_en, statement, proof, formula |
+| **example** | Worked example | title, given, solution, result |
+| **divider** | Visual divider | style |
+
+### JSON Schema
+
+```json
+{
+  "type": "card",
+  "title": "📐 التعاريف الأساسية · Core Definitions",
+  "children": [
+    { "type": "definition", "term": "...", "description": "..." },
+    { "type": "equation", "formula": "\\sum...", "display": true },
+    { "type": "diagram", "chart": "flowchart", "code": "graph TD..." }
+  ]
+}
+```
 
 ### CDN Dependencies
 
 ```html
-<!-- Markdown Parser -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
 <!-- LaTeX (KaTeX) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -219,19 +245,21 @@ The focus is on a **practical, static, zero-build** solution that emphasizes con
 
 <!-- DOM Sanitizer -->
 <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+
+<!-- (No marked.js needed - components are pre-structured) -->
 ```
 
-### Rendering Pipeline (Execution Order)
+### Rendering Pipeline (v2.0 - Component-Based)
 
-1. **Fetch JSON** → Build course grid
-2. **Open Course** → Fetch `.md` file
-3. **Parse Markdown** → `marked.parse()` → sanitize with `DOMPurify`
-4. **Transform to Cards** → Each `##` heading wraps into a `.content-card` div
+1. **Fetch courses.json** → Build course grid
+2. **Open Course** → Fetch `.json` file
+3. **Parse Components** → Iterate through component array
+4. **Render to DOM** → Build HTML from component tree
 5. **Render LaTeX** → `renderMathInElement()` (KaTeX)
 6. **Render Diagrams** → Async `mermaid.render()` + safe injection
-7. **Attach Events** → Status buttons, modal close, theme toggle
+7. **Attach Events** → Status buttons, theme toggle
 
-> **Why this order?** Mermaid and KaTeX fail if run on raw text or before DOM nodes exist. The pipeline guarantees clean, isolated rendering.
+> **Why v2.0?** No runtime markdown parsing. Components are pre-structured, type-safe, and easier to generate via AI.
 
 ---
 
@@ -389,7 +417,7 @@ The platform does **not** have direct AI integration. Instead, the system includ
 
 ---
 
-## 13. Data Format
+## 13. Data Format (v2.0 - Component-Based)
 
 ### courses.json Structure
 
@@ -402,7 +430,7 @@ The platform does **not** have direct AI integration. Instead, the system includ
     "title_ar": "نظرية المخططات",
     "title_en": "Graph Theory",
     "status": "reviewed",
-    "summary_md": "courses/graph-theory.md"
+    "summary_json": "courses/graph-theory.json"
   }
 ]
 ```
@@ -415,7 +443,49 @@ The platform does **not** have direct AI integration. Instead, the system includ
 | `title_ar` | String | Arabic course name |
 | `title_en` | String | English course name |
 | `status` | String | `"none"`, `"planned"`, `"reviewed"`, or `"flagged"` |
-| `summary_md` | String | Relative path to Markdown file |
+| `summary_json` | String | Relative path to JSON component file |
+
+### Course Summary JSON Structure
+
+Each course has a `.json` file containing an array of components:
+
+```json
+{
+  "course": {
+    "id": "graph-theory",
+    "title_ar": "نظرية المخططات",
+    "title_en": "Graph Theory"
+  },
+  "components": [
+    {
+      "type": "card",
+      "title": "📐 التعاريف الأساسية · Core Definitions",
+      "icon": "📐",
+      "children": [
+        { "type": "definition", "term": "المخطط", "term_en": "Graph", "description": "...", "formula": "G(V,E)" },
+        { "type": "definition", "term": "درجة الرأس", "term_en": "Degree", "description": "...", "formula": "\\deg(v)" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "🧮 النظريات والصيغ · Theorems & Formulas",
+      "children": [
+        { "type": "equation", "formula": "\\sum_{v \\in V} \\deg(v) = 2|E|", "display": true, "label": "Handshaking Lemma" }
+      ]
+    },
+    {
+      "type": "card",
+      "title": "🔁 الخوارزميات · Algorithms",
+      "children": [
+        { "type": "diagram", "chart": "flowchart", "code": "graph TD..." },
+        { "type": "list", "items": [{ "text": "Step 1..." }, { "text": "Step 2..." }] }
+      ]
+    }
+  ]
+}
+```
+
+The root is always an array of `card` components. Each card contains child components that render the actual content (definitions, equations, lists, tables, diagrams, etc.).
 
 ---
 

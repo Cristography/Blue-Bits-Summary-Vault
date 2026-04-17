@@ -1,0 +1,26 @@
+{
+  "course": { "id": "automata-theory", "title_ar": "نظرية الأرتال", "title_en": "Automata Theory" },
+  "components": [
+    { "type": "card", "title": "التعاريف", "icon": "A", "children": [
+      { "type": "definition", "term": "الأوتوماتا", "description": "آلة رياضية مجردة" },
+      { "type": "definition", "term": "الحالة", "description": "موقع الآلة" },
+      { "type": "definition", "term": "الtransition", "description": "انتقال بين الحالات" }
+    ]},
+    { "type": "card", "title": "الأنواع", "icon": "T", "children": [
+      { "type": "definition", "term": "DFA", "description": "حالة واحدة لكل دخل" },
+      { "type": "definition", "term": "NFA", "description": "متعددة حالات لكل دخل" },
+      { "type": "theorem", "name": "التكافؤ", "statement": "DFA = NFA", "formula": "DFA equiv NFA" }
+    ]},
+    { "type": "card", "title": "التعبيرات", "icon": "R", "children": [
+      { "type": "equation", "formula": "a*b*", "display": true },
+      { "type": "theorem", "name": "Kleene", "statement": "التعبيرات تصف اللغات", "formula": "RE = RL" }
+    ]},
+    { "type": "card", "title": "بومبل", "icon": "P", "children": [
+      { "type": "theorem", "name": "Pumping Lemma", "statement": "يمكن ضخ أي كلمة طويلة", "formula": "w = xyz, y>0, xyz in L" }
+    ]},
+    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
+      { "type": "warning", "variant": "warning", "title": "DFA vs NFA", "text": "DFA حالة واحدة" },
+      { "type": "warning", "variant": "tip", "title": "تلميح", "text": "استخدم بومبل للبرهان" }
+    ]}
+  ]
+}

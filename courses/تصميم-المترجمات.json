@@ -1,0 +1,24 @@
+{
+  "course": { "id": "compiler-design", "title_ar": "تصميم المترجمات", "title_en": "Compiler Design" },
+  "components": [
+    { "type": "card", "title": "المراحل", "icon": "L", "children": [
+      { "type": "definition", "term": "المحلل المعجمي", "description": "يقرأ الكود ويحوله لرموز" },
+      { "type": "definition", "term": "المحلل اللغوي", "description": "يتحقق من البنية" },
+      { "type": "definition", "term": "المحلل الدلالي", "description": "يتحقق من المعنى" }
+    ]},
+    { "type": "card", "title": "BNF", "icon": "B", "children": [
+      { "type": "definition", "term": "التعريف", "description": "شكل باكس-نور" },
+      { "type": "definition", "term": "Left Recursion", "description": "تسبب دورات لا نهائية" },
+      { "type": "definition", "term": "Left Factoring", "description": "طريقة الحل" }
+    ]},
+    { "type": "card", "title": "التحليل", "icon": "P", "children": [
+      { "type": "definition", "term": "LL(1)", "description": "من اليسار، lookahead=1" },
+      { "type": "definition", "term": "LR", "description": "من اليمين" },
+      { "type": "table", "headers": ["النوع", "التعقيد"], "rows": [["LL(k)", "O(n)"], ["LR(k)", "O(n)"], ["LALR", "O(n)"]], "caption": "المحللين" }
+    ]},
+    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
+      { "type": "warning", "variant": "warning", "title": "Left Recursion", "text": "استخدم Left Factoring" },
+      { "type": "warning", "variant": "tip", "title": "LR أفضل", "text": " LR أقوى من LL" }
+    ]}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "course": { "id": "operating-systems-1", "title_ar": "نظم تشغيل 1", "title_en": "Operating Systems 1" },
+  "components": [
+    { "type": "card", "title": "التعاريف", "icon": "O", "children": [
+      { "type": "definition", "term": "نظام التشغيل", "description": "يدير موارد الحاسوب" },
+      { "type": "definition", "term": "العملية", "description": "برنامج قيد التنفيذ" },
+      { "type": "definition", "term": "الخيط", "description": "وحدة تشغيل خفيفة" }
+    ]},
+    { "type": "card", "title": "الجدولة", "icon": "S", "children": [
+      { "type": "table", "headers": ["الخوارزمية", "الافضل", "الاسوأ"], "rows": [["FCFS", "O(n)", "O(n)"], ["SJF", "O(n)", "O(n^2)"], ["Round Robin", "Fair", "Fair"]], "caption": "الخوارزميات" }
+    ]},
+    { "type": "card", "title": "الذاكرة", "icon": "M", "children": [
+      { "type": "definition", "term": "Paging", "description": "صفحات بحجم ثابت" },
+      { "type": "definition", "term": "Segmentation", "description": "قطع متغيرة الحجم" },
+      { "type": "definition", "term": "Virtual", "description": "ذاكرة على القرص" }
+    ]},
+    { "type": "card", "title": "التعطل", "icon": "D", "children": [
+      { "type": "definition", "term": "Deadlock", "description": "انتظار دائري" },
+      { "type": "list", "items": [{ "text": "الاستبعاد المتبادل" }, { "text": "الامساك والانتظار" }, { "text": "لا سلب" }, { "text": "الانتظار الدائري" }] }
+    ]},
+    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
+      { "type": "warning", "variant": "warning", "title": "التعطل", "text": "4 شروط يجب تحققها" },
+      { "type": "warning", "variant": "tip", "title": "الحل", "text": "ترتيب موحد للموارد" }
+    ]}
+  ]
+}

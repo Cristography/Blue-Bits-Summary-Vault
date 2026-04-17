@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Blue Bits Component Schema",
+  "description": "Schema for course summary components - defines component types and their properties",
+  "version": "2.0",
+  
+  "componentTypes": {
+    "card": {
+      "description": "Main card component - container for related content",
+      "properties": {
+        "type": { "const": "card" },
+        "title": { "type": "string", "description": "Card title (Arabic with English in parentheses)" },
+        "icon": { "type": "string", "description": "Emoji icon for the card" },
+        "children": {
+          "type": "array",
+          "description": "Child components within this card",
+          "items": { "$ref": "#/componentTypes" }
+        }
+      },
+      "required": ["type", "title", "children"]
+    },
+    
+    "heading": {
+      "description": "Section heading component",
+      "properties": {
+        "type": { "const": "heading" },
+        "level": { "type": "number", "enum": [1, 2, 3], "default": 2 },
+        "text": { "type": "string" },
+        "style": { "type": "string", "enum": ["default", "section", "chapter"] }
+      },
+      "required": ["type", "text"]
+    },
+    
+    "paragraph": {
+      "description": "Text paragraph component",
+      "properties": {
+        "type": { "const": "paragraph" },
+        "text": { "type": "string", "description": "Rich text with inline LaTeX $...$" },
+        "align": { "type": "string", "enum": ["left", "center", "right", "justify"] }
+      },
+      "required": ["type", "text"]
+    },
+    
+    "equation": {
+      "description": "LaTeX equation component",
+      "properties": {
+        "type": { "const": "equation" },
+        "formula": { "type": "string", "description": "LaTeX formula" },
+        "display": { "type": "boolean", "default": true, "description": "Display mode ($$) vs inline ($)" },
+        "label": { "type": "string", "description": "Equation label/caption" }
+      },
+      "required": ["type", "formula"]
+    },
+    
+    "definition": {
+      "description": "Definition/term component",
+      "properties": {
+        "type": { "const": "definition" },
+        "term": { "type": "string", "description": "Term name" },
+        "term_en": { "type": "string", "description": "English term" },
+        "description": { "type": "string" },
+        "formula": { "type": "string", "description": "Optional LaTeX formula" }
+      },
+      "required": ["type", "term", "description"]
+    },
+    
+    "list": {
+      "description": "Bullet/numbered list",
+      "properties": {
+        "type": { "const": "list" },
+        "ordered": { "type": "boolean", "default": false },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" },
+              "subitems": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "required": ["type", "items"]
+    },
+    
+    "table": {
+      "description": "Table component",
+      "properties": {
+        "type": { "const": "table" },
+        "headers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "caption": { "type": "string" },
+        "align": { "type": "string", "enum": ["left", "center", "right"], "default": "center" }
+      },
+      "required": ["type", "headers", "rows"]
+    },
+    
+    "diagram": {
+      "description": "Mermaid diagram component",
+      "properties": {
+        "type": { "const": "diagram" },
+        "chart": { "type": "string", "enum": ["flowchart", "graph", "pie", "sequence", "class", "state", "er", "gantt"] },
+        "code": { "type": "string", "description": "Mermaid diagram definition" },
+        "caption": { "type": "string" }
+      },
+      "required": ["type", "code"]
+    },
+    
+    "code": {
+      "description": "Code block component",
+      "properties": {
+        "type": { "const": "code" },
+        "language": { "type": "string", "description": "Programming language" },
+        "code": { "type": "string" },
+        "caption": { "type": "string" },
+        "lineNumbers": { "type": "boolean", "default": false }
+      },
+      "required": ["type", "code"]
+    },
+    
+    "warning": {
+      "description": "Warning/note component",
+      "properties": {
+        "type": { "const": "warning" },
+        "variant": { "type": "string", "enum": ["note", "warning", "tip", "important"], "default": "note" },
+        "title": { "type": "string" },
+        "text": { "type": "string" }
+      },
+      "required": ["type", "text"]
+    },
+    
+    "theorem": {
+      "description": "Theorem/proposition component",
+      "properties": {
+        "type": { "const": "theorem" },
+        "name": { "type": "string" },
+        "name_en": { "type": "string" },
+        "statement": { "type": "string" },
+        "proof": { "type": "string" },
+        "formula": { "type": "string" }
+      },
+      "required": ["type", "name", "statement"]
+    },
+    
+    "example": {
+      "description": "Example/worked problem component",
+      "properties": {
+        "type": { "const": "example" },
+        "title": { "type": "string" },
+        "given": { "type": "string", "description": "Problem statement" },
+        "solution": { "type": "string", "description": "Solution steps" },
+        "result": { "type": "string", "description": "Final answer" }
+      },
+      "required": ["type", "given", "solution"]
+    },
+    
+    "divider": {
+      "description": "Visual divider/spacer",
+      "properties": {
+        "type": { "const": "divider" },
+        "style": { "type": "string", "enum": ["solid", "dashed", "dotted", "space"] }
+      },
+      "required": ["type"]
+    }
+  },
+  
+  "example": {
+    "$schema": "#/definitions/component",
+    "type": "card",
+    "title": "📐 التعاريف الأساسية · Core Definitions",
+    "children": [
+      {
+        "type": "definition",
+        "term": "المخطط (Graph)",
+        "term_en": "Graph",
+        "description": "بنية رياضية تتكون من مجموعة رؤوس ومجموعة حواف",
+        "formula": "G(V,E)"
+      },
+      {
+        "type": "definition",
+        "term": "درجة الرأس",
+        "term_en": "Degree", 
+        "description": "عدد الحواف المتصلة بالرأس",
+        "formula": "\\deg(v)"
+      },
+      {
+        "type": "equation",
+        "formula": "\\sum_{v \\in V} \\deg(v) = 2|E|",
+        "display": true,
+        "label": "Handshaking Lemma"
+      }
+    ]
+  }
+}

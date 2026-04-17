@@ -1,0 +1,23 @@
+{
+  "course": { "id": "databases-2", "title_ar": "قواعد المعطيات 2", "title_en": "Databases 2" },
+  "components": [
+    { "type": "card", "title": "SQL المتقدم", "icon": "S", "children": [
+      { "type": "definition", "term": "Subquery", "description": "استعلام داخل استعلام" },
+      { "type": "definition", "term": "Window", "description": "دوال على نوافذ" },
+      { "type": "code", "language": "sql", "code": "SELECT * FROM (SELECT * FROM t) AS sub;", "caption": "Subquery" }
+    ]},
+    { "type": "card", "title": "الفهارس", "icon": "I", "children": [
+      { "type": "definition", "term": "B-Tree", "description": "للبحث السريع", "formula": "O(log n)" },
+      { "type": "definition", "term": "Hash", "description": "للبحث الثابت", "formula": "O(1)" },
+      { "type": "table", "headers": ["النوع", "الوصف"], "rows": [["B-Tree", "بحث"], ["Hash", "مساواة"]], "caption": "الأنواع" }
+    ]},
+    { "type": "card", "title": "المعاملات", "icon": "T", "children": [
+      { "type": "definition", "term": "ACID", "description": "الخصائص الأساسية" },
+      { "type": "list", "items": [{ "text": "Atomicity" }, { "text": "Consistency" }, { "text": "Isolation" }, { "text": "Durability" }] }
+    ]},
+    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
+      { "type": "warning", "variant": "warning", "title": "الأداء", "text": "Subquery قد يكون بطيئا" },
+      { "type": "warning", "variant": "tip", "title": "فهرس", "text": "أنشئ على أعمدة WHERE" }
+    ]}
+  ]
+}

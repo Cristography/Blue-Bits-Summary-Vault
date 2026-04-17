@@ -1,12 +1,17 @@
 /**
- * Blue Bits Summary Vault - Application
+ * Blue Bits Summary Vault - Application (v2.0)
  * Author: Crist Yaghjian
  * Version: 2.0
  * 
  * Zero-build static site renderer
- * Supports: Markdown, LaTeX (KaTeX), Mermaid diagrams
+ * Supports: JSON Components, LaTeX (KaTeX), Mermaid diagrams
  * Navigation: Home → Years → Semester → Course Page (no modal)
+ * 
+ * Key Change from v1.0: No markdown parsing!
+ * Content is stored as pre-structured JSON components.
  */
+
+'use strict';
 
 // ========================================
 // Configuration
@@ -254,7 +259,7 @@ function renderSemesterCourses(year, semester) {
   // Update breadcrumb
   updateBreadcrumb(`الفصل ${semester === 1 ? 'الأول' : 'الثاني'}`, year, semester);
   
-  // Filter and render courses - LARGER CARD GRID
+  // Filter and render courses
   let courses = state.courses.filter(c => c.year === year && c.semester === semester);
   
   if (state.searchQuery) {
@@ -275,7 +280,6 @@ function renderSemesterCourses(year, semester) {
     return;
   }
   
-  // BIGGER CARDS with larger font
   coursesGrid.innerHTML = courses.map(course => `
     <article class="course-card-large" data-course-id="${course.id}">
       <div class="card-status-indicator" data-status="${course.status}"></div>
@@ -299,27 +303,24 @@ function getStatusLabel(status) {
   return labels[status] || 'قيد الانتظار';
 }
 
-// ========================================.
-// Global Search - Search across ALL years and courses
+// ========================================
+// Global Search
 // ========================================
 
 function performGlobalSearch(query) {
   if (!query || query.length < 2) {
-    // If search is cleared, go back to home
     goHome();
     return;
   }
 
   const lowerQuery = query.toLowerCase();
   
-  // Search across ALL courses (all years)
   const matchingCourses = state.courses.filter(c => 
     c.title_ar.toLowerCase().includes(lowerQuery) || 
     c.title_en.toLowerCase().includes(lowerQuery) ||
     c.id.toLowerCase().includes(lowerQuery)
   );
 
-  // Show search results view
   showSearchResults(query, matchingCourses);
 }
 
@@ -348,7 +349,6 @@ function showSearchResults(query, courses) {
     return;
   }
 
-  // Render matching courses (reuse same card style)
   grid.innerHTML = courses.map(course => `
     <article class="course-card-large" data-course-id="${course.id}" data-year="${course.year}" data-semester="${course.semester}">
       <div class="card-status-indicator" data-status="${course.status}"></div>
@@ -362,7 +362,6 @@ function showSearchResults(query, courses) {
     </article>
   `).join('');
 
-  // Update breadcrumb
   updateBreadcrumb(`نتائج البحث`);
 }
 
@@ -376,7 +375,7 @@ function clearSearch() {
 }
 
 // ========================================
-// Rendering - Course Page (Dedicated Page)
+// Rendering - Course Page (v2.0 - JSON Components)
 // ========================================
 
 async function openCourse(courseId) {
@@ -397,7 +396,6 @@ async function openCourse(courseId) {
   if (statusSelect) statusSelect.value = course.status;
   
   // Update breadcrumb
-  const semesterLabel = `الفصل ${course.semester === 1 ? 'الأول' : 'الثاني'}`;
   updateBreadcrumb(course.title_ar, course.year, course.semester);
   
   // Show loading
@@ -410,141 +408,283 @@ async function openCourse(courseId) {
     `;
   }
   
-  // Load markdown content
-  if (course.summary_md) {
-    await renderCourseContent(course.summary_md, courseContent);
+  // Load JSON components (NOT markdown!)
+  if (course.summary_json) {
+    await renderCourseComponents(course.summary_json, courseContent);
+  } else if (course.summary_md) {
+    // Backward compatibility: try loading markdown
+    console.warn('Using legacy markdown format:', course.summary_md);
+    await renderLegacyMarkdown(course.summary_md, courseContent);
   } else {
     if (courseContent) {
       courseContent.innerHTML = `
         <div class="empty-state">
           <i class="fas fa-file-alt"></i>
           <p>لم يتم إضافة ملخص لهذا المقرر بعد.</p>
-          <p class="hint">يرجى إضافة ملف الملخص في المجلد المناسب</p>
+          <p class="hint">يرجى إنشاء ملف JSON للمقرر</p>
         </div>
       `;
     }
   }
 }
 
-async function renderCourseContent(mdPath, container) {
+async function renderCourseComponents(jsonPath, container) {
   if (!container) return;
   
-  console.log('Loading:', mdPath); // Debug log
-  
   try {
-    const response = await fetch(mdPath);
-    console.log('Response status:', response.status); // Debug log
+    const response = await fetch(jsonPath);
+    if (!response.ok) throw new Error(`Failed to load: ${response.status}`);
     
-    if (!response.ok) throw new Error(`Failed to load: ${response.status} ${response.statusText}`);
+    const data = await response.json();
     
-    const md = await response.text();
-    console.log('Loaded MD length:', md.length); // Debug log
+    // Validate component structure
+    if (!data.components || !Array.isArray(data.components)) {
+      throw new Error('Invalid component format: missing components array');
+    }
     
-    // Preprocess card syntax  
-    const processedMd = preprocessCards(md);
+    // Render components
+    container.innerHTML = `<div class="summary-content" id="summaryContent"></div>`;
+    const contentDiv = container.querySelector('#summaryContent');
     
-    // Parse markdown to HTML
-    const html = marked.parse(processedMd);
+    // Render each card component
+    contentDiv.innerHTML = data.components.map(comp => renderComponent(comp)).join('');
     
-    // Sanitize with DOMPurify
-    const safeHtml = DOMPurify.sanitize(html);
-    
-    // Wrap content in container
-    container.innerHTML = `
-      <div class="summary-content" id="summaryContent">
-        ${safeHtml}
-      </div>
-    `;
-    
-    // Transform content into cards - wrap each h2 in a card
-    transformToCards(container);
-    
-    // Render LaTeX (KaTeX)
+    // Render LaTeX equations
     renderMath(container);
     
     // Render Mermaid diagrams
     await renderMermaidDiagrams(container);
     
+    console.log(`Rendered ${data.components.length} components`);
+    
   } catch (error) {
-    console.error('Error rendering course content:', error);
-    console.error('Error details:', error.message); // More detail
+    console.error('Error rendering course components:', error);
     container.innerHTML = `
       <div class="error-state">
         <i class="fas fa-exclamation-triangle"></i>
-        <p>فشل تحميل المحتوى: ${mdPath}</p>
+        <p>فشل تحميل المحتوى</p>
         <p class="hint">${error.message}</p>
       </div>
     `;
   }
 }
 
-function preprocessCards(md) {
-  // No longer needed - transformToCards handles card wrapping
-  return md;
+// ========================================
+// Component Rendering System (v2.0)
+// ========================================
+
+function renderComponent(comp) {
+  switch (comp.type) {
+    case 'card':
+      return renderCard(comp);
+    case 'heading':
+      return renderHeading(comp);
+    case 'paragraph':
+      return renderParagraph(comp);
+    case 'equation':
+      return renderEquation(comp);
+    case 'definition':
+      return renderDefinition(comp);
+    case 'list':
+      return renderList(comp);
+    case 'table':
+      return renderTable(comp);
+    case 'diagram':
+      return renderDiagram(comp);
+    case 'code':
+      return renderCode(comp);
+    case 'warning':
+      return renderWarning(comp);
+    case 'theorem':
+      return renderTheorem(comp);
+    case 'example':
+      return renderExample(comp);
+    case 'divider':
+      return renderDivider(comp);
+    default:
+      console.warn('Unknown component type:', comp.type);
+      return '';
+  }
 }
 
-function transformToCards(container) {
-  const summaryContent = container.querySelector('.summary-content');
-  if (!summaryContent) return;
+function renderCard(card) {
+  const icon = card.icon || getCardIcon(card.title);
+  const children = (card.children || []).map(child => renderComponent(child)).join('');
   
-  // Get all children
-  const children = Array.from(summaryContent.children);
-  
-  // Group content by h2 sections
-  let sections = [];
-  let currentSection = null;
-  let contentBuffer = [];
-  
-  children.forEach(child => {
-    if (child.tagName === 'H2') {
-      if (currentSection) {
-        sections.push({ title: currentSection, content: [...contentBuffer] });
-      }
-      currentSection = child.textContent;
-      contentBuffer = [];
-    } else {
-      contentBuffer.push(child);
-    }
-  });
-  
-  if (currentSection) {
-    sections.push({ title: currentSection, content: contentBuffer });
-  }
-  
-  // If no sections, make everything one card
-  if (sections.length === 0) {
-    sections = [{ title: 'المحتوى', content: children }];
-  }
-  
-  // Build HTML - each section becomes a card
-  summaryContent.innerHTML = sections.map((section) => {
-    const icon = getSectionIcon(section.title);
-    return `
-      <div class="content-card">
-        <div class="card-header">
-          <span class="card-icon">${icon}</span>
-          <h3 class="card-title">${section.title}</h3>
-        </div>
-        <div class="card-body">
-          ${section.content.map(el => el.outerHTML).join('')}
-        </div>
+  return `
+    <div class="content-card">
+      <div class="card-header">
+        <span class="card-icon">${icon}</span>
+        <h3 class="card-title">${safeText(card.title)}</h3>
       </div>
-    `;
-  }).join('');
+      <div class="card-body">
+        ${children}
+      </div>
+    </div>
+  `;
 }
 
-function getSectionIcon(title) {
-  const titleLower = title.toLowerCase();
-  if (titleLower.includes('تعاريف') || titleLower.includes('مفاهيم') || titleLower.includes('definition')) return '📐';
-  if (titleLower.includes('أنواع') || titleLower.includes('types') || titleLower.includes('data')) return '🧮';
-  if (titleLower.includes('تحكم') || titleLower.includes('control') || titleLower.includes('flow')) return '🔁';
-  if (titleLower.includes('دوال') || titleLower.includes('functions')) return '⚙️';
-  if (titleLower.includes('جدول') || titleLower.includes('table')) return '📊';
-  if (titleLower.includes('مخطط') || titleLower.includes('diagram')) return '📈';
-  if (titleLower.includes('ملخص') || titleLower.includes('summary')) return '📝';
-  if (titleLower.includes('أخطاء') || titleLower.includes('pitfalls') || titleLower.includes('mistakes')) return '⚠️';
+function renderHeading(heading) {
+  const Tag = `h${heading.level || 2}`;
+  return `<${Tag} class="content-heading">${safeText(heading.text)}</${Tag}>`;
+}
+
+function renderParagraph(p) {
+  return `<p class="content-paragraph" style="text-align: ${p.align || 'right'}">${safeText(p.text)}</p>`;
+}
+
+function renderEquation(eq) {
+  const label = eq.label ? `<span class="equation-label">${safeText(eq.label)}</span>` : '';
+  const formula = eq.display ? `$$${safeText(eq.formula)}` : '$' + safeText(eq.formula);
+  return `
+    <div class="content-equation">
+      ${label}
+      <span class="katex-formula">${formula}$</span>
+    </div>
+  `;
+}
+
+function renderDefinition(def) {
+  const formula = def.formula ? `<code class="formula-inline">${safeText(def.formula)}</code>` : '';
+  const termEn = def.term_en ? `<span class="term-en">(${safeText(def.term_en)})</span>` : '';
+  
+  return `
+    <div class="content-definition">
+      <dt>${safeText(def.term)} ${termEn}</dt>
+      <dd>${safeText(def.description)} ${formula}</dd>
+    </div>
+  `;
+}
+
+function renderList(list) {
+  const Tag = list.ordered ? 'ol' : 'ul';
+  const items = (list.items || []).map(item => `
+    <li>${safeText(item.text)}</li>
+  `).join('');
+  
+  return `<${Tag} class="content-list">${items}</${Tag}>`;
+}
+
+function renderTable(table) {
+  const headers = (table.headers || []).map(h => `<th>${safeText(h)}</th>`).join('');
+  const rows = (table.rows || []).map(row => `
+    <tr>${row.map(cell => `<td>${safeText(cell)}</td>`).join('')}</tr>
+  `).join('');
+  
+  return `
+    <div class="content-table-wrapper">
+      ${table.caption ? `<p class="table-caption">${safeText(table.caption)}</p>` : ''}
+      <table class="content-table">
+        <thead><tr>${headers}</tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderDiagram(diag) {
+  const caption = diag.caption ? `<p class="diagram-caption">${safeText(diag.caption)}</p>` : '';
+  return `
+    <div class="content-diagram">
+      ${caption}
+      <pre class="mermaid">${safeText(diag.code)}</pre>
+    </div>
+  `;
+}
+
+function renderCode(code) {
+  const lang = code.language || '';
+  const caption = code.caption ? `<p class="code-caption">${safeText(code.caption)}</p>` : '';
+  
+  return `
+    <div class="content-code">
+      ${caption}
+      <pre><code class="language-${lang}">${safeText(code.code)}</code></pre>
+    </div>
+  `;
+}
+
+function renderWarning(warn) {
+  const icon = warn.variant === 'warning' ? '⚠️' : warn.variant === 'tip' ? '💡' : warn.variant === 'important' ? '🔴' : '📝';
+  
+  return `
+    <div class="content-warning variant-${warn.variant || 'note'}">
+      <div class="warning-header">
+        <span class="warning-icon">${icon}</span>
+        <span class="warning-title">${safeText(warn.title || '')}</span>
+      </div>
+      <p class="warning-text">${safeText(warn.text)}</p>
+    </div>
+  `;
+}
+
+function renderTheorem(th) {
+  const formula = th.formula ? `<div class="theorem-formula"><code>${safeText(th.formula)}</code></div>` : '';
+  const proof = th.proof ? `<div class="theorem-proof"><strong>Proof:</strong> ${safeText(th.proof)}</div>` : '';
+  
+  return `
+    <div class="content-theorem">
+      <h4 class="theorem-name">${safeText(th.name)}${th.name_en ? ` <span class="term-en">(${safeText(th.name_en)})</span>` : ''}</h4>
+      <p class="theorem-statement">${safeText(th.statement)}</p>
+      ${formula}
+      ${proof}
+    </div>
+  `;
+}
+
+function renderExample(ex) {
+  return `
+    <div class="content-example">
+      <h4 class="example-title">${safeText(ex.title || 'مثال')}</h4>
+      <div class="example-given"><strong>المعطيات:</strong> ${safeText(ex.given)}</div>
+      <div class="example-solution"><strong>الحل:</strong> ${safeText(ex.solution)}</div>
+      ${ex.result ? `<div class="example-result"><strong>النتيجة:</strong> ${safeText(ex.result)}</div>` : ''}
+    </div>
+  `;
+}
+
+function renderDivider(div) {
+  return `<hr class="content-divider style-${div.style || 'solid'}">`;
+}
+
+// ========================================
+// Helper Functions
+// ========================================
+
+function getCardIcon(title) {
+  if (!title) return '📚';
+  const t = title.toLowerCase();
+  if (t.includes('تعاريف') || t.includes('مفاهيم') || t.includes('definition')) return '📐';
+  if (t.includes('نظريات') || t.includes('theorems')) return '🧮';
+  if (t.includes('خوارزميات') || t.includes('algorithms')) return '🔁';
+  if (t.includes('جداول') || t.includes('tables')) return '📊';
+  if (t.includes('مخطط') || t.includes('diagram')) return '📈';
+  if (t.includes('ملخص') || t.includes('summary')) return '📝';
+  if (t.includes('أخطاء') || t.includes('pitfalls')) return '⚠️';
   return '📚';
 }
+
+function renderTextWithLatex(text) {
+  if (!text) return '';
+  // Simple approach - just escape but preserve literal $ for LaTeX
+  return text.replace(/([^$])(\$[^$]+\$)/g, '$1$2');
+}
+
+function safeText(text) {
+  if (!text) return '';
+  return String(text);
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ========================================
+// LaTeX Rendering
+// ========================================
 
 function renderMath(container) {
   if (typeof renderMathInElement !== 'undefined' && container) {
@@ -559,61 +699,56 @@ function renderMath(container) {
   }
 }
 
+// ========================================
+// Mermaid Rendering
+// ========================================
+
 async function renderMermaidDiagrams(container) {
   if (typeof mermaid === 'undefined') return;
   
-  // Find all pre elements that might contain mermaid diagrams
-  const mermaidBlocks = [];
-  const allPres = container.querySelectorAll('pre');
-  
-  for (const pre of allPres) {
-    const code = pre.querySelector('code');
-    const codeClass = code?.className || '';
-    const preText = pre.textContent.trim();
-    
-    // Check if this is a mermaid block
-    const isMermaid = codeClass.includes('mermaid') || 
-        preText.startsWith('graph') || 
-        preText.startsWith('flowchart') ||
-        preText.startsWith('pie') ||
-        preText.startsWith('sequenceDiagram') ||
-        preText.startsWith('classDiagram') ||
-        preText.startsWith('stateDiagram');
-    
-    if (isMermaid) {
-      mermaidBlocks.push(pre);
-    }
-  }
+  const mermaidBlocks = container.querySelectorAll('pre.mermaid');
   
   for (const block of mermaidBlocks) {
     try {
       const graphDefinition = (block.textContent || block.innerText || '').trim();
       if (!graphDefinition) continue;
       
-      // Create unique ID for each diagram
       const id = `mermaid-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       
-      // Use mermaid 10.x API - render returns { svg } promise
       const { svg } = await mermaid.render(id, graphDefinition);
       
       const wrapper = document.createElement('div');
       wrapper.className = 'mermaid';
       wrapper.innerHTML = svg;
-      
-      // Ensure proper styling
       wrapper.style.direction = 'ltr';
       wrapper.style.textAlign = 'left';
       
       block.replaceWith(wrapper);
     } catch (error) {
       console.error('Mermaid render error:', error);
-      // Replace with error message
       const errorDiv = document.createElement('div');
       errorDiv.className = 'error-state';
       errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i><p>خطأ في رسم المخطط البياني</p><p class="hint">${error.message}</p>`;
       block.replaceWith(errorDiv);
     }
   }
+}
+
+// ========================================
+// Legacy Markdown Support (Backward Compatibility)
+// ========================================
+
+async function renderLegacyMarkdown(mdPath, container) {
+  console.warn('Using legacy markdown renderer for:', mdPath);
+  
+  // Simple fallback - show message that this needs conversion
+  container.innerHTML = `
+    <div class="legacy-notice">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>هذا المقرر يستخدم تنسيق Markdown القديم.</p>
+      <p class="hint">يرجى تحويله إلى تنسيق JSON الجديد.</p>
+    </div>
+  `;
 }
 
 // ========================================
@@ -624,11 +759,10 @@ function setupEventListeners() {
   // Theme toggle
   document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
   
-  // Search - Now searches across ALL years and courses globally
+  // Search
   const searchInput = document.getElementById('searchInput');
   searchInput?.addEventListener('input', debounce((e) => {
     state.searchQuery = e.target.value;
-    // Always perform global search across all courses
     performGlobalSearch(state.searchQuery);
   }, CONFIG.debounceDelay));
   
@@ -675,7 +809,6 @@ function setupEventListeners() {
     const courseCard = e.target.closest('.course-card-large');
     if (courseCard) {
       const courseId = courseCard.dataset.courseId;
-      // Store the year/semester before navigating
       const year = parseInt(courseCard.dataset.year);
       const semester = parseInt(courseCard.dataset.semester);
       state.currentYear = year;
@@ -701,25 +834,21 @@ function setupEventListeners() {
 
 function goBack() {
   if (state.currentCourse) {
-    // Go from course page to semester or search results
     state.currentCourse = null;
     if (state.currentYear && state.currentSemester) {
       showView('semesterView');
       updateBreadcrumb(`الفصل ${state.currentSemester === 1 ? 'الأول' : 'الثاني'}`, state.currentYear, state.currentSemester);
     } else if (state.searchQuery) {
-      // Go back to search results if there was a search query
       performGlobalSearch(state.searchQuery);
     } else {
       renderYears();
     }
   } else if (state.searchQuery) {
-    // Go from search results to years
     state.searchQuery = '';
     const searchInput = document.getElementById('searchInput');
     if (searchInput) searchInput.value = '';
     renderYears();
   } else if (state.currentYear) {
-    // Go from semester to years
     state.currentYear = null;
     state.currentSemester = null;
     renderYears();
