@@ -1,27 +1,70 @@
 {
   "course": { "id": "programming-1", "title_ar": "برمجة 1", "title_en": "Programming 1" },
   "components": [
-    { "type": "card", "title": "التعاريف", "icon": "D", "children": [
-      { "type": "definition", "term": "المتغير", "description": "موقع ذاكرة", "formula": "type name" },
-      { "type": "definition", "term": "نوع البيانات", "description": "تصنيف القيم" },
-      { "type": "definition", "term": "المعامل", "description": "يرمز لعملية" },
-      { "type": "definition", "term": "الدالة", "description": "كتلة برمجية" }
+    { "type": "card", "title": "📐 التعاريف الأساسية", "icon": "📐", "children": [
+      { "type": "definition", "term": "المتغير (Variable)", "term_en": "Variable", "description": "موقع في الذاكرة يخزن قيمة", "formula": "type name = value;" },
+      { "type": "definition", "term": "نوع البيانات (Data Type)", "term_en": "Data Type", "description": "تصنيف القيمة المخزنة" },
+      { "type": "definition", "term": "المعامل (Operator)", "term_en": "Operator", "description": "يرمز لعملية حسابية أو منطقية" },
+      { "type": "definition", "term": "الدالة (Function)", "term_en": "Function", "description": "كتلة برمجية قابلة لإعادة الاستخدام", "formula": "return_type name(params) { }" },
+      { "type": "definition", "term": "المصفوفة (Array)", "term_en": "Array", "description": "مجموعة من العناصر من نفس النوع", "formula": "type name[size];" }
     ]},
-    { "type": "card", "title": "الأنواع", "icon": "T", "children": [
-      { "type": "table", "headers": ["النوع", "الحجم", "النطاق"], "rows": [["int", "4 bytes", "-2^31 to 2^31-1"], ["float", "4 bytes", "±3.4×10^38"], ["double", "8 bytes", "±1.7×10^308"], ["char", "1 byte", "-128 to 127"], ["bool", "1 byte", "true/false"]], "caption": "أنواع C++" }
+    { "type": "card", "title": "💻 الأنواع الأساسية", "icon": "💻", "children": [
+      { "type": "table", "headers": ["النوع", "الحجم", "النطاق", "الوصف"], "rows": [
+        ["int", "4 bytes", "$-2^{31}$ to $2^{31}-1$", "عدد صحيح"],
+        ["float", "4 bytes", "$\\pm 3.4 \\times 10^{38}$", "عدد عشري"],
+        ["double", "8 bytes", "$\\pm 1.7 \\times 10^{308}$", "عدد عشري مضاعف"],
+        ["char", "1 byte", "$-128$ to $127$", "حرف واحد"],
+        ["bool", "1 byte", "true/false", "قيمة منطقية"]
+      ], "caption": "أنواع البيانات في C++" },
+      { "type": "code", "language": "cpp", "code": "// أمثلة على التصريح\nint age = 25;\ndouble salary = 1500.50;\nchar grade = 'A';\nbool isActive = true;", "caption": "تصريح المتغيرات" }
     ]},
-    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
-      { "type": "equation", "formula": "type name = value;", "display": true, "label": "تعريف" },
-      { "type": "equation", "formula": "return_type f(params){}", "display": true, "label": "دالة" },
-      { "type": "equation", "formula": "for(init;cond;inc){}", "display": true, "label": "for loop" }
+    { "type": "card", "title": "💻 العمليات الحسابية", "icon": "➕", "children": [
+      { "type": "table", "headers": ["العملية", "الرمز", "المثال", "النتيجة"], "rows": [
+        ["جمع", "+", "5 + 3", "8"],
+        ["طرح", "-", "5 - 3", "2"],
+        ["ضرب", "*", "5 * 3", "15"],
+        ["قسمة", "/", "5 / 3", "1"],
+        ["باقٍ", "%", "5 % 3", "2"]
+      ], "caption": "العمليات الحسابية" },
+      { "type": "code", "language": "cpp", "code": "int a = 10, b = 3;\nint sum = a + b;    // 13\nint diff = a - b;    // 7\nint prod = a * b;   // 30\nint quot = a / b;   // 3\nint rem = a % b;    // 1", "caption": "أمثلة عملية" }
     ]},
-    { "type": "card", "title": "الجداول", "icon": "S", "children": [
-      { "type": "table", "headers": ["ال操作", "الرمز", "النتيجة"], "rows": [["جمع", "5 + 3", "8"], ["طرح", "5 - 3", "2"], ["ضرب", "5 * 3", "15"], ["قسمة", "5 / 3", "1"], ["باقٍ", "5 % 3", "2"]], "caption": "العمليات" },
-      { "type": "table", "headers": ["المقارنة", "الرمز"], "rows": [["أكبر", ">"], ["أصغر", "<"], ["تساوي", "=="], ["لا تساوي", "!="]], "caption": "المقارنة" }
+    { "type": "card", "title": "💻 ع��ليات المقارنة", "icon": "🔄", "children": [
+      { "type": "table", "headers": ["المقارنة", "الرمز", "مثال", "النتيجة"], "rows": [
+        ["أكبر من", ">", "5 > 3", "true"],
+        ["أصغر من", "<", "5 < 3", "false"],
+        ["تساوي", "==", "5 == 5", "true"],
+        ["لا تساوي", "!=", "5 != 3", "true"],
+        ["أكبر أو يساوي", ">=", "5 >= 3", "true"],
+        ["أصغر أو يساوي", "<=", "5 <= 3", "false"]
+      ], "caption": "عمليات المقارنة" },
+      { "type": "warning", "variant": "warning", "title": "فرق مهم", "text": "= تعني إسناد، == تعني مقارنة" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "=", "text": "= إسناد، == مقارنة" },
-      { "type": "warning", "variant": "tip", "title": "++i vs i++", "text": "الأولى تزيد ثم تستخدم" }
+    { "type": "card", "title": "🔄 الـ Control Flow", "icon": "🔄", "children": [
+      { "type": "code", "language": "cpp", "code": "// if-else\nif (age >= 18) {\n    cout << \"بالغ\";\n} else {\n    cout << \"قاصر\";\n}", "caption": "الشرط (if-else)" },
+      { "type": "code", "language": "cpp", "code": "// for loop\nfor (int i = 0; i < 5; i++) {\n    cout << i << \" \";\n}\n// الناتج: 0 1 2 3 4", "caption": "حلقة for" },
+      { "type": "code", "language": "cpp", "code": "// while loop\nint i = 0;\nwhile (i < 5) {\n    cout << i++ << \" \";\n}", "caption": "حلقة while" }
+    ]},
+    { "type": "card", "title": "📊 الدوال الأساسية", "icon": "📊", "children": [
+      { "type": "equation", "formula": "$\\frac{n(n+1)}{2}$", "display": true, "label": "مجموع الأعداد من 1 إلى n" },
+      { "type": "equation", "formula": "$n^2$", "display": true, "label": "مربع العدد" },
+      { "type": "equation", "formula": "$n! = 1 \\times 2 \\times ... \\times n$", "display": true, "label": "عاملي" },
+      { "type": "code", "language": "cpp", "code": "// حساب Factorial\nint factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n-1);\n}", "caption": "دالة Factorial" }
+    ]},
+    { "type": "card", "title": "🧮 المصفوفات", "icon": "📊", "children": [
+      { "type": "code", "language": "cpp", "code": "// التصريح\nint numbers[5];\n\n// الإسناد\nnumbers[0] = 10;\nnumbers[1] = 20;\nnumbers[2] = 30;\n\n// أو\nint numbers[] = {10, 20, 30};", "caption": "مصفوفة أحادية" },
+      { "type": "code", "language": "cpp", "code": "// طباعة عناصر المصفوفة\nfor (int i = 0; i < 5; i++) {\n    cout << numbers[i] << \" \";\n}", "caption": "遍历 المصفوفة" },
+      { "type": "table", "headers": ["العملية", "التعقيد"], "rows": [
+        ["الوصول للعنصر", "$O(1)$"],
+        ["البحث", "$O(n)$"],
+        ["الإدراج", "$O(n)$"],
+        ["الحذف", "$O(n)$"]
+      ], "caption": "تعقيد المصفوفات" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "=", "text": "= إسناد وليس مقارنة! استخدم ==" },
+      { "type": "warning", "variant": "warning", "title": "الفهرسة", "text": "المصفوفة تبدأ من 0 وليس 1" },
+      { "type": "warning", "variant": "tip", "title": "++i vs i++", "text": "++i تزيد ثم تستخدم، i++ تستخدم ثم تزيد" },
+      { "type": "warning", "variant": "tip", "title": "النوع", "text": "5/2 = 2 (قسمة صحيحة)، 5.0/2 = 2.5" }
     ]}
   ]
 }

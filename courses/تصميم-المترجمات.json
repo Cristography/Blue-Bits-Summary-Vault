@@ -1,26 +1,63 @@
 {
   "course": { "id": "compiler-design", "title_ar": "تصميم المترجمات", "title_en": "Compiler Design" },
   "components": [
-    { "type": "card", "title": "المراحل", "icon": "L", "children": [
-      { "type": "definition", "term": "Lexer", "description": "المحلل المعجمي" },
-      { "type": "definition", "term": "Parser", "description": "المحلل اللغوي" },
-      { "type": "definition", "term": "Semantic", "description": "المحلل الدلالي" },
-      { "type": "definition", "term": "Codegen", "description": "توليد الكود" }
+    { "type": "card", "title": "📐 مراحل المترجم", "icon": "📐", "children": [
+      { "type": "definition", "term": "المحلل المعجمي", "term_en": "Lexer", "description": "تحويل النص لرموز", "formula": "$lexer \\rightarrow tokens$" },
+      { "type": "definition", "term": "المحلل اللغوي", "term_en": "Parser", "description": "بناء شجرة التحليل", "formula": "$tokens \\rightarrow AST$" },
+      { "type": "definition", "term": "المحلل الدلالي", "term_en": "Semantic Analyzer", "description": "فحص المعنى والأنواع", "formula": "$AST \\rightarrow AST$" },
+      { "type": "definition", "term": "محسن الكود", "term_en": "Optimizer", "description": "تحسين الشجرة", "formula": "$IR \\rightarrow IR_{opt}$" },
+      { "type": "definition", "term": "مولد الكود", "term_en": "Code Generator", "description": "توليد الكود النهائي", "formula": "$IR \\rightarrow assembly$" },
+      { "type": "diagram", "chart": "flowchart", "code": "SRC(Source) --> LEX(Lexer)\nLEX --> TOK(Tokens)\nTOK --> PAR(Parser)\nPAR --> AST(AST)\nAST --> SEM(Semantic)\nSEM --> IR(IR)\nIR --> OPT(Optimizer)\nOPT --> CG(Code Gen)\nCG --> OUT(Output)", "caption": "مراحل المترجم" }
     ]},
-    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
-      { "type": "equation", "formula": "Lexer -> Tokens", "display": true, "label": "المحلل المعجمي" },
-      { "type": "equation", "formula": "Tokens -> Parse Tree", "display": true, "label": "المحلل اللغوي" },
-      { "type": "equation", "formula": "Parse Tree -> AST", "display": true, "label": "شجرة المجرد" }
+    { "type": "card", "title": "💻 الـ Lexer", "icon": "💻", "children": [
+      { "type": "code", "language": "cpp", "code": "enum TokenType {\n    IDENTIFIER,\n    KEYWORD,\n    NUMBER,\n    STRING,\n    OPERATOR,\n    DELIMITER\n};\n\nstruct Token {\n    TokenType type;\n    string lexeme;\n    int line;\n    int column;\n};", "caption": "تعريف Token" },
+      { "type": "code", "language": "cpp", "code": "Token lexer(string input) {\n    vector<Token> tokens;\n    int i = 0;\n    while (i < input.length()) {\n        if (isspace(input[i])) { i++; continue; }\n        if (isalpha(input[i])) {\n            string word;\n            while (isalnum(input[i]))\n                word += input[i++];\n            tokens.push_back(classify(word));\n        } else if (isdigit(input[i])) {\n            string num;\n            while (isdigit(input[i]))\n                num += input[i++];\n            tokens.push_back({NUMBER, num});\n        } else {\n            tokens.push_back({OPERATOR, string(1, input[i++])});\n        }\n    }\n    return tokens;\n}", "caption": "مثال Lexer" }
     ]},
-    { "type": "card", "title": "الـ BNF", "icon": "B", "children": [
-      { "type": "table", "headers": ["الرمز", "المعنى"], "rows": [["::=", "يساوي"], ["<>", "غير طرفي"], ["|", "أو"]], "caption": "الترميز" }
+    { "type": "card", "title": "🧮 grammaires والـ BNF", "icon": "🧮", "children": [
+      { "type": "table", "headers": ["الرمز", "المعنى", "مثال"], "rows": [
+        ["::=", "يساوي تعريف", "$<expr> ::= <term>+$"],
+        ["<>", "غير طرفي", "$<digit> ::= 0|1|2|...|9$"],
+        [" | ", "أو", "$<digit> ::= 0|1|2|3|4|5|6|7|8|9$"],
+        ["()", "تجميع", "$<expr> ::= (<term>)+$"],
+        ["*", "صفر أو أكثر", "$<digit>*$"],
+        ["+", "واحد أو أكثر", "$<digit>+$"],
+        ["?", "اختياري", "$<digit>?$"]
+      ], "caption": "ترميز BNF" },
+      { "type": "code", "language": "bnf", "code": "<!-- مثال على grammaires成名 -->\n<program> ::= <decl_list>\n\n<decl_list> ::= <decl> | <decl_list> <decl>\n\n<decl> ::= <var_decl> | <fn_decl>\n\n<var_decl> ::= <type> <identifier> ;\n\n<type> ::= int | float | void\n\n<identifier> ::= <letter> <letter_or_digit>*\n\n\n<letter_or_digit> ::= <letter> | <digit>", "caption": "مثال BNF" }
     ]},
-    { "type": "card", "title": "التحليل", "icon": "P", "children": [
-      { "type": "table", "headers": ["النوع", "التعقيد"], "rows": [["LL(1)", "O(n)"], ["LR(k)", "O(n)"], ["SLR", "O(n)"], ["LALR", "O(n)"]], "caption": "المحللين" }
+    { "type": "card", "title": "🔄 أنواع التحليل اللغوي", "icon": "🔄", "children": [
+      { "type": "table", "headers": ["النوع", "الاتجاه", "جدول التحليل", "العيوب"], "rows": [
+        ["LL(1)", "Top-down", "First/Follow", "لا 左 recursion"],
+        ["LR(0)", "Bottom-up", "Items", "Complex"],
+        ["SLR(1)", "Bottom-up", "Follow sets", "Simple LALR"],
+        ["LALR(1)", "Bottom-up", "Lookahead", "Popular"],
+        ["CLR(1)", "Bottom-up", "Full lookahead", "Large table"]
+      ], "caption": "أنواع Parser" },
+      { "type": "code", "language": "cpp", "code": "// Recursive Descent Parser (LL)\nbool parse_expr() {\n    if (parse_term()) {\n        while (lookahead == PLUS || lookahead == MINUS) {\n            match(lookahead);\n            parse_term();\n            // build tree node\n        }\n        return true;\n    }\n    return false;\n}\n\nbool parse_term() {\n    if (parse_factor()) {\n        while (lookahead == TIMES || lookahead == DIVIDE) {\n            match(lookahead);\n            parse_factor();\n        }\n        return true;\n    }\n    return false;\n}", "caption": "Recursive Descent Parser" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "Left Recursion", "text": "يسبب لوردية غير منتهية" },
-      { "type": "warning", "variant": "tip", "title": "LR أفضل", "text": " LR أقوى من LL" }
+    { "type": "card", "title": "🔍 الكشف عن الأخطاء", "icon": "🔍", "children": [
+      { "type": "definition", "term": "الإبلاغ", "term_en": "Reporting", "description": "إظهار رسالة الخطأ" },
+      { "type": "definition", "term": "التعافي", "term_en": "Recovery", "description": "مواصلة التحليل" },
+      { "type": "table", "headers": ["الStrategy", "الوصف", "المميزات"], "rows": [
+        [" Panic Mode", "تجاهل حتى ;", "Simple"],
+        [" Phrase", "إدراج/حذف", "Limited"],
+        [" Decision", "جدول أخطاء", "Complex"],
+        [" Global", "تصحيح شامل", "Expensive"]
+      ], "caption": "استراتيجيات التعافي" },
+      { "type": "warning", "variant": "warning", "title": "Left Recursion", "text": "يسبب ل无限 loop في LL(1)!" },
+      { "type": "warning", "variant": "tip", "title": "LR أفضل", "text": "LR أقوى من LL ويست Left recursion" }
+    ]},
+    { "type": "card", "title": "📊 intermediate Representation", "icon": "📊", "children": [
+      { "type": "definition", "term": "Three-Address Code", "term_en": "3AC", "description": "تعليمات بحد أقصى 3 عناوين", "formula": "$x = y \\ op \\ z$" },
+      { "type": "definition", "term": "Static Single Assignment", "term_en": "SSA", "description": "كل متغير يُعرّف مرة واحدة" },
+      { "type": "definition", "term": "Control Flow Graph", "term_en": "CFG", "description": "تمثيل بياني للتدفق" },
+      { "type": "code", "language": "asm", "code": "# Three-Address Code\nt1 = a + b\nt2 = t1 * c\nd = t2 - e\n\n# معlabels\nif a < b goto L1\nt3 = 0\ngoto L2\nL1: t3 = 1\nL2: x = t3", "caption": "مثال 3AC" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "Left Recursion", "text": "في LL(1)会导致 infloop!" },
+      { "type": "warning", "variant": "warning", "title": "Ambiguity", "text": "$a$b$c$ يمكن أن تكون $+ (b \\times c)$ أو $(a+b) \\times c$" },
+      { "type": "warning", "variant": "tip", "title": "LR أفضل", "text": "LR يقبل left recursion و أكثر expressiveness" },
+      { "type": "warning", "variant": "tip", "title": "Flex & Bison", "text": "أدوات لإنشاء lexer/parser" }
     ]}
   ]
 }

@@ -1,28 +1,61 @@
 {
   "course": { "id": "discrete-math", "title_ar": "رياضيات متقطعة", "title_en": "Discrete Mathematics" },
   "components": [
-    { "type": "card", "title": "المفاهيم", "icon": "M", "children": [
-      { "type": "definition", "term": "المجموعات", "description": "عناصر متميزة" },
-      { "type": "definition", "term": "العلاقات", "description": "رابط بين عنصرين" },
-      { "type": "definition", "term": "الدوال", "description": "تخطيط لمجموعة" }
+    { "type": "card", "title": "📐 المفاهيم الأساسية", "icon": "📐", "children": [
+      { "type": "definition", "term": "المجموعة (Set)", "term_en": "Set", "description": "مجموعة من_elements المتميزة", "formula": "$A = \\{1, 2, 3\\}$" },
+      { "type": "definition", "term": "العنصر (Element)", "term_en": "Element", "description": "مكون من مكونات المجموعة" },
+      { "type": "definition", "term": "المجموعة الشاغرة (Empty Set)", "term_en": "Empty Set", "description": "مجموعة لا تحتوي عناصر", "formula": "$\\emptyset = \\{\\}$" },
+      { "type": "definition", "term": "التجزئة (Partition)", "term_en": "Partition", "description": "تقسيم المجموعة إلى مجموعات فرعية متفككة" }
     ]},
-    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
-      { "type": "equation", "formula": "A U B", "display": true, "label": "Union" },
-      { "type": "equation", "formula": "A n B", "display": true, "label": "Intersection" },
-      { "type": "equation", "formula": "A - B", "display": true, "label": "Difference" },
-      { "type": "equation", "formula": "Ac", "display": true, "label": "Complement" }
+    { "type": "card", "title": "🔗 العلاقات والعمليات", "icon": "🔗", "children": [
+      { "type": "table", "headers": ["العملية", "الرمز", "المعنى", "التعريف"], "rows": [
+        ["الاتحاد", "$\\cup$", "أو", "$A \\cup B = \\{x: x \\in A \\text{ أو } x \\in B\\}$"],
+        ["التقاطع", "$\\cap$", "و", "$A \\cap B = \\{x: x \\in A \\text{ و } x \\in B\\}$"],
+        ["الفرق", "$A - B$", "ليس في", "$A - B = \\{x: x \\in A \\text{ و } x \\notin B\\}$"],
+        ["المكملة", "$\\overline{A}$", "ليس في U", "$\\overline{A} = U - A$"]
+      ], "caption": "عمليات المجموعات" },
+      { "type": "example", "given": "$A = \\{1,2,3\\}$, $B = \\{2,4\\}$", "solution": "$A \\cup B = \\{1,2,3,4\\}$, $A \\cap B = \\{2\\}$, $A - B = \\{1,3\\}$", "result": "$\\cup = \\{1,2,3,4\\}, \\cap = \\{2\\}, - = \\{1,3\\}$" }
     ]},
-    { "type": "card", "title": "النظريات", "icon": "T", "children": [
-      { "type": "theorem", "name": "دي مورجان 1", "statement": " complements", "formula": "overline(AnB) = overlineA U overlineB" },
-      { "type": "theorem", "name": "دي مورجان 2", "statement": " complements", "formula": "overline(AUB) = overlineA n overlineB" }
+    { "type": "card", "title": "🧮 قوانين ديمورغان", "icon": "🧮", "children": [
+      { "type": "theorem", "name": "قانون ديمورجان الأول", "name_en": "De Morgan's Law 1", "statement": "مكمال التقاطع يساوي تقاطع المكمالات", "formula": "$\\overline{A \\cap B} = \\overline{A} \\cup \\overline{B}$" },
+      { "type": "theorem", "name": "قانون ديمورجان الثاني", "name_en": "De Morgan's Law 2", "statement": "مكمال الاتحاد يساوي تقاطع المكمالات", "formula": "$\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B}$" },
+      { "type": "example", "given": "$A = \\{1,2\\}$, $B = \\{2,3\\}$, $U = \\{1,2,3,4\\}$", "solution": "$\\overline{A} = \\{3,4\\}, \\overline{B} = \\{1,4\\}$", "result": "$\overline{A \\cap B} = \\{1,3,4\\} = \\overline{A} \\cup \\overline{B}$ ✓" }
     ]},
-    { "type": "card", "title": "التوافقيات", "icon": "C", "children": [
-      { "type": "equation", "formula": "P(n,r) = n!/(n-r)!", "display": true, "label": "التباديل" },
-      { "type": "equation", "formula": "C(n,r) = n!/(r!(n-r)!)", "display": true, "label": "التوافقيات" },
-      { "type": "table", "headers": ["النوع", "الصيغة"], "rows": [["مبدأ الضرب", "|AxB| = |A|x|B|"], ["مبدأ الجمع", "|AUB| = |A|+|B|-|AnB|"]], "caption": "المبادئ" }
+    { "type": "card", "title": "🔢 التوافقيات", "icon": "🔢", "children": [
+      { "type": "equation", "formula": "$P(n,r) = \\frac{n!}{(n-r)!}$", "display": true, "label": "التباديل (Permutations)" },
+      { "type": "equation", "formula": "$C(n,r) = \\binom{n}{r} = \\frac{n!}{r!(n-r)!}$", "display": true, "label": "التوافقيات (Combinations)" },
+      { "type": "table", "headers": ["النوع", "الصيغة", "مثال"], "rows": [
+        ["مبدأ الضرب", "$|A \\times B| = |A| \\times |B|$", "$3 \\times 4 = 12$"],
+        ["مبدأ الجمع", "$|A \\cup B| = |A| + |B| - |A \\cap B|$", "$3 + 4 - 1 = 6$"]
+      ], "caption": "مبادئ العد" },
+      { "type": "example", "given": "كم عدد بطاقات鎖مة من 4 أحرف؟", "solution": "$P(26,4) = 26 \\times 25 \\times 24 \\times 23 = 358,800$", "result": "$358,800$ طريقة" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "tip", "title": "ملاحظة", "text": "U = Union, n = Intersection" }
+    { "type": "card", "title": "📊 العلاقات", "icon": "📊", "children": [
+      { "type": "definition", "term": "العلاقة الثنائية", "term_en": "Binary Relation", "description": "مجموعة من الأزواج المرتبة", "formula": "$R \\subseteq A \\times B$" },
+      { "type": "definition", "term": "الت reflexivity", "term_en": "Reflexive", "description": "$aRa$ لكل $a \\in A$" },
+      { "type": "definition", "term": "التناظر (Symmetric)", "term_en": "Symmetric", "description": "إذا $aRb$ então $bRa$" },
+      { "type": "definition", "term": "الانتقالية (Transitive)", "term_en": "Transitive", "description": "إذا $aRb$ و $bRc$ então $aRc$" },
+      { "type": "definition", "term": "علاقة التكافؤ", "term_en": "Equivalence Relation", "description": "reflexive + symmetric + transitive" }
+    ]},
+    { "type": "card", "title": "📊 الدوال", "icon": "📊", "children": [
+      { "type": "definition", "term": "الدالة", "term_en": "Function", "description": "Relation حيث كل عنصرDomain له صورة واحدة" },
+      { "type": "table", "headers": ["النوع", "الشرط", "مثال"], "rows": [
+        ["one-to-one (1-1)", "$f(a) = f(b) \\Rightarrow a = b$", "$f(x) = 2x$"],
+        ["onto (surjective)", "$Ranges = Codomain$", "$f(x) = x^2$ (إذا Range ≥ 0)"],
+        ["bijective", "1-1 + onto", "$f(x) = x + 1$"]
+      ], "caption": "أنواع الدوال" },
+      { "type": "equation", "formula": "$(f \\circ g)(x) = f(g(x))$", "display": true, "label": "تكوين الدوال" }
+    ]},
+    { "type": "card", "title": "📈 المتتابعات", "icon": "📈", "children": [
+      { "type": "equation", "formula": "$a_n = a_1 + (n-1)d$", "display": true, "label": "متتابعة حسابية" },
+      { "type": "equation", "formula": "$S_n = \\frac{n}{2}(a_1 + a_n)$", "display": true, "label": "مجموع حسابي" },
+      { "type": "equation", "formula": "$a_n = a_1 \\cdot r^{n-1}$", "display": true, "label": "متتابعة هندسية" },
+      { "type": "equation", "formula": "$S_n = a_1 \\frac{1-r^n}{1-r}$", "display": true, "label": "مجموع هندسي ($r \\neq 1$)" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "U vs n", "text": "$U$ = الاتحاد، $\\cap$ = التقاطع (وليس العكس!)" },
+      { "type": "warning", "variant": "tip", "title": "De Morgan", "text": "ت互換ع: $\cap$ → $\cup$ و $\cup$ → $\cap$" },
+      { "type": "warning", "variant": "tip", "title": "P vs C", "text": "الترتيب مهم →$P(n,r)$، الترتيب مش مهم →$C(n,r)$" }
     ]}
   ]
 }

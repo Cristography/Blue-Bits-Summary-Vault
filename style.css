@@ -926,6 +926,23 @@ body {
   unicode-bidi: embed;
 }
 
+/* LaTeX formula in code blocks */
+.card-body code.formula-inline,
+.card-body code.katex-formula {
+  background: transparent;
+  padding: 0;
+  font-size: 1em;
+  display: inline-block;
+}
+
+/* Ensure katex renders properly */
+.card-body .katex-inline,
+.card-body .katex-formula {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: bidi-override;
+}
+
 .card-body pre {
   background: var(--surf);
   padding: var(--space-md);

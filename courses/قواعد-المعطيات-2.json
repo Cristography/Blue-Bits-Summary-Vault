@@ -1,23 +1,57 @@
 {
   "course": { "id": "databases-2", "title_ar": "قواعد المعطيات 2", "title_en": "Databases 2" },
   "components": [
-    { "type": "card", "title": "الـ SQL المتقدم", "icon": "S", "children": [
-      { "type": "equation", "formula": "SELECT col FROM (subquery)", "display": true, "label": "Subquery" },
-      { "type": "equation", "formula": "ROW_NUMBER() OVER()", "display": true, "label": "Window" },
-      { "type": "equation", "formula": "JOIN ON t1.id = t2.id", "display": true, "label": "JOIN" }
+    { "type": "card", "title": "📐 التعاريف المتقدمة", "icon": "📐", "children": [
+      { "type": "definition", "term": "الـ Transaction", "term_en": "Transaction", "description": "وحدة من العمليات", "formula": "$BEGIN \\rightarrow COMMIT$" },
+      { "type": "definition", "term": "ACID", "term_en": "ACID Properties", "description": "Atomicity, Consistency, Isolation, Durability" },
+      { "type": "definition", "term": "Checkpoint", "term_en": "Checkpoint", "description": "نقطة حفظ في القرص" },
+      { "type": "definition", "term": "Rollback", "term_en": "Rollback", "description": "التراجع عن التغييرات" }
     ]},
-    { "type": "card", "title": "الفهارس", "icon": "I", "children": [
-      { "type": "table", "headers": ["النوع", "التعقيد"], "rows": [["B-Tree", "O(log n)"], ["Hash", "O(1)"]], "caption": "الفهارس" }
+    { "type": "card", "title": "💻 SQL المتقدم", "icon": "💻", "children": [
+      { "type": "code", "language": "sql", "code": "-- Subquery\nSELECT name\nFROM students\nWHERE gpa > (\n    SELECT AVG(gpa)\n    FROM students\n);", "caption": "Subquery" },
+      { "type": "code", "language": "sql", "code": "-- EXISTS\nSELECT * FROM departments d\nWHERE EXISTS (\n    SELECT 1 FROM students s\n    WHERE s.dept_id = d.id\n);", "caption": "EXISTS" },
+      { "type": "code", "language": "sql", "code": "-- Window Functions\nSELECT \n    name,\n    gpa,\n    ROW_NUMBER() OVER (ORDER BY gpa DESC) as rank,\n    AVG(gpa) OVER () as avg_gpa,\n    SUM(gpa) OVER (PARTITION BY dept_id) as dept_sum\nFROM students;", "caption": "Window Functions" },
+      { "type": "code", "language": "sql", "code": "-- CTEs (Common Table Expressions)\nWITH dept_avg AS (\n    SELECT dept_id, AVG(gpa) as avg_gpa\n    FROM students\n    GROUP BY dept_id\n)\nSELECT s.name, s.gpa, d.avg_gpa\nFROM students s\nJOIN dept_avg d ON s.dept_id = d.dept_id\nWHERE s.gpa > d.avg_gpa;", "caption": "CTEs" }
     ]},
-    { "type": "card", "title": "المعاملات", "icon": "T", "children": [
-      { "type": "table", "headers": ["المستوى", "الوصف"], "rows": [["READ UNCOMMITTED", "قراءة غير محتملة"], ["READ COMMITTED", "قراءة محتملة"], ["REPEATABLE READ", "غير قابلة للتكرار"], ["SERIALIZABLE", "تسلسلية"]], "caption": "الـ Isolation" }
+    { "type": "card", "title": "🔗 الـ Joins المتقدمة", "icon": "🔗", "children": [
+      { "type": "code", "language": "sql", "code": "-- Cross Join (Cartesian)\nSELECT * FROM table1 CROSS JOIN table2;\n\n-- Self Join\nSELECT e.name, m.name as manager\nFROM employees e\nLEFT JOIN employees m ON e.manager_id = m.id;", "caption": "أنواع JOIN" },
+      { "type": "code", "language": "sql", "code": "-- Natural Join\nSELECT * FROM t1 NATURAL JOIN t2;\n\n-- Using specific columns\nSELECT * FROM t1\nJOIN t2 USING (id, name);", "caption": "Natural & Using" },
+      { "type": "code", "language": "sql", "code": "-- Lateral Join (PostgreSQL)\nSELECT t.*, pt.*\nFROM tests t\nCROSS JOIN LATERAL (\n    SELECT COUNT(*) as pass_count\n    FROM test_results tr\n    WHERE tr.test_id = t.id AND tr.score >= 60\n) pt;", "caption": "LATERAL Join" }
     ]},
-    { "type": "card", "title": "ACID", "icon": "A", "children": [
-      { "type": "table", "headers": ["الحرف", "المعنى"], "rows": [["A", "Atomicity"], ["C", "Consistency"], ["I", "Isolation"], ["D", "Durability"]], "caption": "الخصائص" }
+    { "type": "card", "title": "📊 الفهارس والـ Indexing", "icon": "���", "children": [
+      { "type": "table", "headers": ["النوع", "التعقيد", "الحالة"], "rows": [
+        ["B-Tree", "$O(\\log n)$", "Default، للمدى"],
+        ["B+Tree", "$O(\\log n)$", "للنطاقات، في معظم DBs"],
+        ["Hash", "$O(1)$", "للمطابقة التامة فقط"],
+        ["Bitmap", "مضغوط", "للـ low-cardinality"],
+        ["GiST", "موسع", "للنص والـ geometry"],
+        ["BRIN", "مضغوط جداً", "لـ sequential data"]
+      ], "caption": "أنواع الفهارس" },
+      { "type": "code", "language": "sql", "code": "-- Partial Index\nCREATE INDEX idx_active \nON orders(customer_id)\nWHERE status = 'active';\n\n-- Composite Index (order matters!)\nCREATE INDEX idx_name_dept\nON employees(name, dept_id);\n\n-- Include Columns (covering)\nCREATE INDEX idx_name_dept\nON employees(name, dept_id)\nINCLUDE (email, phone);", "caption": "فهارس خاصة" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "Subquery", "text": "قد تكون بطيئة" },
-      { "type": "warning", "variant": "tip", "title": "فهرس", "text": "على أعمدة WHERE" }
+    { "type": "card", "title": "🔒 الـ Isolation Levels", "icon": "🔒", "children": [
+      { "type": "table", "headers": ["المستوى", " Dirty Read", " Non-Repeatable", " Phantom"], "rows": [
+        ["READ UNCOMMITTED", "✓可能出现", "✓可能出现", "✓可能出现"],
+        ["READ COMMITTED", "✗ لا", "✓可能出现", "✓可能出现"],
+        ["REPEATABLE READ", "✗ لا", "✗ لا", "✓可能出现"],
+        ["SERIALIZABLE", "✗ لا", "✗ لا", "✗ لا"]
+      ], "caption": "مستويات العزل" },
+      { "type": "code", "language": "sql", "code": "-- SET Isolation\nSET TRANSACTION ISOLATION LEVEL \n    READ COMMITTED;\n\n-- أو\nBEGIN TRANSACTION;\nSET TRANSACTION ISOLATION LEVEL \n    SERIALIZABLE;\nCOMMIT;", "caption": "تعيين المستوى" },
+      { "type": "warning", "variant": "tip", "title": "ملاحظة", "text": "Level越高，越安全，但الـ concurrency أقل" }
+    ]},
+    { "type": "card", "title": "⚡ الأداء والـ Tuning", "icon": "⚡", "children": [
+      { "type": "code", "language": "sql", "code": "-- EXPLAIN ANALYZE\nEXPLAIN ANALYZE \nSELECT * FROM students \nWHERE gpa > 3.0;\n\n-- pgAdmin \n-- أو\nSET enable_seqscan = off;", "caption": "تحليل الاستعلام" },
+      { "type": "code", "language": "sql", "code": "-- ANALYZE (statistics)\nANALYZE students;\n\n-- VACUUM (reclaim space)\nVACUUM FULL students;\n\n-- REINDEX\nREINDEX INDEX idx_name;", "caption": "صيانة الفهارس" },
+      { "type": "table", "headers": ["الـ Hint", "الاستخدام"], "rows": [
+        ["/*+ FULL(t) */", "Full table scan"],
+        ["/*+ INDEX(t name) */", "Use index"],
+        ["/*+ PARALLEL(t 4) */", "Parallel workers"]
+      ], "caption": "Hints (Oracle)" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "Subquery", "text": "قد يكون بطيئاً، استخدم JOIN بدلاً" },
+      { "type": "warning", "variant": "tip", "title": "فهرس��", "text": "فهرس على أعمدة WHERE و JOIN" },
+      { "type": "warning", "variant": "tip", "title": "SELECT *", "text": "حدد الأعمدة فقط!" }
     ]}
   ]
 }

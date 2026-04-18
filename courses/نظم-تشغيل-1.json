@@ -1,30 +1,70 @@
 {
   "course": { "id": "operating-systems-1", "title_ar": "نظم تشغيل 1", "title_en": "Operating Systems 1" },
   "components": [
-    { "type": "card", "title": "التعاريف", "icon": "O", "children": [
-      { "type": "definition", "term": "نظام التشغيل", "description": "يدير الموارد" },
-      { "type": "definition", "term": "العملية", "description": "برنامج قيد التنفيذ" },
-      { "type": "definition", "term": "الخيط", "description": "Thread" },
-      { "type": "definition", "term": "الـ Kernel", "description": "قلب النظام" }
+    { "type": "card", "title": "📐 التعاريف الأساسية", "icon": "📐", "children": [
+      { "type": "definition", "term": "نظام التشغيل", "term_en": "Operating System", "description": "برنامج يدير موارد الحاسوب", "formula": "$OS$" },
+      { "type": "definition", "term": "العملية", "term_en": "Process", "description": "برنامج قيد التنفيذ", "formula": "$P$" },
+      { "type": "definition", "term": "الخيط", "term_en": "Thread", "description": "وحدة أساسية للتشغيل", "formula": "$T$" },
+      { "type": "definition", "term": "kernel", "term_en": "Kernel", "description": "قلب نظام التشغيل" },
+      { "type": "definition", "term": "Shell", "term_en": "Shell", "description": "طبقة واجهة المستخدم" },
+      { "type": "definition", "term": "الملفات", "term_en": "File System", "description": "تنظيم البيانات على القرص" }
     ]},
-    { "type": "card", "title": "الجدولة", "icon": "S", "children": [
-      { "type": "table", "headers": ["الخوارزمية", "أفضل", "الاسوأ"], "rows": [["FCFS", "O(n)", "O(n)"], ["SJF", "O(n)", "O(n^2)"], ["Round Robin", "Fair", "Fair"], ["Priority", "Variable", "Starvation"]], "caption": "الخوارزميات" }
+    { "type": "card", "title": "🔄 جدولة العمليات", "icon": "🔄", "children": [
+      { "type": "table", "headers": ["الخوارزمية", "الأفضل", "الأسوأ", "المميزات", "العيوب"], "rows": [
+        ["FCFS", "$O(n)$", "$O(n)$", "Simple", "Affected by order"],
+        ["SJF", "$O(n^2)$", "$O(n)$", "Optimal", "Starvation"],
+        ["Priority", "Variable", "Variable", "Supports priority", "Starvation"],
+        ["Round Robin", "Fair", "Fair", "Time sharing", "Context switch"],
+        ["MLFQ", "Better for mix", "Good", "Adaptive", "Complex"]
+      ], "caption": "خوارزميات الجدولة" },
+      { "type": "code", "language": "c", "code": "// FCFS Scheduling\nvoid fcfs_schedule(processes[], int n) {\n    int time = 0;\n    for (int i = 0; i < n; i++) {\n        processes[i].start = time;\n        time += processes[i].burst;\n        processes[i].completion = time;\n        processes[i].turnaround = time - processes[i].arrival;\n        processes[i].Waiting = processes[i].turnaround - processes[i].burst;\n    }\n}", "caption": "FCFS Implementation" },
+      { "type": "equation", "formula": "$Turnaround = Completion - Arrival$", "display": true, "label": "معدل الدوران" },
+      { "type": "equation", "formula": "$Waiting = Turnaround - Burst$", "display": true, "label": "وقت الانتظار" },
+      { "type": "equation", "formula": "$Throughput = \\frac{Completed}{Time}$", "display": true, "label": "الإنتاجية" }
     ]},
-    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
-      { "type": "equation", "formula": "Turnaround = Completion - Arrival", "display": true, "label": "معدل الدوران" },
-      { "type": "equation", "formula": "Waiting = Turnaround - Burst", "display": true, "label": "وقت الانتظار" },
-      { "type": "equation", "formula": "Throughput = Completed / Time", "display": true, "label": "الإنتاجية" }
+    { "type": "card", "title": "💾 إدارة الذاكرة", "icon": "💾", "children": [
+      { "type": "definition", "term": "Paging", "term_en": "Paging", "description": "تقسيم الذاكرة لصفحات ثابتة", "formula": "$pages$" },
+      { "type": "definition", "term": "Segmentation", "term_en": "Segmentation", "description": "تقسيم لقطع متغيرة الحجم" },
+      { "type": "definition", "term": "الذاكرة الافتراضية", "term_en": "Virtual Memory", "description": "ذاكرة على القرص", "formula": "$VM$" },
+      { "type": "definition", "term": "Page Fault", "term_en": "Page Fault", "description": "الصفحة غير موجودة في الذاكرة" },
+      { "type": "table", "headers": ["الخوارزمية", "صفحة ضحية", "ملاحظات"], "rows": [
+        ["FIFO", "الأقدم", "Simple but قد increases"],
+        ["LRU", "المستخدمة الأقل", "Good performance"],
+        ["Optimal", "المستخدمة لاحقاً", "Impossible to implement"],
+        ["Clock", "Second chance", "Approximation of LRU"]
+      ], "caption": "خوارزميات استبدال الصفحات" },
+      { "type": "equation", "formula": "$EAT = Hit \\cdot T_m + Miss \\cdot (T_m + T_s)$", "display": true, "label": "Effective Access Time" }
     ]},
-    { "type": "card", "title": "الذاكرة", "icon": "M", "children": [
-      { "type": "definition", "term": "Paging", "description": "صفحات ثابتة" },
-      { "type": "definition", "term": "Segmentation", "description": "قطع متغيرة" },
-      { "type": "definition", "term": "Virtual Memory", "description": "ذاكرة على القرص" }
+    { "type": "card", "title": "🔒 الـ Deadlock", "icon": "🔒", "children": [
+      { "type": "definition", "term": "Deadlock", "term_en": "Deadlock", "description": "كل العمليات تنتظر موارد محتلة" },
+      { "type": "table", "headers": ["الشرط", "الوصف", "كيف نكسره"], "rows": [
+        ["Mutual Exclusion", "مورد واحد لكل مرة", "Sharing"],
+        ["Hold and Wait", "امساك + انتظار", "Request all at once"],
+        ["No Preemption", "لا إجبار", "Preemption"],
+        ["Circular Wait", "انتظار دائري", "Order resources"]
+      ], "caption": "الشروط الأربعة ( Coffman )" },
+      { "type": "diagram", "chart": "flowchart", "code": "P1(Process 1) -->|hold| R1(Resource 1)\nP2(Process 2) -->|hold| R2(Resource 2)\nR1 -.->|wait| P2\nR2 -.->|wait| P1\nstyle P1 fill:#f96\nstyle R1 fill:#9cf\nstyle P2 fill:#f96\nstyle R2 fill:#9cf", "caption": "مثال Deadlock" },
+      { "type": "code", "language": "c", "code": "// Avoid deadlock with ordering\nvoid acquire_resources(int order) {\n    if (current_order < order) {\n        // wait for resources\n    } else {\n        // acquire\n    }\n}", "caption": "تجنب الـ Deadlock" }
     ]},
-    { "type": "card", "title": "الـ Deadlock", "icon": "D", "children": [
-      { "type": "table", "headers": ["الشرط", "الوصف"], "rows": [["Mutual Exclusion", "استخدام حصري"], ["Hold and Wait", "امساك وانتظار"], ["No Preemption", "لا سلب"], ["Circular Wait", "انتظار دائري"]], "caption": "الشروط الأربعة" }
+    { "type": "card", "title": "🔀 التزامن Concurrent", "icon": "🔀", "children": [
+      { "type": "definition", "term": "Mutex", "term_en": "Mutex", "description": "متطلب الدخول المتبادل", "formula": "lock/unlock" },
+      { "type": "definition", "term": "Semaphore", "term_en": "Semaphore", "description": "عداد للموارد المتاحة", "formula": "$S$" },
+      { "type": "definition", "term": "Monitor", "term_en": "Monitor", "description": "كائن للمزامنة", "formula": "$M$" },
+      { "type": "code", "language": "c", "code": "// Producer-Consumer with Semaphore\nSemaphore empty = N;  // slots empty\nSemaphore full = 0;   // slots full\nMutex = 1;         // mutual exclusion\n\nvoid producer() {\n    wait(empty);\n    wait(mutex);\n    // produce item\n    signal(mutex);\n    signal(full);\n}\n\nvoid consumer() {\n    wait(full);\n    wait(mutex);\n    // consume item\n    signal(mutex);\n    signal(empty);\n}", "caption": "Producer-Consumer" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "Deadlock", "text": "4 شروط يجب تحققها" }
+    { "type": "card", "title": "📊 الـ I/O وال Disk", "icon": "📊", "children": [
+      { "type": "table", "headers: ["الخوارزمية", "الوصف", "التعقيد"], "rows": [
+        ["FCFS", "First Come First Serve", "$O(n)$"],
+        ["SSTF", "Shortest Seek Time", "Good for local"],
+        ["SCAN", "Elevator", "Fair"],
+        ["C-SCAN", "Circular SCAN", "Uniform"]
+      ], "caption": "Disk Scheduling" },
+      { "type": "equation", "formula": "$T = T_seek + T_latency + T_transfer$", "display": true, "label": "وقت القرص" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "Deadlock", "text": "تحقق 4 شروط - كسر شرط واحد للتجنب" },
+      { "type": "warning", "variant": "tip", "title": "SJF", "text": "قد يحدث starvation للعمليات الطويلة" },
+      { "type": "warning", "variant": "tip", "title": "Page Fault", "text": "قلل الـ page faults بالـ locality" }
     ]}
   ]
 }

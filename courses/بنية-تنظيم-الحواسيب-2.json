@@ -1,29 +1,76 @@
 {
-  "course": { "id": "computer-architecture-2", "title_ar": "بنية الحواسيب 2", "title_en": "Computer Architecture 2" },
+  "course": { "id": "computer-architecture-2", "title_ar": "بنية وتنظيم الحواسيب 2", "title_en": "Computer Architecture 2" },
   "components": [
-    { "type": "card", "title": "المعالجة", "icon": "P", "children": [
-      { "type": "definition", "term": "Pipelining", "description": "مراحل متداخلة" },
-      { "type": "definition", "term": "Superscalar", "description": "وحدات متعددة" },
-      { "type": "definition", "term": "Hazard", "description": "توقف خط الإنتاج" }
+    { "type": "card", "title": "📐 التعاريف الأساسية", "icon": "📐", "children": [
+      { "type": "definition", "term": "التنفيذ الأنبوبي", "term_en": "Pipelining", "description": "تداخل مراحل متعددة", "formula": "$stages$" },
+      { "type": "definition", "term": "Superscalar", "term_en": "Superscalar", "description": "وحدات تنفيذ متعددة" },
+      { "type": "definition", "term": "الـ Hazard", "term_en": "Hazard", "description": "توقف خط الإنتاج", "formula": "$hazard$" },
+      { "type": "definition", "term": "الـ CPI", "term_en": "Cycles Per Instruction", "description": "دورات لكل تعليمة", "formula": "$CPI = \\frac{Cycles}{Instructions}$" },
+      { "type": "definition", "term": "الـ IPC", "term_en": "Instructions Per Cycle", "description": "تعليمات لكل دورة", "formula": "$IPC = \\frac{1}{CPI}$" }
     ]},
-    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
-      { "type": "equation", "formula": "CPI = CPU Cycles / Instructions", "display": true, "label": "CPI" },
-      { "type": "equation", "formula": "Speedup = 1 / (1 - P + P/N)", "display": true, "label": "Amdahl" },
-      { "type": "equation", "formula": "CPU Time = IC x CPI x Clock", "display": true, "label": "الوقت" }
+    { "type": "card", "title": "🧮 الأداء والحساب", "icon": "🧮", "children": [
+      { "type": "equation", "formula": "$CPI = \\frac{CPU \\ Cycles}{Instructions}$", "display": true, "label": "CPI" },
+      { "type": "equation", "formula": "$CPU \\ Time = Instructions \\times CPI \\times Clock$", "display": true, "label": "وقت الـ CPU" },
+      { "type": "equation", "formula": "$Speedup = \\frac{1}{1 - P + \\frac{P}{N}}$", "display": true, "label": "قاعدة أحدال (Amdahl's Law)" },
+      { "type": "equation", "formula": "$Speedup = \\frac{Speedup_{parallel}}{1 + (S/P)}$", "display": true, "label": "Gustafson's Law" },
+      { "type": "example", "given": "$P = 40\%$ من البرنامج parallels على $N = 4$ cores", "solution": "$Speedup = \\frac{1}{1 - 0.4 + \\frac{0.4}{4}} = \\frac{1}{0.6 + 0.1} = \\frac{1}{0.7} \\approx 1.43$", "result": "$Speedup = 1.43x$" }
     ]},
-    { "type": "card", "title": "الـ Hazards", "icon": "H", "children": [
-      { "type": "table", "headers": ["النوع", "الوصف"], "rows": [["Structural", "تعارض موارد"], ["Data", "اعتماد بيانات"], ["Control", "فرع غير محدد"]], "caption": "الأنواع" }
+    { "type": "card", "title": "⚠️ الـ Hazards", "icon": "⚠️", "children": [
+      { "type": "table", "headers": ["النوع", "السبب", "الحل"], "rows": [
+        ["Structural", "تعارض موارد", "إضافة موارد"],
+        ["Data", "اعتماد بيانات", "Forwarding, Stall"],
+        ["Control", "فرع غير محدد", "Branch Prediction"]
+      ], "caption": "أنواع الـ Hazards" },
+      { "type": "code", "language": "asm", "code": "// RAW Hazard (Read After Write)\nADD R1, R2, R3   // R1 يُكتب في Cycle 4\nSUB R4, R1, R5   // R1 يُقرأ في Cycle 5\n\n// الحل: Forwarding\n// R1 من ALU يُمرر مباشرة", "caption": "مثال RAW Hazard" },
+      { "type": "diagram", "chart": "flowchart", "code": "IF[IF] --> ID[ID] --> EX[EX] --> MEM[MEM] --> WB[WB]\nIF2[IF] --> ID2[ID] --> EX2[EX] --> MEM2[MEM] --> WB2[WB]\nEX -->|Forward| EX2\nstyle EX fill:#f96\nstyle EX2 fill:#9cf", "caption": "Data Forwarding" }
     ]},
-    { "type": "card", "title": "الذاكرة", "icon": "M", "children": [
-      { "type": "table", "headers": ["المستوى", "الحجم", "الوقت"], "rows": [["Registers", "32 bytes", "1 ns"], ["L1 Cache", "32 KB", "4 ns"], ["L2 Cache", "256 KB", "10 ns"], ["Main Memory", "8 GB", "100 ns"]], "caption": "الهرمية" }
+    { "type": "card", "title": "💾 هرمية الذاكرة", "icon": "💾", "children": [
+      { "type": "table", "headers": ["المستوى", "الحجم", "الوقت", "التعقيد", "الوصول"], "rows": [
+        ["Registers", "$32$ bytes", "$1$ ns", "$0$", "$O(1)$"],
+        ["L1 Cache", "$32$ KB", "$4$ ns", "$1$", "$O(1)$"],
+        ["L2 Cache", "$256$ KB", "$10$ ns", "$1$", "$O(1)$"],
+        ["L3 Cache", "$8$ MB", "$20-50$ ns", "$1$", "$O(1)$"],
+        ["Main Memory", "$8+$ GB", "$100$ ns", "$1$", "$O(1)$"],
+        ["Disk", "$1+$ TB", "$10$ ms", "$1$", "$O(1)$"]
+      ], "caption": "هرمية الذاكرة" },
+      { "type": "equation", "formula": "$AMAT = Hit \\ Time + Miss \\ Rate \\times Miss \\ Penalty$", "display": true, "label": "متوسط وقت الوصول (AMAT)" },
+      { "type": "example", "given": "L1: $Hit=1ns, Rate=5\%$, L2: $Hit=10ns, Rate=50\%$", "solution": "$AMAT = 1 + 0.05 \\times (10 + 0.5 \\times 100)$\n$= 1 + 0.05 \\times 60$\n$= 1 + 3 = 4$ ns", "result": "$AMAT = 4$ ns" }
     ]},
-    { "type": "card", "title": "الحساب", "icon": "C", "children": [
-      { "type": "definition", "term": "Miss Rate", "description": "نسبة الفشل", "formula": "misses / accesses" },
-      { "type": "definition", "term": "AMAT", "description": "متوسط وقت الوصول", "formula": "Hit Time + Miss Rate x Miss Penalty" }
+    { "type": "card", "title": "🔄 التنبؤ بالـ Branches", "icon": "🔄", "children": [
+      { "type": "table", "headers": ["الخوارزمية", "الدقة", "الذاكرة"], "rows": [
+        ["Always Not Taken", "~50\%", "$0$"],
+        ["1-bit Counter", "~$60\%$", "$1$ bit/branch"],
+        ["2-bit Counter", "~$80-90\%$", "$2$ bits/branch"],
+        ["2-level", "~$95\%$", "Large"],
+        ["Hybrid", "~$97\%$", "Variable"]
+      ], "caption": "استراتيجيات التنبؤ" },
+      { "type": "code", "language": "asm", "code": "// 2-bit saturating counter\n// 00 = Strongly not taken\n// 01 = Weakly not taken\n// 10 = Weakly taken\n// 11 = Strongly taken\n\nif (taken) {\n    if (counter < 3) counter++;\n} else {\n    if (counter > 0) counter--;\n}", "caption": "2-bit Counter" },
+      { "type": "diagram", "chart": "flowchart", "code": "START[FETCH] --> PRED[Predict] --> EXEC[EXEC] --> UP{Correct?}\nUP -->|yes| SAVE[Update OK]\nUP -->|no| UPDATE[Update & Flush]", "caption": "Branch Prediction Loop" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "Hazards", "text": "Three types" },
-      { "type": "warning", "variant": "tip", "title": "Amdahl", "text": "1/(Ps + 1/Pc)" }
+    { "type": "card", "title": "📊 Cache Design", "icon": "📊", "children": [
+      { "type": "definition", "term": "Miss Rate", "term_en": "Miss Rate", "description": "النسبة المئوية للفشل", "formula": "$Miss \\ Rate = \\frac{Misses}{Accesses}$" },
+      { "type": "definition", "term": "_hit_ time", "term_en": "Hit Time", "description": "وقت الوصول عند النجاح" },
+      { "type": "definition", "term": "Miss Penalty", "term_en": "Miss Penalty", "description": "الوقت الإضافي عند الفشل" },
+      { "type": "table", "headers": ["Policy", "الوصف"], "rows": [
+        ["Direct Mapped", "address % ways", "Simple, conflicts"],
+        ["N-way Set Associative", "N ways per set", "Trade-off"],
+        ["Fully Associative", "Any location", "Expensive, best""]
+      ], "caption": "أنواع Cache Mapping" },
+      { "type": "code", "language": "asm", "code": "// Write Policy: Write-Through vs Write-Back\n// Write-Through:\n//   Write to cache AND memory\n//   + Simple, consistent\n//   - Slow (always to memory)\n\n// Write-Back:\n//   Write to cache only\n//   Write to memory on evict\n//   + Fast\n//   - Complex (dirty bit)", "caption": "Write Policies" }
+    ]},
+    { "type": "card", "title": "⚡_MULTI-threading", "icon": "⚡", "children": [
+      { "type": "table", "headers": ["النوع", "الوصف", "الـ ILP"], "rows": [
+        ["Coarse-grained", "switch on stall", "Low"],
+        ["Fine-grained", "switch every cycle", "Medium"],
+        ["Simultaneous (SMT)", "multiple threads", "High"]
+      ], "caption": "أنواع Multi-threading" },
+      { "type": "definition", "term": "ILP", "term_en": "Instruction Level Parallelism", "description": "تعليمات متوازية", "formula": "$ILP$" },
+      { "type": "theorem", "name": "Limit of ILP", "name_en": "ILP Limit", "statement": "حد ILP نظرياً ~1.5-2 في البرامج الحقيقية", "formula": "$IPC_{max} \\approx 1.5-2$" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "Hazards", "text": "3 أنواع: Structural, Data, Control" },
+      { "type": "warning", "variant": "warning", "title": "Dirty Bit", "text": "يتتبع هل تم تعديل الـ block" },
+      { "type": "warning", "variant": "tip", "title": "قاعدة أحدال", "text": "$Speedup = 1/(S + 1/P)$ where $P$ = fraction" }
     ]}
   ]
 }

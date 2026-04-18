@@ -1,29 +1,58 @@
 {
-  "course": { "id": "databases-1", "title_ar": "قواعد المعطيات 1", "title_en": " Databases 1" },
+  "course": { "id": "databases-1", "title_ar": "قواعد المعطيات 1", "title_en": "Databases 1" },
   "components": [
-    { "type": "card", "title": "التعاريف", "icon": "D", "children": [
-      { "type": "definition", "term": "قاعدة البيانات", "description": "بيانات منظمة" },
-      { "type": "definition", "term": "المفتاح الأساسي", "description": "يحدد كل صف" },
-      { "type": "definition", "term": "المفتاح الخارجي", "description": "يشير لجدول آخر" },
-      { "type": "definition", "term": "DBMS", "description": "نظام إدارة" }
+    { "type": "card", "title": "📐 التعاريف الأساسية", "icon": "📐", "children": [
+      { "type": "definition", "term": "قاعدة البيانات", "term_en": "Database", "description": "مجموعة من البيانات المنظمة", "formula": "$DB$" },
+      { "type": "definition", "term": "نظام إدارة قواعد البيانات", "term_en": "DBMS", "description": "برنامج لإدارة قواعد البيانات", "formula": "$DBMS$" },
+      { "type": "definition", "term": "المفتاح الأساسي", "term_en": "Primary Key", "description": "عمود يحدد كل صف بشكل فريد", "formula": "$PK$" },
+      { "type": "definition", "term": "المفتاح الخارجي", "term_en": "Foreign Key", "description": "عمود يشير لجدول آخر", "formula": "$FK$" },
+      { "type": "definition", "term": "المخطط", "term_en": "Schema", "description": "بنية قاعدة البيانات" },
+      { "type": "definition", "term": "النسخة", "term_en": "Instance", "description": "البيانات الفعلية في وقت محدد" }
     ]},
-    { "type": "card", "title": "الجداول", "icon": "T", "children": [
-      { "type": "table", "headers": ["المفهوم", "الوصف"], "rows": [["DBMS", "نظام الإدارة"], ["Schema", "البنية"], ["Instance", "البيانات"], ["SQL", "لغة الاستعلام"]], "caption": "المفاهيم" }
+    { "type": "card", "title": "💻 أساسيات SQL", "icon": "💻", "children": [
+      { "type": "code", "language": "sql", "code": "-- إنشاء جدول\nCREATE TABLE students (\n    id INT PRIMARY KEY,\n    name VARCHAR(100) NOT NULL,\n    age INT,\n    gpa DECIMAL(3,2),\n    enrollment_date DATE\n);", "caption": "إنشاء جدول - CREATE TABLE" },
+      { "type": "code", "language": "sql", "code": "-- إدراج بيانات\nINSERT INTO students (id, name, age, gpa)\nVALUES (1, 'أحمد', 20, 3.5);\n\n-- أو\nINSERT INTO students VALUES \n(2, 'سارة', 19, 3.8, '2024-01-15');", "caption": "إدراج - INSERT" },
+      { "type": "code", "language": "sql", "code": "-- استعلام عن البيانات\nSELECT name, gpa \nFROM students \nWHERE age > 18 \nORDER BY gpa DESC;", "caption": "استعلام - SELECT" },
+      { "type": "code", "language": "sql", "code": "-- تحديث البيانات\nUPDATE students \nSET gpa = 3.7 \nWHERE id = 1;\n\n-- حذف البيانات\nDELETE FROM students \nWHERE age < 16;", "caption": "تحديث وحذف - UPDATE/DELETE" }
     ]},
-    { "type": "card", "title": "التسوية", "icon": "N", "children": [
-      { "type": "table", "headers": ["المستوى", "الشرط"], "rows": [["1NF", "قيم ذرية"], ["2NF", "اعتماد على المفتاح"], ["3NF", "لا اعتماديات متعدية"], ["BCNF", "مفتاح مرشح"]], "caption": "أشكال التسوية" }
+    { "type": "card", "title": "🔗 العلاقات والـ Joins", "icon": "🔗", "children": [
+      { "type": "table", "headers": ["النوع", "الرمز SQL", "الوصف"], "rows": [
+        ["واحد لواحد", "1:1", "صف واحد يطابق صف واحد"],
+        ["واحد لمتعدد", "1:N", "صف واحد يطابق عدة صفوف"],
+        ["متعدد لواحد", "N:1", "نفس 1:N"],
+        ["متعدد لمتعدد", "N:M", "several صفوف تطابق عدة صفوف"]
+      ], "caption": "أنواع العلاقات" },
+      { "type": "code", "language": "sql", "code": "-- INNER JOIN\nSELECT s.name, d.dept_name\nFROM students s\nINNER JOIN departments d \nON s.dept_id = d.id;\n\n-- LEFT JOIN\nSELECT s.name, d.dept_name\nFROM students s\nLEFT JOIN departments d \nON s.dept_id = d.id;\n\n-- RIGHT JOIN\nSELECT s.name, d.dept_name\nFROM students s\nRIGHT JOIN departments d \nON s.dept_id = d.id;", "caption": "أنواع الـ JOIN" },
+      { "type": "code", "language": "sql", "code": "-- FULL OUTER JOIN (في PostgreSQL)\nSELECT s.name, d.dept_name\nFROM students s\nFULL OUTER JOIN departments d \nON s.dept_id = d.id;\n\n-- CROSS JOIN\nSELECT * \nFROM students, departments;", "caption": "JOIN إضافي" }
     ]},
-    { "type": "card", "title": "الـ SQL", "icon": "S", "children": [
-      { "type": "equation", "formula": "CREATE TABLE t()", "display": true, "label": "إنشاء" },
-      { "type": "equation", "formula": "SELECT * FROM t WHERE", "display": true, "label": "استعلام" },
-      { "type": "equation", "formula": "INSERT INTO t VALUES()", "display": true, "label": "إدراج" }
+    { "type": "card", "title": "📊 Normalization forms", "icon": "📊", "children": [
+      { "type": "table", "headers": ["المستوى", "الشرط", "المثال"], "rows": [
+        ["1NF", "قيم ذرية (لا قوائم)", "كل عمود له قيمة واحدة"],
+        ["2NF", "Dependency على PK الكامل", "لا اعتماد جزئي"],
+        ["3NF", "لا اعتماديات متعدية", "A → B → C (لا)"],
+        ["BCNF", "PK only", "لكل محدد هو PK"]
+      ], "caption": "أشكال التسوية" },
+      { "type": "example", "given": "جدول: student_id, course_id, student_name, course_name", "solution": "المشكلة: تكرار student_name لكل course\nالحل: تقسيم لجدولين:\n- students(id, name)\n- enrollments(student_id, course_id)", "result": "في 2NF" },
+      { "type": "warning", "variant": "tip", "title": "تلميح", "text": "1 ذري، 2 كامل، 3 لا متعدٍ، BCNF محدد" }
     ]},
-    { "type": "card", "title": "الـ ER", "icon": "E", "children": [
-      { "type": "table", "headers": ["النوع", "الترجمة"], "rows": [["1:1", " واحد لواحد"], ["1:N", " واحد لمتعدد"], ["N:M", " متعدد لمتعدد"]], "caption": "العلاقات" }
+    { "type": "card", "title": "📈 الفهارس والـ Indexing", "icon": "📈", "children": [
+      { "type": "table", "headers": ["النوع", "التعقيد", "متى تستخدم"], "rows": [
+        ["B-Tree", "$O(\\log n)$", "Default، للبحث والنطاق"],
+        ["Hash", "$O(1)$", "للمطابقة التامة فقط"],
+        ["Bitmap", "جيد للـ low-cardinality", "نعم/لا، Male/Female"],
+        ["Clustered", "ترتيب فيزيائي", "جدول واحد فقط لكل جدول"]
+      ], "caption": "أنواع الفهارس" },
+      { "type": "code", "language": "sql", "code": "-- إنشاء فهرس\nCREATE INDEX idx_name ON students(name);\n\n-- فهرس فريد\nCREATE UNIQUE INDEX idx_email ON students(email);\n\n-- فهرس مركب\nCREATE INDEX idx_name_age ON students(name, age);\n\n-- حذف فهرس\nDROP INDEX idx_name;", "caption": "إنشاء وحذف الفهارس" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "المفتاح", "text": "لا NULL" },
-      { "type": "warning", "variant": "tip", "title": "تلميح", "text": "1ذري 2كلي 3متعدٍ" }
+    { "type": "card", "title": "🧮 الدوال التجميعية", "icon": "🧮", "children": [
+      { "type": "code", "language": "sql", "code": "-- COUNT: عدد الصفوف\nSELECT COUNT(*) FROM students;\n\n-- SUM: المجموع\nSELECT SUM(gpa) FROM students;\n\n-- AVG: المتوسط\nSELECT AVG(gpa) FROM students;\n\n-- MIN/MAX\nSELECT MIN(age), MAX(age) FROM students;", "caption": "دوال تجميعية أساسية" },
+      { "type": "code", "language": "sql", "code": "-- GROUP BY\nSELECT dept_id, COUNT(*) as num, AVG(gpa) as avg_gpa\nFROM students\nGROUP BY dept_id;\n\n-- HAVING (فلترة بعد التجميع)\nSELECT dept_id, COUNT(*) as num\nFROM students\nGROUP BY dept_id\nHAVING COUNT(*) > 5;", "caption": "GROUP BY و HAVING" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "NULL", "text": "NULL ≠ 0 ≠ '', استخدم IS NULL/IS NOT NULL" },
+      { "type": "warning", "variant": "warning", "title": "DROP vs DELETE", "text": "DROP = حذف كامل، DELETE = حذف صفوف" },
+      { "type": "warning", "variant": "tip", "title": "فهرسة", "text": "فهرس على أعمدة WHERE و JOIN" },
+      { "type": "warning", "variant": "tip", "title": "ترتيب", "text": "WHERE ثم GROUP BY ثم HAVING ثم ORDER BY" }
     ]}
   ]
 }

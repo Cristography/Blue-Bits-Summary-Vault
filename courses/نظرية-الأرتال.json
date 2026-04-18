@@ -1,30 +1,65 @@
 {
   "course": { "id": "automata-theory", "title_ar": "نظرية الأرتال", "title_en": "Automata Theory" },
   "components": [
-    { "type": "card", "title": "التعاريف", "icon": "A", "children": [
-      { "type": "definition", "term": "الأوتوماتا", "description": "آلة رياضية" },
-      { "type": "definition", "term": "الحالة", "description": "موقع الآلة" },
-      { "type": "definition", "term": "الانتقال", "description": "Transition" },
-      { "type": "definition", "term": "المدخل", "description": "Input" }
+    { "type": "card", "title": "📐 التعاريف الأساسية", "icon": "📐", "children": [
+      { "type": "definition", "term": "الأوتوماتا", "term_en": "Automaton", "description": "آلة رياضية تقبل أو ترفض سلاسل" },
+      { "type": "definition", "term": "الحالة", "term_en": "State", "description": "موقع الأوتوماتا", "formula": "$q$" },
+      { "type": "definition", "term": "الانتقال", "term_en": "Transition", "description": "تنقل بين الحالات", "formula": "$\\delta$" },
+      { "type": "definition", "term": "المدخل", "term_en": "Input", "description": "السلسلة المدخلة", "formula": "$w$" },
+      { "type": "definition", "term": "الحالة الابتدائية", "term_en": "Start State", "description": "حالة البداية", "formula": "$q_0$" },
+      { "type": "definition", "term": "حالات القبول", "term_en": "Accept States", "description": "حالات النهاية", "formula": "$F$" }
     ]},
-    { "type": "card", "title": "الأنواع", "icon": "T", "children": [
-      { "type": "definition", "term": "DFA", "description": "حالة واحدة لكل دخل" },
-      { "type": "definition", "term": "NFA", "description": "متعددة حالات لكل دخل" },
-      { "type": "equation", "formula": "DFA equiv NFA", "display": true, "label": "تكافؤ" }
+    { "type": "card", "title": "🔄 أنواع الأوتوماتا", "icon": "🔄", "children": [
+      { "type": "definition", "term": "DFA", "term_en": "Deterministic FA", "description": "حالة واحدة لكل مدخل", "formula": "$M = (Q, \\Sigma, \\delta, q_0, F)$" },
+      { "type": "definition", "term": "NFA", "term_en": "Nondeterministic FA", "description": "متعددة حالات لكل مدخل" },
+      { "type": "equation", "formula": "$DFA \\equiv NFA$", "display": true, "label": "التكافؤ" },
+      { "type": "diagram", "chart": "flowchart", "code": "START(q0) --> a(q1)\nq1 --> a(q1)\nq1 -->|b| q2\nq2 -->|b| q3\nq3((Accept))", "caption": "مثال DFA يقبل ab*" }
     ]},
-    { "type": "card", "title": "التعبيرات", "icon": "R", "children": [
-      { "type": "equation", "formula": "a*", "display": true, "label": "صفر أو أكثر" },
-      { "type": "equation", "formula": "a+", "display": true, "label": "واحد أو أكثر" },
-      { "type": "equation", "formula": "a|b", "display": true, "label": "a أو b" }
+    { "type": "card", "title": "💻 التعبيرات النمطية_regex", "icon": "💻", "children": [
+      { "type": "table", "headers": ["الرمز", "المعنى", "مثال"], "rows": [
+        ["a", "الحرف a", "تقبل 'a' فقط"],
+        ["a*", "صفر أو أكثر", "تقبل '', 'a', 'aaa'..."],
+        ["a+", "واحد أو أكثر", "تقبل 'a', 'aa', 'aaa'..."],
+        ["a|b", "a أو b", "تقبل 'a' أو 'b'"],
+        [".", "أي حرف", "تقبل أي حرف"],
+        ["^", "بداية السلسلة", "must start"],
+        ["$", "نهاية السلسلة", "must end"],
+        ["(abc)", "تجميع", "treat as unit"]
+      ], "caption": "رموز Regex" },
+      { "type": "example", "given": "^[a-zA-Z_][a-zA-Z0-9_]*$", "solution": "^ = start\n[a-zA-Z_] = حرف أو underscore\n[a-zA-Z0-9_]* = أي عدد من حرف/رقم/underscore\n$ = end", "result": "Valid C identifier" }
     ]},
-    { "type": "card", "title": "الجدول", "icon": "S", "children": [
-      { "type": "table", "headers": ["الرمز", "المعنى"], "rows": [["*", "صفر أو أكثر"], ["+", "واحد أو أكثر"], ["|", "أو"], ["()", "تجميع"]], "caption": "الترميز" }
+    { "type": "card", "title": "🧮 اللغات النظامية", "icon": "🧮", "children": [
+      { "type": "definition", "term": "Type 3 - Regular", "term_en": "Regular Languages", "description": "DFA/NFA يقبلها" },
+      { "type": "definition", "term": "Type 2 - Context-Free", "term_en": "CF Languages", "description": "PDA يقبلها" },
+      { "type": "definition", "term": "Type 1 - Context-Sensitive", "term_en": "CS Languages", "description": "LBA يقبلها" },
+      { "type": "definition", "term": "Type 0 - Recursively Enumerable", "term_en": "RE Languages", "description": "Turing يقبلها" },
+      { "type": "table", "headers": ["النوع", "ال machines", "الـ grammar", "Closed under"], "rows": [
+        ["Type 3", "DFA/NFA", "Regular", "Union, Concatenion, Star"],
+        ["Type 2", "PDA", "CF", "Union, Concatenion, Star"],
+        ["Type 1", "LBA", "CS", "Intersection, Union"],
+        ["Type 0", "TM", "Unrestricted", "Union, Concatenion"]
+      ], "caption": "هرم تشومسكي" }
     ]},
-    { "type": "card", "title": "بومبل", "icon": "P", "children": [
-      { "type": "theorem", "name": "Pumping Lemma", "statement": "كل كلمة > n يمكن ضخها", "formula": "w = xyz, y>0" }
+    { "type": "card", "title": "📊 Pushdown Automata", "icon": "📊", "children": [
+      { "type": "definition", "term": "PDA", "term_en": "Pushdown Automaton", "description": "DFA + Stack" },
+      { "type": "table", "headers": ["النوع", "Description", "مثال"], "rows": [
+        ["Deterministic", "حالة واحدة لكل مدخل", "a^n b^n"],
+        ["Nondeterministic", "multiple transitions", "$ww^R$"],
+        ["Stack push", "إضافة لل stack", "a → X"],
+        ["Stack pop", "إزالة من stack", "X → ε"],
+        ["Stack top", "العنصر العلوي", "top(X) = X"]
+      ], "caption": "أنواع PDA" },
+      { "type": "diagram", "chart": "flowchart", "code": "S0((Start)) -->|a| S1(push X)\nS1 -->|b| S2(pop X)\nS3((Accept)) <-- S2", "caption": " PDA لـ a^n b^n" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "tip", "title": "ملاحظة", "text": "DFA = NFA تكافؤ" }
+    { "type": "card", "title": "🧮 نظرية بومبينغ", "icon": "🧮", "children": [
+      { "type": "theorem", "name": "Pumping Lemma (Regular)", "name_en": "Pumping Lemma", "statement": "لغة منتظمة، يوجد $n$ لكل $|w| \\geq n$", "formula": "$w = xyz, |y| > 0$" },
+      { "type": "theorem", "name": "Pumping Lemma (CF)", "name_en": "Pumping Lemma for CFLs", "statement": "لغة حرة، يوجد $n$ لكل $|w| \\geq n$", "formula": "$w = uv^ixyz, i \\geq 0$" },
+      { "type": "example", "given": "$L = \\{a^n b^n: n \\geq 0\\}$", "solution": "نفترض أنها منتظمة، إذن $p$Pump Lemma\nاخذ $w = a^p b^p$\n$w = xyz$ with $|y| > 0$\nالحالات:\ny في $a^*$ → $a^k a^p b^p$ لا في $L$y في $b^*$ → $a^p b^k b^p$ لا في $L$\ny في $a^* b^*$ → $a^{p+k} b^p$ أو $a^p b^{p+k}$ لا في $L$\nكل الحالات تفشل!", "result": "$a^n b^n$ غير منتظمة!" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "DFA = NFA", "text": "DFA ≡ NFA أي يمكن تحويل أي NFA ل DFA" },
+      { "type": "warning", "variant": "tip", "title": "التسلسلات", "text": "regex للدويل، CFG للمتداخلة" },
+      { "type": "warning", "variant": "tip", "title": "Pumping", "text": "يُستخدم لإثبات عدم الانتظام، وليس العكس!" }
     ]}
   ]
 }

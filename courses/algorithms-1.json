@@ -1,32 +1,62 @@
 {
   "course": { "id": "algorithms-1", "title_ar": "خوارزميات 1", "title_en": "Algorithms I" },
   "components": [
-    { "type": "card", "title": "التعاريف", "icon": "D", "children": [
-      { "type": "definition", "term": "الخوارزمية", "description": "خطوات الحل" },
-      { "type": "definition", "term": "التعقيد الزمني", "description": "الزمن بدلالة n" },
-      { "type": "definition", "term": "O", "description": "أقصى حد" },
-      { "type": "definition", "term": "Omega", "description": "حد أدنى" }
+    { "type": "card", "title": "📐 التعاريف الأساسية", "icon": "📐", "children": [
+      { "type": "definition", "term": "الخوارزمية", "term_en": "Algorithm", "description": "تسلسل محدد من الخطوات لحل مشكلة", "formula": "$O(n)$" },
+      { "type": "definition", "term": "التعقيد الزمني", "term_en": "Time Complexity", "description": "الزمن اللازم بدلالة حجم المدخل $n$" },
+      { "type": "definition", "term": "التعقيد المكاني", "term_en": "Space Complexity", "description": "الذاكرة المستخدمة بدلالة $n$" },
+      { "type": "definition", "term": "نمو الدالة (Big-O)", "term_en": "Big-O Notation", "description": "أقصى حد للتعقيد (الحالة الأسوأ)" },
+      { "type": "definition", "term": "أوميقا (Ω)", "term_en": "Omega Notation", "description": "الحد الأدنى للتعقيد (الحالة الأفضل)" },
+      { "type": "definition", "term": "ثيتا (Θ)", "term_en": "Theta Notation", "description": "التعقيد المتوسط精确اً" }
     ]},
-    { "type": "card", "title": "المعادلات", "icon": "E", "children": [
-      { "type": "equation", "formula": "O(1)", "display": true, "label": "ثابت" },
-      { "type": "equation", "formula": "O(log n)", "display": true, "label": "لوغاريتمي" },
-      { "type": "equation", "formula": "O(n)", "display": true, "label": "خطي" },
-      { "type": "equation", "formula": "O(n log n)", "display": true, "label": "خطي لوغاريتمي" },
-      { "type": "equation", "formula": "O(n^2)", "display": true, "label": "تربيعي" },
-      { "type": "equation", "formula": "O(2^n)", "display": true, "label": "أسي" }
+    { "type": "card", "title": "📊 تصنيف التعقيد", "icon": "📊", "children": [
+      { "type": "table", "headers": ["الترتيب", "التعقيد", "الاسم", "مثال"], "rows": [
+        ["1", "$O(1)$", "ثابت", " الوصول للمصفوفة"],
+        ["2", "$O(\\log n)$", "لوغاريتمي", "Binary Search"],
+        ["3", "$O(n)$", "خطي", "Linear Search"],
+        ["4", "$O(n \\log n)$", "خطي لوغاريتمي", "Merge Sort"],
+        ["5", "$O(n^2)$", "تربيعي", "Bubble Sort"],
+        ["6", "$O(2^n)$", "أسي", "Fibonacci recursion"],
+        ["7", "$O(n!)$", "عاملي", "Travelling Salesman"]
+      ], "caption": "تصنيفات التعقيد" },
+      { "type": "diagram", "chart": "graph", "code": "O1[O(1)] --> L[O(log n)] --> N[O(n)] --> NL[O(n log n)] --> N2[O(n^2)] --> E2[O(2^n)]", "caption": "ترتيب التصنيفات من الأسرع للأبطأ" }
     ]},
-    { "type": "card", "title": "الترتيب", "icon": "S", "children": [
-      { "type": "table", "headers": ["الخوارزمية", "أفضل", "أسوأ", "المكاني"], "rows": [["Bubble", "O(n)", "O(n^2)", "O(1)"], ["Insertion", "O(n)", "O(n^2)", "O(1)"], ["Merge", "O(n log n)", "O(n log n)", "O(n)"], ["Quick", "O(n log n)", "O(n^2)", "O(log n)"]], "caption": "الخوارزميات" }
+    { "type": "card", "title": "🔄 خوارزميات الترتيب", "icon": "🔄", "children": [
+      { "type": "table", "headers": ["الخوارزمية", "最佳", "أسوأ", "المكاني", "نوع"], "rows": [
+        ["Bubble Sort", "$O(n)$", "$O(n^2)$", "$O(1)$", "مقارنة"],
+        ["Insertion Sort", "$O(n)$", "$O(n^2)$", "$O(1)$", "مقارنة"],
+        ["Selection Sort", "$O(n^2)$", "$O(n^2)$", "$O(1)$", "مقارنة"],
+        ["Merge Sort", "$O(n \\log n)$", "$O(n \\log n)$", "$O(n)$", "تقسيم"],
+        ["Quick Sort", "$O(n \\log n)$", "$O(n^2)$", "$O(\\log n)$", "تقسيم"],
+        ["Heap Sort", "$O(n \\log n)$", "$O(n \\log n)$", "$O(1)$", "قاعدة متعددة"]
+      ], "caption": "مقارنة خوارزميات الترتيب" },
+      { "type": "code", "language": "cpp", "code": "// Bubble Sort\nvoid bubbleSort(int arr[], int n) {\n    for (int i = 0; i < n-1; i++)\n        for (int j = 0; j < n-i-1; j++)\n            if (arr[j] > arr[j+1])\n                swap(arr[j], arr[j+1]);\n}", "caption": "Bubble Sort" },
+      { "type": "diagram", "chart": "flowchart", "code": "A[5, 3, 8, 1] --> B{5 > 3}\nB -->|yes| C[swap]\nC --> D[3, 5, 8, 1]\nD --> E{5 > 8}\nE -->|no| F[3, 5, 1, 8]", "caption": "مثال على Swap" }
     ]},
-    { "type": "card", "title": "البحث", "icon": "F", "children": [
-      { "type": "table", "headers": ["الخوارزمية", "التعقيد"], "rows": [["Linear Search", "O(n)"], ["Binary Search", "O(log n)"]], "caption": "البحث" }
+    { "type": "card", "title": "🔍 خوارزميات البحث", "icon": "🔍", "children": [
+      { "type": "table", "headers": ["الخوارزمية", "التعقيد", "الشرط", "الذاكرة"], "rows": [
+        ["Linear Search", "$O(n)$", "لا شيء", "$O(1)$"],
+        ["Binary Search", "$O(\\log n)$", "مصفوفة مرتبة", "$O(1)$"]
+      ], "caption": "مقارنة خوارزميات البحث" },
+      { "type": "code", "language": "cpp", "code": "// Binary Search\nint binarySearch(int arr[], int l, int r, int x) {\n    while (l <= r) {\n        int mid = l + (r-l)/2;\n        if (arr[mid] == x) return mid;\n        if (arr[mid] < x) l = mid + 1;\n        else r = mid - 1;\n    }\n    return -1;\n}", "caption": "Binary Search" },
+      { "type": "example", "given": "$arr = [2, 5, 8, 12, 16]$, نبحث عن $12$", "solution": "الخطوة 1: mid = 2 (8) < 12 → left\nالخطوة 2: mid = 4 (16) > 12 → right\nالخطوة 3: mid = 3 (12) == 12 ✓", "result": "فُوجد في index 3" }
     ]},
-    { "type": "card", "title": "المخططات", "icon": "D", "children": [
-      { "type": "diagram", "chart": "flowchart", "code": "graph TD A==>B", "caption": "ترتيب" }
+    { "type": "card", "title": "🧮 نظريات مهمة", "icon": "🧮", "children": [
+      { "type": "theorem", "name": "التبادللية (Commutativity)", "statement": "$A \\cup B = B \\cup A$ و $A \\cap B = B \\cap A$", "formula": "$A \\cup B = B \\cup A$" },
+      { "type": "theorem", "name": "التجميعية (Associativity)", "statement": "$(A \\cup B) \\cup C = A \\cup (B \\cup C)$", "formula": "$(A \\cup B) \\cup C = A \\cup (B \\cup C)$" },
+      { "type": "theorem", "name": "التوزيعية (Distributivity)", "statement": "$A \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C)$", "formula": "$A \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C)$" }
     ]},
-    { "type": "card", "title": "الأخطاء", "icon": "!", "children": [
-      { "type": "warning", "variant": "warning", "title": "O vs Omega", "text": "O=أقصى حد، Omega=حد أدنى" },
-      { "type": "warning", "variant": "tip", "title": "Binary", "text": "يتطلب مصفوفة مرتبة" }
+    { "type": "card", "title": "📊 الخوارزميات الفرعية", "icon": "📊", "children": [
+      { "type": "definition", "term": "DFS", "term_en": "Depth First Search", "description": "البحث بالعمق أولاً", "formula": "$O(V + E)$" },
+      { "type": "definition", "term": "BFS", "term_en": "Breadth First Search", "description": "البحث بالعرض أولاً", "formula": "$O(V + E)$" },
+      { "type": "definition", "term": "Dijkstra", "term_en": "Dijkstra", "description": "أقصر مسار", "formula": "$O((V+E) \\log V)$" },
+      { "type": "definition", "term": "Prim", "term_en": "Prim's Algorithm", "description": "أقل شجرة تغطية", "formula": "$O(E \\log V)$" },
+      { "type": "definition", "term": "Kruskal", "term_en": "Kruskal's Algorithm", "description": "أقل شجرة تغطية", "formula": "$O(E \\log V)$" }
+    ]},
+    { "type": "card", "title": "⚠️ الأخطاء الشائعة", "icon": "⚠️", "children": [
+      { "type": "warning", "variant": "warning", "title": "O vs Ω", "text": "$O$ = أبطأ حالة، $\\Omega$ = أفضل حالة" },
+      { "type": "warning", "variant": "warning", "title": "Binary Search", "text": "المصفوفة يجب أن تكون مرتبة!" },
+      { "type": "warning", "variant": "tip", "title": "اختيار الخوارزمية", "text": "n صغيرة → Insertion، n كبيرة → Merge/Quick" }
     ]}
   ]
 }

@@ -545,13 +545,19 @@ function renderEquation(eq) {
 }
 
 function renderDefinition(def) {
-  const formula = def.formula ? `<code class="formula-inline">${safeText(def.formula)}</code>` : '';
+  // Wrap formula in $ delimiters for KaTeX
+  const formula = def.formula ? `<code class="formula-inline">$${safeText(def.formula)}$</code>` : '';
   const termEn = def.term_en ? `<span class="term-en">(${safeText(def.term_en)})</span>` : '';
+  
+  // Make sure description is also processed for inline LaTeX
+  const desc = def.description || '';
+  const hasLatex = desc.includes('$') || desc.includes('\\');
+  const description = hasLatex ? `<span class="katex-inline">$${desc}$</span>` : safeText(desc);
   
   return `
     <div class="content-definition">
       <dt>${safeText(def.term)} ${termEn}</dt>
-      <dd>${safeText(def.description)} ${formula}</dd>
+      <dd>${description} ${formula}</dd>
     </div>
   `;
 }
@@ -566,9 +572,19 @@ function renderList(list) {
 }
 
 function renderTable(table) {
-  const headers = (table.headers || []).map(h => `<th>${safeText(h)}</th>`).join('');
+  // Process headers and cells for LaTeX (wrap in $ if contains \ or math operators)
+  const processCell = (text) => {
+    const t = String(text || '');
+    // Check if text contains LaTeX commands or math operators
+    if (t.includes('\\') || t.includes('^') || t.includes('_') || t.includes('frac') || t.includes('times') || t.includes('leq') || t.includes('geq') || t.includes('infty') || t.includes('sum') || t.includes('int')) {
+      return `<span class="katex-inline">$${t}$</span>`;
+    }
+    return safeText(t);
+  };
+  
+  const headers = (table.headers || []).map(h => `<th>${processCell(h)}</th>`).join('');
   const rows = (table.rows || []).map(row => `
-    <tr>${row.map(cell => `<td>${safeText(cell)}</td>`).join('')}</tr>
+    <tr>${row.map(cell => `<td>${processCell(cell)}</td>`).join('')}</tr>
   `).join('');
   
   return `
@@ -619,7 +635,8 @@ function renderWarning(warn) {
 }
 
 function renderTheorem(th) {
-  const formula = th.formula ? `<div class="theorem-formula"><code>${safeText(th.formula)}</code></div>` : '';
+  // Wrap formula in $ delimiters for KaTeX
+  const formula = th.formula ? `<div class="theorem-formula"><code class="katex-formula">$${th.formula}$</code></div>` : '';
   const proof = th.proof ? `<div class="theorem-proof"><strong>Proof:</strong> ${safeText(th.proof)}</div>` : '';
   
   return `
